@@ -1,103 +1,213 @@
-import Image from "next/image";
+import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className='min-h-screen p-5'>
+      <div className='flex justify-around items-center h-full'>
+        <div className='flex flex-col justify-center md:w-[800px] gap-6'>
+          <h1 className='font-bold'>Unlock the Secrets of Your Neighborhood</h1>
+          <span>
+            Explore your community like never before with real-time insights and
+            alerts. Stay informed about what's happening right around you.
+          </span>
+          <span>
+            <Button>Learn More</Button>
+          </span>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <div>
+          <div>
+            <Image
+              className='h-[600px] w-[600px]'
+              src={'/neighborhood-hero-image.jpg'}
+              alt='hero-image'
+              height={600}
+              width={600}
+              objectFit='cover'
+              objectPosition='center'
+              loading='lazy'
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* {discover} */}
+
+      <div className='mt-52'>
+        <div className='w-3/4'>
+          <h2>Explore Your Neighborhood Like Never Before</h2>
+          Stay connected with your community through our Vicinity Feed, where
+          local updates and posts from your neighbors come alive. Dive deeper
+          into neighborhood insights and make informed decisions about where you
+          live.
+          <span className='mt-10'>
+            Stay connected with your community through our Vicinity Feed, where
+            local updates and posts from your neighbors come alive. Dive deeper
+            into neighborhood insights and make informed decisions about where
+            you live.
+          </span>
+        </div>
+        <div className='grid grid-cols-3 gap-5 w-full place-items-center mt-24'>
+          <div className='self-center items-center'>
+            <h6>Uncover Hidden Gems in Your Area</h6>
+            <span>
+              Our Neighborhood Deep Dive feature provides detailed scores and
+              insights tailored to your ZIP code.
+            </span>
+          </div>
+          <div className='self-center items-center'>
+            <h6>Stay Informed with Real-Time Alerts</h6>
+            <span>
+              Receive instant notifications about crime, development, and rental
+              opportunities in your vicinity.
+            </span>
+          </div>
+          <div className='self-center items-center'>
+            <h6>Join the Conversation with Polls & Surveys</h6>
+            <span>
+              Engage with your neighbors through fun and informative polls that
+              shape your community.
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div className='mt-52 flex justify-around items-center'>
+        <div>
           <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+            className='h-[600px] w-[600px]'
+            src={'/neighborhood-hero-image.jpg'}
+            alt='hero-image'
+            height={600}
+            width={600}
+            objectFit='cover'
+            objectPosition='center'
+            loading='lazy'
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        </div>
+        <div>
+          <h2>
+            Discover Your Neighborhood: Stay Connected and Informed with
+            AreaVibe
+          </h2>
+          <span>
+            With AreaVibe, you can easily stay informed about local happenings
+            and trends. Compare neighborhoods effortlessly to make the best
+            decisions for your lifestyle.
+          </span>
+          <div className='flex justify-between'>
+            <span>
+              <h6>Stay Informed</h6>
+              <span>
+                Receive updates on community events, safety alerts, and local
+                news in real-time.
+              </span>
+            </span>
+            <span>
+              <h6>Easy Comparisons</h6>
+              <span>
+                Effortlessly compare neighborhoods to find the perfect fit for
+                your needs.
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div className='mt-52 mx-auto'>
+        <h2>Uncover Your Neighborhood Like Never Before</h2>
+        <span>
+          With AreaVibe, simply enter your ZIP code or allow GPS access to
+          unlock a world of local insights. Stay informed and connected with
+          real-time updates tailored to your specific area.
+        </span>
+        <div className='grid grid-cols-3 place-items-center'>
+          <div>
+            <Image
+              src={'/neighborhood-image'}
+              alt='image'
+              height={300}
+              width={300}
+            />
+            <h6>Stay Updated with Vicinity Feed</h6>
+          </div>
+          <div>
+            <Image
+              src={'/neighborhood-image'}
+              alt='image'
+              height={300}
+              width={300}
+            />
+            <h6>Stay Updated with Vicinity Feed</h6>
+          </div>
+          <div>
+            <Image
+              src={'/neighborhood-image'}
+              alt='image'
+              height={300}
+              width={300}
+            />
+            <h6>Stay Updated with Vicinity Feed</h6>
+          </div>
+        </div>
+      </div>
+
+      {/* User Testimonials */}
+      <div className='mt-52'>
+        <h2>User Testimonials</h2>
+        <span className='mt-10'>See what users are saying</span>
+        <div className='flex'>
+          <span>
+            "AreaVibe has made me feel more at home in my area. I love staying
+            updated on local happenings!"
+          </span>
+          <span>
+            "I never knew my neighbors cared so much until I joined! The alerts
+            keep me informed and engaged."
+          </span>
+        </div>
+        <div className='flex border border-foreground items-center justify-around'>
+          <div>
+            <h2>Discover Your Neighborhood Today</h2>
+            <span>Get local insights right at your fingertips!</span>
+          </div>
+          <div>
+            <Button>Learn More</Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Newsletter */}
+      <div className='flex justify-around'>
+        <div>
+          <h2>Stay Updated with AreaVibe</h2>
+          <span>
+            Join our community for the latest neighborhood insights and updates
+            delivered right to your inbox.
+          </span>
+          <div className='flex'>
+            <input type='text' />
+            <Button>Hello</Button>
+          </div>
+          <span>
+            By clicking Sign Up, you agree to our Terms and Conditions.
+          </span>
+        </div>
+        <div>
+          <div>
+            <Image
+              className='h-[600px] w-[600px]'
+              src={'/neighborhood-hero-image.jpg'}
+              alt='hero-image'
+              height={600}
+              width={600}
+              objectFit='cover'
+              objectPosition='center'
+              loading='lazy'
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
