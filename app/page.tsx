@@ -240,20 +240,20 @@ export default function Home() {
       </div>
 
       {/* Newsletter */}
-      <div className='flex justify-around'>
+      <div className='flex justify-around items-center'>
         <div>
           <h2>Stay Updated with AreaVibe</h2>
-          <span>
+          <div className='mt-5'>
             Join our community for the latest neighborhood insights and updates
             delivered right to your inbox.
-          </span>
-          <div className='flex'>
-            <input type='text' />
-            <Button>Hello</Button>
           </div>
-          <span>
+          <div className='flex gap-2 mt-10'>
+            <input className='flex-1 bg-muted' type='text' />
+            <Button>Submit</Button>
+          </div>
+          <div className='mt-5 text-xs'>
             By clicking Sign Up, you agree to our Terms and Conditions.
-          </span>
+          </div>
         </div>
         <div>
           <div>
