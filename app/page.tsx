@@ -1,11 +1,11 @@
 import { Button } from '@/components/ui/button';
-import { AlertCircle, AlertOctagon, Gem, MessageCircle } from 'lucide-react';
+import { AlertCircle, Gem, MessageCircle } from 'lucide-react';
 import Image from 'next/image';
 
 export default function Home() {
   return (
     <div className='min-h-screen p-5'>
-      <div className='flex justify-between items-center h-full'>
+      <div className='flex justify-between items-center h-full gap-10'>
         <div className='flex flex-col justify-center md:w-[800px] gap-6'>
           <h1 className='font-bold'>Unlock the Secrets of Your Neighborhood</h1>
           <span>
@@ -16,20 +16,15 @@ export default function Home() {
             <Button>Learn More</Button>
           </span>
         </div>
-        <div>
-          <div>
-            <Image
-              className='h-[600px] w-[600px]'
-              src={'/neighborhood-hero-image.jpg'}
-              alt='hero-image'
-              height={600}
-              width={600}
-              objectFit='cover'
-              objectPosition='center'
-              loading='lazy'
-            />
-          </div>
-        </div>
+
+        <Image
+          className='h-[600px] w-[600px]'
+          src={'/neighborhood-hero-image.jpg'}
+          alt='hero-image'
+          objectFit='cover'
+          height={600}
+          width={600}
+        />
       </div>
 
       {/* {discover} */}
@@ -79,19 +74,18 @@ export default function Home() {
         </div>
       </div>
 
-      <div className='mt-52 flex justify-around items-center gap-5'>
-        <div className=''>
-          <Image
-            className='h-[600px] w-[600px]'
-            src={'/neighborhood-hero-image.jpg'}
-            alt='hero-image'
-            height={600}
-            width={600}
-            objectFit='cover'
-            objectPosition='center'
-            loading='lazy'
-          />
-        </div>
+      <div className='mt-52 flex justify-around items-center gap-10'>
+        <Image
+          className='h-[600px] w-[600px]'
+          src={'/neighborhood-hero-image.jpg'}
+          alt='hero-image'
+          height={600}
+          width={600}
+          objectFit='cover'
+          objectPosition='center'
+          loading='lazy'
+        />
+
         <div className='gap-10 flex flex-col w-1/2'>
           <h2>
             Discover Your Neighborhood: Stay Connected and Informed with
