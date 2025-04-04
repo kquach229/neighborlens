@@ -1,5 +1,15 @@
+import { AvatarImage, Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { AlertCircle, Gem, MessageCircle } from 'lucide-react';
+import { Card, CardFooter } from '@/components/ui/card';
+
+import {
+  AlertCircle,
+  Gem,
+  MessageCircle,
+  Star,
+  StarIcon,
+  Stars,
+} from 'lucide-react';
 import Image from 'next/image';
 
 export default function Home() {
@@ -115,62 +125,113 @@ export default function Home() {
         </div>
       </div>
 
-      <div className='mt-52 mx-auto'>
-        <h2>Uncover Your Neighborhood Like Never Before</h2>
-        <span>
+      <div className='mt-52 mx-auto text-center'>
+        <h2 className='mb-10'>Uncover Your Neighborhood Like Never Before</h2>
+        <span className=''>
           With AreaVibe, simply enter your ZIP code or allow GPS access to
           unlock a world of local insights. Stay informed and connected with
           real-time updates tailored to your specific area.
         </span>
-        <div className='grid grid-cols-3 place-items-center'>
+        <div className='grid grid-cols-3 place-items-center mt-10'>
           <div>
             <Image
-              src={'/neighborhood-image'}
+              className='place-self-center'
+              src={'/neighborhood-image.jpg'}
               alt='image'
               height={300}
               width={300}
             />
-            <h6>Stay Updated with Vicinity Feed</h6>
+            <h4 className='mt-5'>Stay Updated with Vicinity Feed</h4>
           </div>
           <div>
             <Image
-              src={'/neighborhood-image'}
+              className='place-self-center'
+              src={'/neighborhood-image.jpg'}
               alt='image'
               height={300}
               width={300}
             />
-            <h6>Stay Updated with Vicinity Feed</h6>
+            <h4 className='mt-5'>Stay Updated with Vicinity Feed</h4>
           </div>
           <div>
             <Image
-              src={'/neighborhood-image'}
+              className='place-self-center'
+              src={'/neighborhood-image.jpg'}
               alt='image'
               height={300}
               width={300}
             />
-            <h6>Stay Updated with Vicinity Feed</h6>
+            <h4 className='mt-5'>Stay Updated with Vicinity Feed</h4>
           </div>
         </div>
       </div>
 
       {/* User Testimonials */}
       <div className='mt-52'>
-        <h2>User Testimonials</h2>
-        <span className='mt-10'>See what users are saying</span>
-        <div className='flex'>
-          <span>
-            "AreaVibe has made me feel more at home in my area. I love staying
-            updated on local happenings!"
-          </span>
-          <span>
-            "I never knew my neighbors cared so much until I joined! The alerts
-            keep me informed and engaged."
-          </span>
+        <h2 className='mb-5'>User Testimonials</h2>
+        <span>See what users are saying</span>
+        <div className='flex gap-5 mt-5 mb-28'>
+          <Card className='p-5'>
+            <div className='flex'>
+              <StarIcon color='ffee8c' fill='ffee8c' />
+              <StarIcon color='ffee8c' fill='ffee8c' />
+              <StarIcon color='ffee8c' fill='ffee8c' />
+              <StarIcon color='ffee8c' fill='ffee8c' />
+              <StarIcon color='ffee8c' fill='ffee8c' />
+            </div>
+
+            <span>
+              "AreaVibe has made me feel more at home in my area. I love staying
+              updated on local happenings!"
+            </span>
+            <CardFooter className='flex gap-5'>
+              <div>
+                <Avatar>
+                  <AvatarImage src='/lily.jpeg' />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </div>
+              <div>
+                <div className='font-semibold'>Lily James</div>
+                <div className='text-sm'>Local Resident</div>
+              </div>
+            </CardFooter>
+          </Card>
+          <Card className='p-5'>
+            <div className='flex'>
+              <StarIcon color='ffee8c' fill='ffee8c' />
+              <StarIcon color='ffee8c' fill='ffee8c' />
+              <StarIcon color='ffee8c' fill='ffee8c' />
+              <StarIcon color='ffee8c' fill='ffee8c' />
+              <StarIcon color='ffee8c' fill='ffee8c' />
+            </div>
+            <span>
+              "I never knew my neighbors cared so much until I joined! The
+              alerts keep me informed and engaged."
+            </span>
+            <CardFooter className='flex gap-5'>
+              <div>
+                <Avatar>
+                  <AvatarImage src='/lily.jpeg' />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </div>
+              <div>
+                <div className='font-semibold'>Lily James</div>
+                <div className='text-sm'>Local Resident</div>
+              </div>
+            </CardFooter>
+          </Card>
         </div>
-        <div className='flex border border-foreground items-center justify-around'>
+      </div>
+
+      <div className='mt-52 mb-52'>
+        <div className='flex border border-foreground items-center justify-between pl-10 pr-10 h-32'>
           <div>
             <h2>Discover Your Neighborhood Today</h2>
-            <span>Get local insights right at your fingertips!</span>
+            <div className='mt-2'>
+              Get local insights right at your fingertips!
+            </div>
           </div>
           <div>
             <Button>Learn More</Button>
