@@ -1,0 +1,148 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  role      UserRole @default(RESIDENT)
+  avatarUrl String?
+  createdAt DateTime @default(now())
+  planTier  PlanTier @default(FREE)
+
+  // Relations
+  reviews            Review[]
+  questions          Question[]
+  answers            Answer[]
+  savedNeighborhoods SavedNeighborhood[]
+  Plan               Plan                @relation(fields: [planTier], references: [tier])
+}
+
+model Neighborhood {
+  id               String  @id @default(uuid())
+  name             String
+  zipCode          String
+  city             String
+  state            String
+  latitude         Float
+  longitude        Float
+  description      String?
+  safetyScore      Float?
+  walkabilityScore Float?
+  averageRating    Float?
+
+  // Relations
+  reviews           Review[]
+  questions         Question[]
+  amenities         Amenity[]
+  SavedNeighborhood SavedNeighborhood[]
+}
+
+model Review {
+  id             String   @id @default(uuid())
+  rating         Int
+  safety         Int?
+  noiseLevel     Int
+  comment        String?
+  tags           String[]
+  userId         String
+  neighborhoodId String
+  createdAt      DateTime @default(now())
+
+  // Relations
+  user         User         @relation(fields: [userId], references: [id])
+  neighborhood Neighborhood @relation(fields: [neighborhoodId], references: [id])
+}
+
+model Question {
+  id             String   @id @default(uuid())
+  title          String
+  body           String?
+  userId         String
+  neighborhoodId String
+  createdAt      DateTime @default(now())
+  answerId       String
+
+  // Relations
+  user         User         @relation(fields: [userId], references: [id])
+  neighborhood Neighborhood @relation(fields: [neighborhoodId], references: [id])
+
+  Answer Answer[]
+}
+
+model Answer {
+  id         String   @id @default(uuid())
+  body       String
+  userId     String
+  questionId String
+  createdAt  DateTime @default(now())
+
+  // Relations
+  user     User     @relation(fields: [userId], references: [id])
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// Monetization
+
+model Plan {
+  tier     PlanTier @id @unique
+  price    Float    @default(0)
+  features Json
+  stripeId String
+  users    User[]
+}
+
+// Supporting Models
+
+model Amenity {
+  id             String      @id @default(uuid())
+  name           String
+  type           AmenityType
+  neighborhoodId String
+
+  neighborhood Neighborhood @relation(fields: [neighborhoodId], references: [id])
+}
+
+model SavedNeighborhood {
+  userId         String
+  neighborhoodId String
+
+  user         User         @relation(fields: [userId], references: [id])
+  neighborhood Neighborhood @relation(fields: [neighborhoodId], references: [id])
+
+  @@id([userId, neighborhoodId])
+}
+
+// Enums
+
+enum UserRole {
+  RESIDENT
+  REALTOR
+  INVESTOR
+  ADMIN
+}
+
+enum PlanTier {
+  FREE
+  PRO
+}
+
+enum AmenityType {
+  SCHOOL
+  PARK
+  RESTAURANT
+  GROCERY
+  PUBLIC_TRUST
+}

@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <div className='h-[30vh] w-full flex flex-col justify-end'>
       <div className='mx-auto flex justify-center flex-col items-center gap-2 mb-20'>
-        <div>
+        <div className='mt-5 mb-5'>
           <NavLogo />
         </div>
         <div className='gap-5 flex'>
