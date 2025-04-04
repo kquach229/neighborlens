@@ -1,10 +1,11 @@
 import { Button } from '@/components/ui/button';
+import { AlertCircle, AlertOctagon, Gem, MessageCircle } from 'lucide-react';
 import Image from 'next/image';
 
 export default function Home() {
   return (
     <div className='min-h-screen p-5'>
-      <div className='flex justify-around items-center h-full'>
+      <div className='flex justify-between items-center h-full'>
         <div className='flex flex-col justify-center md:w-[800px] gap-6'>
           <h1 className='font-bold'>Unlock the Secrets of Your Neighborhood</h1>
           <span>
@@ -35,11 +36,13 @@ export default function Home() {
 
       <div className='mt-52'>
         <div className='w-3/4'>
-          <h2>Explore Your Neighborhood Like Never Before</h2>
-          Stay connected with your community through our Vicinity Feed, where
-          local updates and posts from your neighbors come alive. Dive deeper
-          into neighborhood insights and make informed decisions about where you
-          live.
+          <h2 className='mb-5'>Explore Your Neighborhood Like Never Before</h2>
+          <span>
+            Stay connected with your community through our Vicinity Feed, where
+            local updates and posts from your neighbors come alive. Dive deeper
+            into neighborhood insights and make informed decisions about where
+            you live.
+          </span>
           <span className='mt-10'>
             Stay connected with your community through our Vicinity Feed, where
             local updates and posts from your neighbors come alive. Dive deeper
@@ -47,15 +50,18 @@ export default function Home() {
             you live.
           </span>
         </div>
-        <div className='grid grid-cols-3 gap-5 w-full place-items-center mt-24'>
-          <div className='self-center items-center'>
+        <div className='grid grid-cols-3 gap-5 w-full place-items-center mt-24 text-center'>
+          <div>
+            <Gem className='place-self-center mb-5 h-[3rem] w-[3rem]' />
             <h6>Uncover Hidden Gems in Your Area</h6>
+
             <span>
               Our Neighborhood Deep Dive feature provides detailed scores and
               insights tailored to your ZIP code.
             </span>
           </div>
           <div className='self-center items-center'>
+            <AlertCircle className='place-self-center mb-5 h-[3rem] w-[3rem]' />
             <h6>Stay Informed with Real-Time Alerts</h6>
             <span>
               Receive instant notifications about crime, development, and rental
@@ -63,6 +69,7 @@ export default function Home() {
             </span>
           </div>
           <div className='self-center items-center'>
+            <MessageCircle className='place-self-center mb-5 h-[3rem] w-[3rem]' />
             <h6>Join the Conversation with Polls & Surveys</h6>
             <span>
               Engage with your neighbors through fun and informative polls that
@@ -72,8 +79,8 @@ export default function Home() {
         </div>
       </div>
 
-      <div className='mt-52 flex justify-around items-center'>
-        <div>
+      <div className='mt-52 flex justify-around items-center gap-5'>
+        <div className=''>
           <Image
             className='h-[600px] w-[600px]'
             src={'/neighborhood-hero-image.jpg'}
@@ -85,7 +92,7 @@ export default function Home() {
             loading='lazy'
           />
         </div>
-        <div>
+        <div className='gap-10 flex flex-col w-1/2'>
           <h2>
             Discover Your Neighborhood: Stay Connected and Informed with
             AreaVibe
@@ -95,15 +102,15 @@ export default function Home() {
             and trends. Compare neighborhoods effortlessly to make the best
             decisions for your lifestyle.
           </span>
-          <div className='flex justify-between'>
-            <span>
+          <div className='flex justify-start gap-5'>
+            <span className='w-80'>
               <h6>Stay Informed</h6>
               <span>
                 Receive updates on community events, safety alerts, and local
                 news in real-time.
               </span>
             </span>
-            <span>
+            <span className='w-80'>
               <h6>Easy Comparisons</h6>
               <span>
                 Effortlessly compare neighborhoods to find the perfect fit for
