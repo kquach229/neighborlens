@@ -4,8 +4,8 @@ import { Glasses } from 'lucide-react';
 
 export const NavLogo = () => {
   return (
-    <div className='inline-flex items-center gap-2'>
-      <h3>NeighborLens</h3>
+    <div className='inline-flex items-center gap-2 font-oleo'>
+      <h3>ValidateLens</h3>
       <Glasses className='h-8 w-8' />
     </div>
   );
@@ -13,7 +13,7 @@ export const NavLogo = () => {
 
 const Navbar = () => {
   return (
-    <div className='flex justify-between items-center p-5 h-[10vh] font-oleo'>
+    <div className='flex justify-between items-center p-5 h-[10vh]'>
       <NavLogo />
       <ThemeToggler />
     </div>

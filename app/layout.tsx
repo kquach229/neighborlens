@@ -4,6 +4,7 @@ import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { SessionProvider } from 'next-auth/react';
 
 const roboto = Roboto({
   variable: '--font-roboto',
@@ -29,19 +30,21 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <body className={`${roboto.className} ${oleo.variable} antialiased`}>
-        <ThemeProvider
-          attribute='class'
-          defaultTheme='system'
-          enableSystem
-          disableTransitionOnChange>
-          <div className='max-w-[1500px] mx-auto overflow-hidden'>
-            <Navbar />
+        <SessionProvider>
+          <ThemeProvider
+            attribute='class'
+            defaultTheme='system'
+            enableSystem
+            disableTransitionOnChange>
+            <div className='max-w-[1500px] mx-auto overflow-hidden'>
+              <Navbar />
 
-            {children}
+              {children}
 
-            <Footer />
-          </div>
-        </ThemeProvider>
+              <Footer />
+            </div>
+          </ThemeProvider>
+        </SessionProvider>
       </body>
     </html>
   );

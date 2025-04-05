@@ -2,28 +2,25 @@ import { AvatarImage, Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Card, CardFooter } from '@/components/ui/card';
 
-import {
-  AlertCircle,
-  Gem,
-  MessageCircle,
-  Star,
-  StarIcon,
-  Stars,
-} from 'lucide-react';
+import { AlertCircle, Gem, MessageCircle, StarIcon } from 'lucide-react';
 import Image from 'next/image';
+import { auth } from '../auth';
+import SignInButton from '@/components/SignInButton';
 
-export default function Home() {
+export default async function Home() {
   return (
     <div className='min-h-screen p-5'>
       <div className='flex justify-between items-center h-full gap-10'>
         <div className='flex flex-col justify-center md:w-[800px] gap-6'>
-          <h1 className='font-bold'>Unlock the Secrets of Your Neighborhood</h1>
+          <h1 className='font-bold'>
+            Unlock Insights from Real World Users. No AI, just Humans
+          </h1>
           <span>
-            Explore your community like never before with real-time insights and
-            alerts. Stay informed about what's happening right around you.
+            Get real validation for your startup idea—before you waste time and
+            money.
           </span>
           <span>
-            <Button>Learn More</Button>
+            <SignInButton />
           </span>
         </div>
 
