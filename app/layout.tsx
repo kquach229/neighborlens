@@ -36,7 +36,7 @@ export default function RootLayout({
             defaultTheme='system'
             enableSystem
             disableTransitionOnChange>
-            <div className='max-w-[1500px] mx-auto overflow-hidden'>
+            <div className='max-w-[1500px] mx-auto overflow-hidden p-2'>
               <Navbar />
 
               {children}
