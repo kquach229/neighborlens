@@ -64,9 +64,11 @@ model Review {
 
 model Plan {
   id PlanTier @id @default(FREE)
-  features Json @db.Json
+  description String?
+  features String[]
   updatedAt DateTime @updatedAt
   priceInCents Int
+
 
 }
 
