@@ -2,6 +2,7 @@ import React from 'react';
 import ThemeToggler from './ThemeToggler';
 import { Glasses } from 'lucide-react';
 import Link from 'next/link';
+import { Button } from './ui/button';
 
 export const NavLogo = () => {
   return (
@@ -20,6 +21,10 @@ const Navbar = () => {
       </div>
 
       <div className='flex gap-5 items-center'>
+        <Link href='/submit-idea'>
+          <Button>Submit Idea</Button>
+        </Link>
+        <Link href='/dashboard'>Dashboard</Link>
         <Link href='/pricing'>Pricing</Link>
         <ThemeToggler />
       </div>

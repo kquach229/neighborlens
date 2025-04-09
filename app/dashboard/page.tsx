@@ -1,25 +1,19 @@
 import React from 'react';
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import ReusableForm from '@/components/ReusableForm';
+import { prisma } from '@/lib/prisma';
+import { cookies } from 'next/headers';
+import DashboardClient from './DashboardClient';
 
-const DashboardPage = () => {
+const getIdeas = async () => {
+  const ideas = await prisma.idea.findMany();
+  return ideas;
+};
+
+const DashboardPage = async () => {
+  const ideas = await getIdeas();
+
   return (
     <div className='min-h-[90vh] p-5'>
-      <div className='flex justify-between'>
-        <div>
-          <h2>Dashboard</h2>
-        </div>
-        <div>
-          Modes
-          <ToggleGroup type='single'>
-            <ToggleGroupItem value='founder'>Founder</ToggleGroupItem>
-            <ToggleGroupItem value='validator'>Validator</ToggleGroupItem>
-          </ToggleGroup>
-        </div>
-      </div>
-      <div>
-        <ReusableForm />
-      </div>
+      <DashboardClient ideas={ideas} />
     </div>
   );
 };

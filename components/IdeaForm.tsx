@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { Button } from './ui/button';
 import { Label } from '@radix-ui/react-dropdown-menu';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -18,8 +19,9 @@ const formSchema = z.object({
 
 type FormSchema = z.infer<typeof formSchema>;
 
-const ReusableForm = () => {
+const IdeaForm = () => {
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors },
@@ -27,8 +29,18 @@ const ReusableForm = () => {
     resolver: zodResolver(formSchema),
   });
 
-  const onSubmit = (data: FormSchema) => {
-    console.log(data);
+  const router = useRouter();
+
+  const onSubmit = async (data: FormSchema) => {
+    await fetch('/api/ideas', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    reset();
+    router.refresh();
   };
 
   return (
@@ -74,4 +86,4 @@ const ReusableForm = () => {
   );
 };
 
-export default ReusableForm;
+export default IdeaForm;
