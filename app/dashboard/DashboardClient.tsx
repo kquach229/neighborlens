@@ -2,10 +2,9 @@
 import IdeaCard from '@/components/IdeaCard';
 import { ROLES, useRoleStore } from '@/stores/roleStore';
 import RoleToggle from '@/components/RoleToggle';
-import ReusableDialog from '@/components/ReusableDialog';
-import IdeaForm from '@/components/IdeaForm';
 
 const FounderView = ({ ideas }) => {
+  console.log(ideas);
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10'>
       {ideas.map((idea) => (
@@ -27,7 +26,7 @@ const DashboardClient = ({ ideas }) => {
         <div className='flex flex-col'>
           <h2>Dashboard</h2>
           <h5 className='mt-10 text-muted-foreground'>
-            {role === ROLES.FOUNDER ? 'Your Ideas' : 'Ideas to Validate'}
+            {role === ROLES.FOUNDER ? 'My Ideas' : 'Ideas to Validate'}
           </h5>
         </div>
         <RoleToggle />

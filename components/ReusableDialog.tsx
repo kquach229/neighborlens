@@ -16,7 +16,7 @@ export const GlobalDialog = () => {
       <DialogContent>
         {props?.title && (
           <DialogHeader>
-            <DialogTitle>{props.title}</DialogTitle>
+            <h3>{props.title}</h3>
           </DialogHeader>
         )}
         {Component ? <Component {...props} /> : null}
