@@ -8,8 +8,12 @@ const IdeaCard = ({ idea }) => {
   return (
     <Card>
       <CardHeader>
-        <h3>{idea.title}</h3>
-        <span>Posted {numberOfDaysSincePosting} Ago</span>
+        <div className='flex justify-between items-center'>
+          <h3>{idea.title}</h3>
+          <span className='text-xs text-muted-foreground'>
+            Posted {numberOfDaysSincePosting} Ago
+          </span>
+        </div>
       </CardHeader>
       <CardContent>
         <div>

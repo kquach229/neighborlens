@@ -15,7 +15,12 @@ const FounderView = ({ ideas }) => {
 };
 
 const ValidatorView = ({}) => {
-  return <div>ayoooo</div>;
+  return (
+    <div>
+      <div>LIst to validate</div>
+      <div>List that already validated</div>
+    </div>
+  );
 };
 
 const DashboardClient = ({ ideas }) => {
@@ -26,7 +31,9 @@ const DashboardClient = ({ ideas }) => {
         <div className='flex flex-col'>
           <h2>Dashboard</h2>
           <h5 className='mt-10 text-muted-foreground'>
-            {role === ROLES.FOUNDER ? 'My Ideas' : 'Ideas to Validate'}
+            {role === ROLES.FOUNDER
+              ? `My Ideas (${ideas.length})`
+              : 'Ideas to Validate'}
           </h5>
         </div>
         <RoleToggle />

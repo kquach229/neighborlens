@@ -6,6 +6,9 @@ import Link from 'next/link';
 import { Button } from './ui/button';
 import { useDialogStore } from '@/stores/dialogStore';
 import IdeaForm from './IdeaForm';
+import { Avatar } from './ui/avatar';
+import { AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
+import { useSession } from 'next-auth/react';
 
 export const NavLogo = () => {
   return (
@@ -18,6 +21,7 @@ export const NavLogo = () => {
 
 const Navbar = () => {
   const { openDialog } = useDialogStore();
+  const session = useSession();
   return (
     <div className='flex justify-between items-center p-5 h-[10vh]'>
       <div>
@@ -37,6 +41,12 @@ const Navbar = () => {
         <Link href='/dashboard'>Dashboard</Link>
         <Link href='/pricing'>Pricing</Link>
         <ThemeToggler />
+        <Avatar>
+          <AvatarImage src={session.data?.user?.image} alt='image' />
+          <AvatarFallback>
+            {session.data?.user?.name?.split(' ')[0][0]}
+          </AvatarFallback>
+        </Avatar>
       </div>
     </div>
   );
