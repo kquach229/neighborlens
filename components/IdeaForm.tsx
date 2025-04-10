@@ -6,6 +6,7 @@ import { Button } from './ui/button';
 import { Label } from '@radix-ui/react-dropdown-menu';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
+import { useDialogStore } from '@/stores/dialogStore';
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -30,6 +31,7 @@ const IdeaForm = () => {
   });
 
   const router = useRouter();
+  const { closeDialog } = useDialogStore();
 
   const onSubmit = async (data: FormSchema) => {
     await fetch('/api/ideas', {
@@ -41,6 +43,7 @@ const IdeaForm = () => {
     });
     reset();
     router.refresh();
+    closeDialog();
   };
 
   return (

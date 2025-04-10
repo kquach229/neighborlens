@@ -1,10 +1,26 @@
 'use client';
 import IdeaCard from '@/components/IdeaCard';
-import React, { useEffect } from 'react';
 import { ROLES, useRoleStore } from '@/stores/roleStore';
 import RoleToggle from '@/components/RoleToggle';
+import ReusableDialog from '@/components/ReusableDialog';
+import IdeaForm from '@/components/IdeaForm';
+
+const FounderView = ({ ideas }) => {
+  return (
+    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10'>
+      {ideas.map((idea) => (
+        <IdeaCard key={idea.id} idea={idea} />
+      ))}
+    </div>
+  );
+};
+
+const ValidatorView = ({}) => {
+  return <div>ayoooo</div>;
+};
+
 const DashboardClient = ({ ideas }) => {
-  const { role, toggleRole, setRole } = useRoleStore();
+  const { role } = useRoleStore();
   return (
     <div>
       <div className='flex justify-between items-center'>
@@ -16,12 +32,11 @@ const DashboardClient = ({ ideas }) => {
         </div>
         <RoleToggle />
       </div>
-
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10'>
-        {ideas.map((idea) => (
-          <IdeaCard key={idea.id} idea={idea} />
-        ))}
-      </div>
+      {role === ROLES.FOUNDER ? (
+        <FounderView ideas={ideas} />
+      ) : (
+        <ValidatorView />
+      )}
     </div>
   );
 };

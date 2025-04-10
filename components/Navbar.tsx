@@ -1,8 +1,10 @@
+'use client';
 import React from 'react';
 import ThemeToggler from './ThemeToggler';
 import { Glasses } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from './ui/button';
+import { useDialogStore } from '@/stores/dialogStore';
 
 export const NavLogo = () => {
   return (
@@ -14,6 +16,7 @@ export const NavLogo = () => {
 };
 
 const Navbar = () => {
+  const { openDialog } = useDialogStore();
   return (
     <div className='flex justify-between items-center p-5 h-[10vh]'>
       <div>
@@ -21,9 +24,8 @@ const Navbar = () => {
       </div>
 
       <div className='flex gap-5 items-center'>
-        <Link href='/submit-idea'>
-          <Button>Submit Idea</Button>
-        </Link>
+        <Button onClick={openDialog}>Submit Idea</Button>
+
         <Link href='/dashboard'>Dashboard</Link>
         <Link href='/pricing'>Pricing</Link>
         <ThemeToggler />

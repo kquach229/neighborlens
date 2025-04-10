@@ -5,6 +5,13 @@ import { ThemeProvider } from '@/components/theme-provider';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { SessionProvider } from 'next-auth/react';
+import ReusableDialog, {
+  DialogContent,
+  GlobalDialog,
+} from '@/components/ReusableDialog';
+import IdeaForm from '@/components/IdeaForm';
+import { DialogTrigger } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 
 const roboto = Roboto({
   variable: '--font-roboto',
@@ -38,10 +45,11 @@ export default function RootLayout({
             disableTransitionOnChange>
             <div className='max-w-[1500px] mx-auto overflow-hidden p-2'>
               <Navbar />
-
               {children}
-
               <Footer />
+              <GlobalDialog>
+                <IdeaForm />
+              </GlobalDialog>
             </div>
           </ThemeProvider>
         </SessionProvider>
