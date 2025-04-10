@@ -17,7 +17,7 @@ export const NavLogo = () => {
 };
 
 const Navbar = () => {
-  const openDialog = useDialogStore((s) => s.openDialog);
+  const { openDialog } = useDialogStore();
   return (
     <div className='flex justify-between items-center p-5 h-[10vh]'>
       <div>
@@ -28,8 +28,7 @@ const Navbar = () => {
         <Button
           onClick={() =>
             openDialog(IdeaForm, {
-              itemName: 'Test',
-              onConfirm: () => console.log('deleted'),
+              title: 'Submit Idea',
             })
           }>
           Submit Idea
