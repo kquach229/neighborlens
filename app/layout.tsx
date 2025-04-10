@@ -47,9 +47,7 @@ export default function RootLayout({
               <Navbar />
               {children}
               <Footer />
-              <GlobalDialog>
-                <IdeaForm />
-              </GlobalDialog>
+              <GlobalDialog />
             </div>
           </ThemeProvider>
         </SessionProvider>

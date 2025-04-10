@@ -1,14 +1,16 @@
 'use client';
-// your-dialog.jsx
-import * as React from 'react';
+// components/GlobalDialog.tsx
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { useDialogStore } from '@/stores/dialogStore';
 
-export const GlobalDialog = ({ children }) => {
-  const { open, openDialog, closeDialog } = useDialogStore();
+export const GlobalDialog = () => {
+  const { open, component: Component, props, closeDialog } = useDialogStore();
+
   return (
     <Dialog open={open} onOpenChange={(val) => !val && closeDialog()}>
-      <DialogContent>{children}</DialogContent>
+      <DialogContent>
+        {Component ? <Component {...props} /> : null}
+      </DialogContent>
     </Dialog>
   );
 };
