@@ -41,12 +41,14 @@ const Navbar = () => {
         <Link href='/dashboard'>Dashboard</Link>
         <Link href='/pricing'>Pricing</Link>
         <ThemeToggler />
-        <Avatar>
-          <AvatarImage src={session.data?.user?.image} alt='image' />
-          <AvatarFallback>
-            {session.data?.user?.name?.split(' ')[0][0]}
-          </AvatarFallback>
-        </Avatar>
+        {session.data?.user && (
+          <Avatar>
+            <AvatarImage src={session.data?.user?.image} alt='image' />
+            <AvatarFallback>
+              {session.data?.user?.name?.split(' ')[0][0]}
+            </AvatarFallback>
+          </Avatar>
+        )}
       </div>
     </div>
   );
