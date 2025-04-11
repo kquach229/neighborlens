@@ -9,7 +9,6 @@ import { useRouter } from 'next/navigation';
 import { useDialogStore } from '@/stores/dialogStore';
 import { Textarea } from './ui/textarea';
 import { ReusableMultiSelct } from './ReusableMultiselect';
-import { useState } from 'react';
 import {
   Select,
   SelectContent,
@@ -22,18 +21,20 @@ const formSchema = z.object({
   title: z.string().min(1, {
     message: 'Title must be at least 1 character',
   }),
-  description: z.string().min(5, {
-    message: 'Description must be at least 5 characters',
-  }),
   problem: z.string().min(5, {
     message: 'Problem must be at least 5 characters',
   }),
   solution: z.string().min(5, {
     message: 'Solution must be at least 5 characters',
   }),
-  categories: z.string().array(),
-  pricingDetails: z.string(),
-  pricingModel: z.string(),
+  categories: z.coerce
+    .string()
+    .array()
+    .min(1, { message: 'Select at least one category' }),
+  pricingDetails: z
+    .string()
+    .min(5, { message: 'Pricing Details must be at least 5 characters' }),
+  pricingModel: z.string().min(5, { message: 'Must select a pricing model' }),
 });
 
 type FormSchema = z.infer<typeof formSchema>;
@@ -47,7 +48,7 @@ const categoriesList = [
   { value: 'productivity', label: 'Productivity' },
   { value: 'education/learning', label: 'Education/Learning' },
   { value: 'social/community', label: 'Social/Community' },
-  { value: 'climate/Sustainability', label: 'Climate/Sustainability' },
+  { value: 'climate/ustainability', label: 'Climate/Sustainability' },
 ];
 
 const IdeaForm = () => {
@@ -56,6 +57,7 @@ const IdeaForm = () => {
     register,
     handleSubmit,
     setValue,
+    watch,
     control,
     formState: { errors },
   } = useForm<FormSchema>({
@@ -64,8 +66,7 @@ const IdeaForm = () => {
 
   const router = useRouter();
   const { closeDialog } = useDialogStore();
-
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const selectedCategories = watch('categories') || [];
 
   const onSubmit = async (data: FormSchema) => {
     await fetch('/api/ideas', {
@@ -123,11 +124,11 @@ const IdeaForm = () => {
         <Label>Categories</Label>
         <div className='z-50'>
           <ReusableMultiSelct
+            {...register('categories')}
             className='z-50'
             id='categories'
             options={categoriesList}
             onValueChange={(values) => {
-              setSelectedCategories(values);
               setValue('categories', values);
             }}
             defaultValue={selectedCategories}
@@ -136,24 +137,28 @@ const IdeaForm = () => {
             animation={2}
             maxCount={3}
           />
+          {errors.categories && (
+            <p className='text-red-500 text-sm'>{errors.categories.message}</p>
+          )}
         </div>
         <div className='mt-4'>
           <h2 className='text-xl font-semibold'>Selected Categories:</h2>
           <ul className='list-disc list-inside'>
-            {selectedCategories.map((category) => (
-              <li key={category}>{category}</li>
-            ))}
+            {Array.isArray(selectedCategories)
+              ? selectedCategories?.map((category) => (
+                  <li key={category}>{category}</li>
+                ))
+              : []}
           </ul>
         </div>
-        {errors.categories && (
-          <p className='text-red-500 text-sm'>{errors.categories.message}</p>
-        )}
       </div>
 
       <div className='w-full'>
         <Label>Pricing Model</Label>
         <Controller
+          {...register('pricingModel')}
           control={control}
+          rules={{ required: false }}
           name='pricingModel'
           render={({ field }) => (
             <Select onValueChange={field.onChange} value={field.value}>

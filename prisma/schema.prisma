@@ -38,8 +38,8 @@ model Idea {
   // images  Image[]
 
 
-  pricingModel String?
-  pricingDetails String?
+  pricingModel String
+  pricingDetails String
   author User @relation(fields: [authorId], references: [id])
   reviews Review[]
   updatedAt DateTime @updatedAt
