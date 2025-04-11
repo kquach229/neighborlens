@@ -21,6 +21,7 @@ const formSchema = z.object({
   title: z.string().min(1, {
     message: 'Title must be at least 1 character',
   }),
+  briefDescription: z.string().optional(),
   problem: z.string().min(5, {
     message: 'Problem must be at least 5 characters',
   }),
@@ -97,11 +98,25 @@ const IdeaForm = () => {
       </div>
 
       <div>
+        <Label>Brief Description</Label>
+        <Textarea
+          id='problem'
+          {...register('briefDescription')}
+          className='border p-2 w-full h-[3rem]'
+        />
+        {errors.briefDescription && (
+          <p className='text-red-500 text-sm'>
+            {errors.briefDescription.message}
+          </p>
+        )}
+      </div>
+
+      <div>
         <Label>Problem</Label>
         <Textarea
           id='problem'
           {...register('problem')}
-          className='border p-2 w-full h-[10rem]'
+          className='border p-2 w-full h-[7rem]'
         />
         {errors.problem && (
           <p className='text-red-500 text-sm'>{errors.problem.message}</p>
@@ -113,7 +128,7 @@ const IdeaForm = () => {
         <Textarea
           id='solution'
           {...register('solution')}
-          className='border p-2 w-full'
+          className='border p-2 w-full h-[7rem]'
         />
         {errors.solution && (
           <p className='text-red-500 text-sm'>{errors.solution.message}</p>
@@ -158,7 +173,7 @@ const IdeaForm = () => {
         <Controller
           {...register('pricingModel')}
           control={control}
-          rules={{ required: false }}
+          rules={{ required: true }}
           name='pricingModel'
           render={({ field }) => (
             <Select onValueChange={field.onChange} value={field.value}>

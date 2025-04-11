@@ -8,11 +8,11 @@ const IdeaCard = ({ idea }) => {
   return (
     <Card>
       <CardHeader>
+        <div className='text-xs text-muted-foreground text-right'>
+          Posted {numberOfDaysSincePosting} Ago
+        </div>
         <div className='flex justify-between items-center'>
           <h3>{idea.title}</h3>
-          <span className='text-xs text-muted-foreground'>
-            Posted {numberOfDaysSincePosting} Ago
-          </span>
         </div>
       </CardHeader>
       <CardContent>
@@ -26,3 +26,18 @@ const IdeaCard = ({ idea }) => {
 };
 
 export default IdeaCard;
+
+// id String @id @default(uuid())
+// title String
+// problem String
+// solution String
+// authorId String
+// categories String[]
+// // images  Image[]
+
+// pricingModel String?
+// pricingDetails String?
+// author User @relation(fields: [authorId], references: [id])
+// reviews Review[]
+// updatedAt DateTime @updatedAt
+// createdAt DateTime @default(now())

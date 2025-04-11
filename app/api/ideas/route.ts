@@ -21,18 +21,3 @@ export async function POST(req: Request) {
 
   return NextResponse.json(newIdea);
 }
-
-// id String @id @default(uuid())
-// title String
-// problem String
-// solution String
-// authorId String
-// categories String[]
-// // images  Image[]
-
-// pricingModel String?
-// pricingDetails String?
-// author User @relation(fields: [authorId], references: [id])
-// reviews Review[]
-// updatedAt DateTime @updatedAt
-// createdAt DateTime @default(now())
