@@ -17,7 +17,7 @@ const IdeaCard = ({ idea }) => {
       </CardHeader>
       <CardContent>
         <div>
-          <h6>{idea.description}</h6>
+          <span>{idea.problem}</span>
         </div>
       </CardContent>
       <CardFooter>{idea.targetUsers}</CardFooter>

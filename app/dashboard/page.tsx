@@ -1,19 +1,24 @@
 import React from 'react';
 import { prisma } from '@/lib/prisma';
-import { cookies } from 'next/headers';
 import DashboardClient from './DashboardClient';
 
-const getIdeas = async () => {
-  const ideas = await prisma.idea.findMany();
-  return ideas;
+const getAllIdeas = async () => {
+  const ownIdeas = await prisma.idea.findMany();
+  return ownIdeas;
+};
+
+const getAllReviews = async () => {
+  const allReviews = await prisma.review.findMany();
+  return allReviews;
 };
 
 const DashboardPage = async () => {
-  const ideas = await getIdeas();
+  const allIdeas = await getAllIdeas();
+  const allReviews = await getAllReviews();
 
   return (
     <div className='min-h-[90vh] p-5'>
-      <DashboardClient ideas={ideas} />
+      <DashboardClient allIdeas={allIdeas} allReviews={allReviews} />
     </div>
   );
 };

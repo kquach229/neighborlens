@@ -1,11 +1,6 @@
 'use client';
 // components/GlobalDialog.tsx
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader } from '@/components/ui/dialog';
 import { useDialogStore } from '@/stores/dialogStore';
 
 export const GlobalDialog = () => {
@@ -19,7 +14,10 @@ export const GlobalDialog = () => {
             <h3>{props.title}</h3>
           </DialogHeader>
         )}
-        {Component ? <Component {...props} /> : null}
+
+        <div className='max-h-[75vh] overflow-y-auto'>
+          {Component ? <Component {...props} /> : null}
+        </div>
       </DialogContent>
     </Dialog>
   );

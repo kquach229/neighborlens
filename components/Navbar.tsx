@@ -9,6 +9,8 @@ import IdeaForm from './IdeaForm';
 import { Avatar } from './ui/avatar';
 import { AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import { useSession } from 'next-auth/react';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import { signOut } from 'next-auth/react';
 
 export const NavLogo = () => {
   return (
@@ -42,12 +44,19 @@ const Navbar = () => {
         <Link href='/pricing'>Pricing</Link>
         <ThemeToggler />
         {session.data?.user && (
-          <Avatar>
-            <AvatarImage src={session.data?.user?.image} alt='image' />
-            <AvatarFallback>
-              {session.data?.user?.name?.split(' ')[0][0]}
-            </AvatarFallback>
-          </Avatar>
+          <Popover>
+            <PopoverTrigger>
+              <Avatar>
+                <AvatarImage src={session.data?.user?.image} alt='image' />
+                <AvatarFallback>
+                  {session.data?.user?.name?.split(' ')[0][0]}
+                </AvatarFallback>
+              </Avatar>
+            </PopoverTrigger>
+            <PopoverContent>
+              <Button onClick={() => signOut()}>Sign Out</Button>
+            </PopoverContent>
+          </Popover>
         )}
       </div>
     </div>

@@ -30,11 +30,16 @@ model User {
 
 model Idea {
   id String @id @default(uuid())
-  title String
-  description String
-  targetUsers String?
+  title String 
+  problem String
+  solution String
   authorId String
+  categories String[]
   // images  Image[]
+
+
+  pricingModel String?
+  pricingDetails String?
   author User @relation(fields: [authorId], references: [id])
   reviews Review[]
   updatedAt DateTime @updatedAt
@@ -50,11 +55,13 @@ model Idea {
 // }
 
 
+
+
+
 model Review {
   id String @id @default(uuid())
   rating Float
   comment String?
-  whatsUnique String?
   biggestRisk String?
   competitors String?
   wouldIPayForThis String?
