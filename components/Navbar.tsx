@@ -54,7 +54,9 @@ const Navbar = () => {
               </Avatar>
             </PopoverTrigger>
             <PopoverContent>
-              <Button onClick={() => signOut()}>Sign Out</Button>
+              <Button className='w-full' onClick={() => signOut()}>
+                Sign Out
+              </Button>
             </PopoverContent>
           </Popover>
         )}

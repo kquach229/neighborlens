@@ -181,9 +181,9 @@ const IdeaForm = () => {
                 <SelectValue placeholder='Pricing Model' />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value='light'>Free</SelectItem>
-                <SelectItem value='dark'>Paid</SelectItem>
-                <SelectItem value='system'>Free + Paid</SelectItem>
+                <SelectItem value='free'>Free</SelectItem>
+                <SelectItem value='paid'>Paid</SelectItem>
+                <SelectItem value='free + paid'>Free + Paid</SelectItem>
               </SelectContent>
             </Select>
           )}

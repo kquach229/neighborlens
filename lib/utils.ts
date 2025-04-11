@@ -25,3 +25,7 @@ export const getTimeDifference = (dateString: string) => {
     return `${diffInDays} day${diffInDays !== 1 ? 's' : ''}`;
   }
 };
+
+export const substring = (string: string, charCount: number) => {
+  return `${string.substring(0, charCount)}...`;
+};

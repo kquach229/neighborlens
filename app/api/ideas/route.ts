@@ -10,6 +10,7 @@ export async function POST(req: Request) {
   const newIdea = await prisma.idea.create({
     data: {
       title: body.title,
+      briefDescription: body.briefDescription,
       problem: body.problem,
       solution: body.solution,
       authorId: session.user.id,
