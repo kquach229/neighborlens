@@ -93,7 +93,9 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose }) => {
     reset();
     closeDialog();
     onClose?.();
-    method == 'POST' ? router.refresh() : router.push(`/dashboard`);
+
+    router.refresh();
+
     onSuccess?.();
   };
   return (

@@ -7,9 +7,8 @@ export default function ReusableEditFormButton({
   data,
   FormComponent,
   dataId,
-  isEditing,
-  setIsEditing,
 }) {
+  const [isEditing, setIsEditing] = useState(false);
   if (isEditing) {
     return (
       <div className='mt-10'>
