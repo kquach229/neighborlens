@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Edit } from 'lucide-react';
+import { Edit, Heading3 } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function ReusableEditFormButton({
@@ -28,11 +28,15 @@ export default function ReusableEditFormButton({
 
   return (
     <div className='mt-10 w-full'>
-      <button
-        onClick={() => setIsEditing((prev) => !prev)}
-        className='w-5 hover:opacity-75 text-right'>
-        <Edit />
-      </button>
+      <div className='flex justify-between mb-5'>
+        {isEditing && <h3>Editing Mode</h3>}
+        <button
+          onClick={() => setIsEditing((prev) => !prev)}
+          className='w-5 hover:opacity-75 text-right'>
+          <Edit />
+        </button>
+      </div>
+
       {isEditing && (
         <FormComponent
           dataId={dataId}
