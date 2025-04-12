@@ -13,8 +13,6 @@ const IdeaCard = ({ idea }) => {
     problem,
     updatedAt,
     solution,
-    pricingModel,
-    pricingDetails,
     createdAt,
     categories,
   } = idea;

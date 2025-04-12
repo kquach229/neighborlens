@@ -16,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from './ui/select';
+import { useSession } from 'next-auth/react';
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -52,7 +53,7 @@ const categoriesList = [
   { value: 'climate/ustainability', label: 'Climate/Sustainability' },
 ];
 
-const IdeaForm = () => {
+const IdeaForm = ({ dataId, data, onSuccess, onClose }) => {
   const {
     reset,
     register,
@@ -62,6 +63,15 @@ const IdeaForm = () => {
     control,
     formState: { errors },
   } = useForm<FormSchema>({
+    defaultValues: data || {
+      title: '',
+      briefDescription: '',
+      problem: '',
+      solution: '',
+      categories: [],
+      pricingModel: '',
+      pricingDetails: '',
+    },
     resolver: zodResolver(formSchema),
   });
 
@@ -70,18 +80,22 @@ const IdeaForm = () => {
   const selectedCategories = watch('categories') || [];
 
   const onSubmit = async (data: FormSchema) => {
-    await fetch('/api/ideas', {
-      method: 'POST',
+    const method = data ? 'PUT' : 'POST';
+    const endpoint = data ? `/api/ideas/${dataId}` : `/api/ideas/`;
+    await fetch(endpoint, {
+      method,
       body: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json',
       },
     });
-    reset();
-    router.refresh();
-    closeDialog();
-  };
 
+    reset();
+    closeDialog();
+    onClose?.();
+    method == 'POST' ? router.refresh() : router.push(`/dashboard`);
+    onSuccess?.();
+  };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
       <div>
@@ -208,26 +222,9 @@ const IdeaForm = () => {
         )}
       </div>
 
-      <Button type='submit'>Submit</Button>
+      <Button type='submit'>{data ? 'Update Idea' : 'Create Idea'}</Button>
     </form>
   );
 };
 
 export default IdeaForm;
-
-// model Idea {
-//   id String @id @default(uuid())
-//   title String
-//   problem String
-//   solution String
-//   authorId String
-//   categories String[]
-//   // images  Image[]
-
-//   pricingModel String?
-//   pricingDetails String?
-//   author User @relation(fields: [authorId], references: [id])
-//   reviews Review[]
-//   updatedAt DateTime @updatedAt
-//   createdAt DateTime @default(now())
-// }

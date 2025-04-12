@@ -27,5 +27,7 @@ export const getTimeDifference = (dateString: string) => {
 };
 
 export const substring = (string: string, charCount: number) => {
-  return `${string.substring(0, charCount)}...`;
+  return string.length > charCount
+    ? `${string.substring(0, charCount)}...`
+    : string;
 };
