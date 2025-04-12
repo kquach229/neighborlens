@@ -5,7 +5,6 @@ import RoleToggle from '@/components/RoleToggle';
 import { Button } from '@/components/ui/button';
 import { useDialogStore } from '@/stores/dialogStore';
 import IdeaForm from '@/components/IdeaForm';
-import auth from '@/auth';
 import { useSession } from 'next-auth/react';
 
 const FounderView = ({ ownIdeas }) => {
@@ -24,10 +23,18 @@ const FounderView = ({ ownIdeas }) => {
     );
   }
   return (
-    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10'>
-      {ownIdeas.map((idea) => (
-        <IdeaCard key={idea.id} idea={idea} />
-      ))}
+    <div>
+      <div className='flex justify-end'>
+        <Button
+          onClick={() => openDialog(IdeaForm, { title: 'Create Your Idea' })}>
+          Create Idea
+        </Button>
+      </div>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10'>
+        {ownIdeas.map((idea) => (
+          <IdeaCard key={idea.id} idea={idea} />
+        ))}
+      </div>
     </div>
   );
 };

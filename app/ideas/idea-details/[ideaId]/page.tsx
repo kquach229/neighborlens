@@ -22,18 +22,7 @@ const IdeaDetails = async ({ params }) => {
   const numberOfDaysSinceUpdated = getTimeDifference(idea.updatedAt);
 
   return (
-    <div className='min-h-[90vh] p-5'>
-      <div className='flex justify-end'>
-        <div>
-          <ReusableEditFormButton
-            dataId={ideaId}
-            data={idea}
-            FormComponent={IdeaForm}
-          />
-          {/* 👈 client button toggle */}
-        </div>
-      </div>
-
+    <div className='min-h-[90vh] p-5 flex justify-between gap-10'>
       <div>
         <div className='flex justify-between items-cetner'>
           <div className='mt-10'>
@@ -81,6 +70,16 @@ const IdeaDetails = async ({ params }) => {
             Updated {numberOfDaysSinceUpdated} Ago
           </div>
         )}
+      </div>
+      <div className='flex justify-end'>
+        <div className='flex-1'>
+          <ReusableEditFormButton
+            dataId={ideaId}
+            data={idea}
+            FormComponent={IdeaForm}
+          />
+          {/* 👈 client button toggle */}
+        </div>
       </div>
     </div>
   );

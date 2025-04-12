@@ -16,7 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from './ui/select';
-import { useSession } from 'next-auth/react';
+import { useSearchParams } from 'next/navigation';
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -78,10 +78,13 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose }) => {
   const router = useRouter();
   const { closeDialog } = useDialogStore();
   const selectedCategories = watch('categories') || [];
+  const searchParams = useSearchParams();
+  const isEditing = searchParams.get('isEditing');
 
   const onSubmit = async (data: FormSchema) => {
-    const method = data ? 'PUT' : 'POST';
-    const endpoint = data ? `/api/ideas/${dataId}` : `/api/ideas/`;
+    const method = isEditing ? 'PUT' : 'POST';
+    const endpoint = isEditing ? `/api/ideas/${dataId}` : `/api/ideas/`;
+
     await fetch(endpoint, {
       method,
       body: JSON.stringify(data),
