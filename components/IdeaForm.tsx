@@ -13,10 +13,13 @@ import {
   Select,
   SelectContent,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from './ui/select';
 import { useSearchParams } from 'next/navigation';
+import { FormControl } from './ui/form';
+import { SelectGroup } from '@radix-ui/react-select';
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -36,7 +39,7 @@ const formSchema = z.object({
   pricingDetails: z
     .string()
     .min(5, { message: 'Pricing Details must be at least 5 characters' }),
-  pricingModel: z.string().min(5, { message: 'Must select a pricing model' }),
+  pricingModel: z.string().nonempty({ message: 'Must select a pricing model' }),
 });
 
 type FormSchema = z.infer<typeof formSchema>;
@@ -101,6 +104,7 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose }) => {
 
     onSuccess?.();
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
       <div>
@@ -119,7 +123,7 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose }) => {
       <div>
         <Label>Brief Description</Label>
         <Textarea
-          id='problem'
+          id='briefDescription'
           {...register('briefDescription')}
           className='border p-2 w-full h-[3rem]'
         />
@@ -189,25 +193,27 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose }) => {
 
       <div className='w-full'>
         <Label>Pricing Model</Label>
+
         <Controller
-          {...register('pricingModel')}
           control={control}
-          rules={{ required: true }}
           name='pricingModel'
           render={({ field }) => (
-            <Select onValueChange={field.onChange} value={field.value}>
+            <Select value={field.value} onValueChange={field.onChange}>
+              {console.log('field', field)}
               <SelectTrigger className='w-full'>
                 <SelectValue placeholder='Pricing Model' />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value='free'>Free</SelectItem>
-                <SelectItem value='paid'>Paid</SelectItem>
-                <SelectItem value='free + paid'>Free + Paid</SelectItem>
+                <SelectGroup>
+                  <SelectLabel>Plans</SelectLabel>
+                  <SelectItem value='free'>Free</SelectItem>
+                  <SelectItem value='paid'>Paid</SelectItem>
+                  <SelectItem value='free + paid'>Free + Paid</SelectItem>
+                </SelectGroup>
               </SelectContent>
             </Select>
           )}
         />
-
         {errors.pricingModel && (
           <p className='text-red-500 text-sm'>{errors.pricingModel.message}</p>
         )}

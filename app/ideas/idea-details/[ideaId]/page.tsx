@@ -21,7 +21,6 @@ const IdeaDetails = async ({ params, searchParams }) => {
   const numberOfDaysSincePosting = getTimeDifference(idea.createdAt);
   const numberOfDaysSinceUpdated = getTimeDifference(idea.updatedAt);
   const { isEditing } = await searchParams;
-  console.log('slkfjsfsjf', isEditing);
 
   return (
     <div className='min-h-[90vh] p-5 flex justify-between gap-10'>
