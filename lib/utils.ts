@@ -31,3 +31,10 @@ export const substring = (string: string, charCount: number) => {
     ? `${string.substring(0, charCount)}...`
     : string;
 };
+
+export const maskName = (name: string) => {
+  if (!name || name.length <= 3) return name;
+  const visible = name.substring(0, 3);
+  const masked = '*'.repeat(name.length - 3);
+  return visible + masked;
+};

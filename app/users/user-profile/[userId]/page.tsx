@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { AvatarImage } from '@radix-ui/react-avatar';
 import { Separator } from '@/components/ui/separator';
+import { maskName } from '@/lib/utils';
 
 const getUserData = async (userId) => {
   const userData = await prisma.user.findUnique({
@@ -33,10 +34,11 @@ const ProfilePage = async ({ params }) => {
   });
 
   const dateRegistered = formatter.format(userData?.createdAt);
+  const isCurrentUser = userId === session?.user?.id;
   return (
     <div className='max-w-4xl mx-auto mt-16 px-4'>
       <h1 className='text-3xl font-bold mb-8 text-center'>
-        {userId === session?.user?.id
+        {isCurrentUser
           ? 'Your Profile'
           : `${userData?.name?.split(' ')[0]}'s Profile`}
       </h1>
@@ -48,11 +50,15 @@ const ProfilePage = async ({ params }) => {
             <div className='flex-1 space-y-6 w-full'>
               <div>
                 <p className='text-muted-foreground text-sm'>Name</p>
-                <p className='text-xl font-medium'>{userData?.name}</p>
+                <p className='text-xl font-medium'>
+                  {isCurrentUser ? userData?.name : maskName(userData?.name)}
+                </p>
               </div>
               <div>
                 <p className='text-muted-foreground text-sm'>Email</p>
-                <p className='text-lg'>{userData?.email}</p>
+                <p className='text-lg'>
+                  {isCurrentUser ? userData?.email : maskName(userData?.email)}
+                </p>
               </div>
               <div>
                 <p className='text-muted-foreground text-sm'>Account Created</p>
