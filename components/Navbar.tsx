@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import ThemeToggler from './ThemeToggler';
-import { Glasses } from 'lucide-react';
+import { Glasses, LogOut, User } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from './ui/button';
 import { useDialogStore } from '@/stores/dialogStore';
@@ -53,10 +53,16 @@ const Navbar = () => {
                 </AvatarFallback>
               </Avatar>
             </PopoverTrigger>
-            <PopoverContent>
-              <Button className='w-full' onClick={() => signOut()}>
-                Sign Out
-              </Button>
+            <PopoverContent className='flex flex-col gap-3'>
+              <Link className='flex items-center gap-2' href='/profile'>
+                <User /> <span>Profile</span>
+              </Link>
+              <span
+                className='w-full flex items-center gap-2 cursor-pointer'
+                onClick={() => signOut()}>
+                <LogOut />
+                <span>Sign Out</span>
+              </span>
             </PopoverContent>
           </Popover>
         )}
