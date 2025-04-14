@@ -1,105 +1,113 @@
 import auth from '@/auth';
 import IdeaForm from '@/components/IdeaForm';
 import ReusableEditFormButton from '@/components/ReusableEditFormButton';
+import ReviewCard from '@/components/ReviewCard';
 import ReviewForm from '@/components/ReviewForm';
+import ReviewsComponent from '@/components/ReviewsComponent';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { prisma } from '@/lib/prisma';
 import { getTimeDifference } from '@/lib/utils';
 
 const getIdea = async (ideaId) => {
-  const idea = await prisma.idea.findUnique({
+  return await prisma.idea.findUnique({
+    where: { id: ideaId },
+  });
+};
+
+const getReviewsForIdea = async (ideaId) => {
+  return await prisma.review.findMany({
     where: {
-      id: ideaId,
+      ideaId: ideaId,
     },
   });
-  return idea;
 };
 
 const IdeaDetails = async ({ params, searchParams }) => {
-  const { ideaId } = await params;
+  const { ideaId } = params;
   const idea = await getIdea(ideaId);
+  const reviews = await getReviewsForIdea(ideaId);
+  const session = await auth();
+  const isEditing = searchParams?.isEditing;
   const numberOfDaysSincePosting = getTimeDifference(idea.createdAt);
   const numberOfDaysSinceUpdated = getTimeDifference(idea.updatedAt);
-  const { isEditing } = await searchParams;
-  const session = await auth();
+  const isAuthor = idea?.authorId === session?.user.id;
 
   return (
-    <div className='min-h-[90vh] p-5 flex justify-between gap-10 items-baseline'>
-      {!isEditing && (
-        <div>
-          <div className='flex justify-between items-cetner'>
-            <div className='mt-10'>
-              <h1 className='mb-3'>{idea.title}</h1>
-              <span className='text-muted-foreground'>
-                Posted {numberOfDaysSincePosting} ago
-              </span>
+    <div className='min-h-[90vh] p-5 w-full'>
+      <div className='flex justify-between gap-16 items-baseline'>
+        {!isEditing && (
+          <div className='w-full'>
+            <div className='flex justify-between items-center mt-10'>
+              <div>
+                <h1 className='mb-3'>{idea.title}</h1>
+                <span className='text-muted-foreground'>
+                  Posted {numberOfDaysSincePosting} ago
+                </span>
+              </div>
+            </div>
+
+            <div className='mt-5 space-y-5'>
+              <div>
+                <Label className='text-xl'>Brief Description</Label>
+                <p>{idea?.briefDescription}</p>
+              </div>
+
+              <div>
+                <Label className='text-xl'>Problem</Label>
+                <p>{idea?.problem}</p>
+              </div>
+
+              <div>
+                <Label className='text-xl'>Solution</Label>
+                <p>{idea?.solution}</p>
+              </div>
+
+              <div>
+                <Label className='text-xl'>Pricing Model</Label>
+                <p>{idea?.pricingModel}</p>
+              </div>
+
+              <div>
+                <Label className='text-xl'>Pricing Details</Label>
+                <p>{idea?.pricingDetails}</p>
+              </div>
+
+              <div className='mt-5'>
+                {idea.categories.map((category: string) => (
+                  <Badge key={category} className='mr-2 mt-2 text-xs'>
+                    {category.toUpperCase()}
+                  </Badge>
+                ))}
+              </div>
+
+              {numberOfDaysSinceUpdated !== numberOfDaysSincePosting && (
+                <div className='text-xs text-muted-foreground'>
+                  Updated {numberOfDaysSinceUpdated} ago
+                </div>
+              )}
             </div>
           </div>
-          <div className='mt-5'>
-            <Label className='text-xl'>Brief Description</Label>
-            <span>{idea?.briefDescription}</span>
-          </div>
+        )}
 
-          <div className='mt-5'>
-            <Label className='text-xl'>Problem</Label>
-            <span>{idea?.problem}</span>
-          </div>
-
-          <div className='mt-5'>
-            <Label className='text-xl'>Solution</Label>
-            <span>{idea?.solution}</span>
-          </div>
-
-          <div className='mt-5'>
-            <Label className='text-xl'>Pricing Model</Label>
-            <span>{idea?.pricingModel}</span>
-          </div>
-
-          <div className='mt-5'>
-            <Label className='text-xl'>Pricing Details</Label>
-            <span>{idea?.pricingDetails}</span>
-          </div>
-
-          <div className='mt-10'>
-            {idea.categories.map((category: string) => (
-              <Badge className='mr-2 mt-2 text-xs' key={category}>
-                {category.toUpperCase()}
-              </Badge>
-            ))}
-          </div>
-
-          {numberOfDaysSinceUpdated !== numberOfDaysSincePosting && (
-            <div className='text-xs text-muted-foreground text-right mt-2'>
-              Updated {numberOfDaysSinceUpdated} Ago
-            </div>
-          )}
-        </div>
-      )}
-
-      {
-        // Founder specific
-        idea?.authorId === session?.user.id ? (
-          <div className='flex justify-end'>
-            <div className='flex-1'>
-              <ReusableEditFormButton
-                dataId={ideaId}
-                data={idea}
-                FormComponent={IdeaForm}
-              />
-              {/* 👈 client button toggle */}
-            </div>
+        {isAuthor ? (
+          <div className={isEditing ? 'w-full' : ''}>
+            <ReusableEditFormButton
+              dataId={ideaId}
+              data={idea}
+              FormComponent={IdeaForm}
+            />
           </div>
         ) : (
-          <div className='flex-1'>
+          <div className='w-1/2'>
             <ReviewForm ideaId={ideaId} idea={idea} />
           </div>
-        )
-      }
+        )}
+      </div>
 
-      {
-        // Validator Specific
-      }
+      <div className='mt-32'>
+        <ReviewsComponent reviews={reviews} ideaTitle={idea?.title} />
+      </div>
     </div>
   );
 };

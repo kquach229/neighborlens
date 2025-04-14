@@ -60,7 +60,7 @@ const ReviewForm = ({ ideaId, idea }: { ideaId: string }) => {
 
   return (
     <form
-      className='space-y-6 p-6 bg-white border border-gray-200 rounded-2xl shadow-md'
+      className='flex flex-col space-y-6 p-6 bg-white border border-gray-200 rounded-2xl shadow-md'
       onSubmit={handleSubmit(onSubmit)}>
       <h3 className='text-xl font-semibold text-gray-800'>
         Leave a Review for "{idea.title}"
