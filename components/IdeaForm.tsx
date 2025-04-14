@@ -3,9 +3,9 @@
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from './ui/button';
-import { Label } from '@radix-ui/react-dropdown-menu';
+import { Label } from './ui/label';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useDialogStore } from '@/stores/dialogStore';
 import { Textarea } from './ui/textarea';
 import { ReusableMultiSelct } from './ReusableMultiselect';
@@ -16,10 +16,9 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
+  SelectGroup,
 } from './ui/select';
-import { useSearchParams } from 'next/navigation';
-import { FormControl } from './ui/form';
-import { SelectGroup } from '@radix-ui/react-select';
+import { Input } from './ui/input';
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -99,18 +98,17 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose }) => {
     reset();
     closeDialog();
     onClose?.();
-
     router.refresh();
-
     onSuccess?.();
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
+      <h3 className='text-xl font-semibold'>Submit an Idea</h3>
+
       <div>
         <Label>Title</Label>
-        <input
-          id='title'
+        <Input
           {...register('title')}
           type='text'
           className='border p-2 w-full'
@@ -123,7 +121,6 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose }) => {
       <div>
         <Label>Brief Description</Label>
         <Textarea
-          id='briefDescription'
           {...register('briefDescription')}
           className='border p-2 w-full h-[3rem]'
         />
@@ -137,7 +134,6 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose }) => {
       <div>
         <Label>Problem</Label>
         <Textarea
-          id='problem'
           {...register('problem')}
           className='border p-2 w-full h-[7rem]'
         />
@@ -149,7 +145,6 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose }) => {
       <div>
         <Label>Solution</Label>
         <Textarea
-          id='solution'
           {...register('solution')}
           className='border p-2 w-full h-[7rem]'
         />
@@ -160,46 +155,35 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose }) => {
 
       <div>
         <Label>Categories</Label>
-        <div className='z-50'>
-          <ReusableMultiSelct
-            {...register('categories')}
-            className='z-50'
-            id='categories'
-            options={categoriesList}
-            onValueChange={(values) => {
-              setValue('categories', values);
-            }}
-            defaultValue={selectedCategories}
-            placeholder='Select categories'
-            variant='inverted'
-            animation={2}
-            maxCount={3}
-          />
-          {errors.categories && (
-            <p className='text-red-500 text-sm'>{errors.categories.message}</p>
-          )}
-        </div>
-        <div className='mt-4'>
-          <h2 className='text-xl font-semibold'>Selected Categories:</h2>
-          <ul className='list-disc list-inside'>
-            {Array.isArray(selectedCategories)
-              ? selectedCategories?.map((category) => (
-                  <li key={category}>{category}</li>
-                ))
-              : []}
+        <ReusableMultiSelct
+          className='z-50'
+          options={categoriesList}
+          onValueChange={(values) => setValue('categories', values)}
+          defaultValue={selectedCategories}
+          placeholder='Select categories'
+          variant='inverted'
+          animation={2}
+          maxCount={3}
+        />
+        {errors.categories && (
+          <p className='text-red-500 text-sm'>{errors.categories.message}</p>
+        )}
+        {selectedCategories.length > 0 && (
+          <ul className='mt-2 list-disc list-inside text-sm text-gray-700'>
+            {selectedCategories.map((category) => (
+              <li key={category}>{category}</li>
+            ))}
           </ul>
-        </div>
+        )}
       </div>
 
-      <div className='w-full'>
+      <div>
         <Label>Pricing Model</Label>
-
         <Controller
           control={control}
           name='pricingModel'
           render={({ field }) => (
             <Select value={field.value} onValueChange={field.onChange}>
-              {console.log('field', field)}
               <SelectTrigger className='w-full'>
                 <SelectValue placeholder='Pricing Model' />
               </SelectTrigger>
@@ -222,7 +206,6 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose }) => {
       <div>
         <Label>Pricing Details</Label>
         <Textarea
-          id='pricingDetails'
           {...register('pricingDetails')}
           className='border p-2 w-full'
         />
@@ -233,7 +216,11 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose }) => {
         )}
       </div>
 
-      <Button type='submit'>{data ? 'Update Idea' : 'Create Idea'}</Button>
+      <Button
+        type='submit'
+        className='bg-black text-white py-2 px-4 rounded hover:bg-gray-900 transition'>
+        {data ? 'Update Idea' : 'Create Idea'}
+      </Button>
     </form>
   );
 };

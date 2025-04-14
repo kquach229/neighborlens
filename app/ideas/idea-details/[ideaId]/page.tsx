@@ -1,10 +1,11 @@
+import auth from '@/auth';
 import IdeaForm from '@/components/IdeaForm';
 import ReusableEditFormButton from '@/components/ReusableEditFormButton';
+import ReviewForm from '@/components/ReviewForm';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { prisma } from '@/lib/prisma';
 import { getTimeDifference } from '@/lib/utils';
-import { use } from 'react';
 
 const getIdea = async (ideaId) => {
   const idea = await prisma.idea.findUnique({
@@ -21,14 +22,15 @@ const IdeaDetails = async ({ params, searchParams }) => {
   const numberOfDaysSincePosting = getTimeDifference(idea.createdAt);
   const numberOfDaysSinceUpdated = getTimeDifference(idea.updatedAt);
   const { isEditing } = await searchParams;
+  const session = await auth();
 
   return (
-    <div className='min-h-[90vh] p-5 flex justify-between gap-10'>
+    <div className='min-h-[90vh] p-5 flex justify-between gap-10 items-baseline'>
       {!isEditing && (
         <div>
           <div className='flex justify-between items-cetner'>
             <div className='mt-10'>
-              <h1 className=''>{idea.title}</h1>
+              <h1 className='mb-3'>{idea.title}</h1>
               <span className='text-muted-foreground'>
                 Posted {numberOfDaysSincePosting} ago
               </span>
@@ -75,16 +77,29 @@ const IdeaDetails = async ({ params, searchParams }) => {
         </div>
       )}
 
-      <div className='flex justify-end'>
-        <div className='flex-1'>
-          <ReusableEditFormButton
-            dataId={ideaId}
-            data={idea}
-            FormComponent={IdeaForm}
-          />
-          {/* 👈 client button toggle */}
-        </div>
-      </div>
+      {
+        // Founder specific
+        idea?.authorId === session?.user.id ? (
+          <div className='flex justify-end'>
+            <div className='flex-1'>
+              <ReusableEditFormButton
+                dataId={ideaId}
+                data={idea}
+                FormComponent={IdeaForm}
+              />
+              {/* 👈 client button toggle */}
+            </div>
+          </div>
+        ) : (
+          <div className='flex-1'>
+            <ReviewForm ideaId={ideaId} idea={idea} />
+          </div>
+        )
+      }
+
+      {
+        // Validator Specific
+      }
     </div>
   );
 };
