@@ -15,9 +15,7 @@ const ReviewsComponent = ({ reviews, ideaTitle }) => {
 
       <div className='mt-10 p-10 w-full'>
         {!reviews.length ? (
-          <div className='mx-auto text-3xl'>
-            No reviews yet for {ideaTitle}{' '}
-          </div>
+          <div className='mx-auto text-xl'>No reviews yet for {ideaTitle} </div>
         ) : (
           <Carousel
             opts={{ align: 'center' }}

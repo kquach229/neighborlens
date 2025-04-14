@@ -35,7 +35,7 @@ const IdeaDetails = async ({ params, searchParams }) => {
 
   return (
     <div className='min-h-[90vh] p-5 w-full'>
-      <div className='flex justify-between gap-16 items-baseline'>
+      <div className='flex justify-between gap-16 items-baseline flex-col md:flex-row'>
         {!isEditing && (
           <div className='w-full'>
             <div className='flex justify-between items-center mt-10'>
@@ -99,7 +99,7 @@ const IdeaDetails = async ({ params, searchParams }) => {
             />
           </div>
         ) : (
-          <div className='w-1/2'>
+          <div className='w-full md:w-2/3'>
             <ReviewForm ideaId={ideaId} idea={idea} />
           </div>
         )}
