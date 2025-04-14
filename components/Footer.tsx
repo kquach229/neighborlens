@@ -10,20 +10,15 @@ const Footer = () => {
           <NavLogo />
         </div>
         <div className='gap-5 flex'>
-          <Link href='/'>Link 1</Link>
-          <Link href='/'>Link 2</Link>
-          <Link href='/'>Link 3</Link>
-          <Link href='/'>Link 4</Link>
-          <Link href='/'>Link 5</Link>
+          <Link href='/dashboard'>Dashboard</Link>
+          <Link href='/pricing'>Pricing</Link>
         </div>
       </div>
 
       <div className='flex justify-between'>
-        <span>© 2025 Relume. All rights reserved.</span>
+        <span>© 2025 ValidateLens. All rights reserved.</span>
         <div className='flex gap-5 mb-5 underline'>
-          <Link href='/'>Privacy Policy</Link>
-          <Link href='/'>Terms of Service</Link>
-          <Link href='/'>Cookies Settings</Link>
+          <Link href='/privacy-policy'>Privacy Policy</Link>
         </div>
       </div>
     </div>
