@@ -28,7 +28,7 @@ const ReviewCard = ({ review }) => {
   ));
 
   return (
-    <Card className='w-full'>
+    <Card>
       <CardHeader className='space-y-2'>
         <div className='flex items-center gap-2'>
           <span className='text-sm text-muted-foreground'>
