@@ -4,6 +4,14 @@ import { prisma } from '@/lib/prisma';
 import { Check } from 'lucide-react';
 import React from 'react';
 
+const formatPrice = (cents: number) => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+  }).format(cents / 100);
+};
+
 const PricingPage = async () => {
   const plans = await prisma.plan.findMany({
     orderBy: {
@@ -11,47 +19,48 @@ const PricingPage = async () => {
     },
   });
 
-  console.log(plans);
-
   return (
-    <div className='min-h-[90vh] p-5'>
-      <div className=''>
-        <h2 className='mt-16'>Pricing</h2>
+    <div className='min-h-screen px-6 py-16 max-w-7xl mx-auto'>
+      <header className='text-center mb-12'>
+        <h1 className='text-5xl font-bold'>Choose Your Plan</h1>
+        <p className='text-muted-foreground mt-2'>
+          Simple and transparent pricing. No hidden fees.
+        </p>
+      </header>
 
-        <div className='mt-16 flex justify-between items-center gap-5'>
-          {plans.map((plan) => (
-            <Card className='w-3xl min-h-96 p-5'>
-              <CardHeader>
-                <div>
-                  <div className='flex justify-between'>
-                    <div className='text-4xl'>{plan.id}</div>
-                    <div className='text-2xl mb-5'>
-                      ${plan.priceInCents * 0.01}
-                    </div>
-                  </div>
+      <div className='flex flex-wrap gap-10 justify-center'>
+        {plans.map((plan) => (
+          <Card
+            key={plan.id}
+            className='hover:scale-110 duration-150 w-full sm:w-[300px] shadow-lg'>
+            <CardHeader className='space-y-2'>
+              <div className='flex justify-between items-center'>
+                <h3 className='text-2xl font-semibold capitalize'>
+                  {plan.name ?? plan.id}
+                </h3>
+                <span className='text-xl font-bold'>
+                  {formatPrice(plan.priceInCents)}
+                </span>
+              </div>
+              <p className='text-sm text-muted-foreground'>
+                {plan.description}
+              </p>
+            </CardHeader>
 
-                  <span className='text-muted-foreground text-sm'>
-                    {plan.description}
-                  </span>
-                </div>
-              </CardHeader>
-              <Separator />
+            <Separator />
 
-              <CardContent>
-                <ul>
-                  {plan.features.map((feature) => (
-                    <li key={feature}>
-                      <span className='inline-flex gap-2'>
-                        <Check color='green' />
-                        {feature}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+            <CardContent className='mt-4'>
+              <ul className='space-y-2'>
+                {plan.features.map((feature, index) => (
+                  <li key={index} className='flex items-start gap-2 text-sm'>
+                    <Check className='text-green-600 w-4 h-4 mt-1' />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </div>
   );
