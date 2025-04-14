@@ -54,7 +54,9 @@ const Navbar = () => {
               </Avatar>
             </PopoverTrigger>
             <PopoverContent className='flex flex-col gap-3'>
-              <Link className='flex items-center gap-2' href='/profile'>
+              <Link
+                className='flex items-center gap-2'
+                href={`/users/user-profile/${session.data.user.id}`}>
                 <User /> <span>Profile</span>
               </Link>
               <span
