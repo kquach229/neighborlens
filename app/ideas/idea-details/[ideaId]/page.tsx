@@ -20,6 +20,7 @@ const getReviewsForIdea = async (ideaId) => {
     where: {
       ideaId: ideaId,
     },
+    include: { user: true },
   });
 };
 

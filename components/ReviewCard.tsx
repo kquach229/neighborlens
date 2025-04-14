@@ -14,7 +14,7 @@ const ReviewCard = ({ review }) => {
     createdAt,
     user,
   } = review;
-
+  console.log(review);
   const stars = Array.from({ length: 5 }, (_, i) => (
     <Star
       key={i}
@@ -32,7 +32,7 @@ const ReviewCard = ({ review }) => {
       <CardHeader className='space-y-2'>
         <div className='flex items-center gap-2'>
           <span className='text-sm text-muted-foreground'>
-            {user?.name || 'Anonymous'} ·{' '}
+            {user.name.split(' ')[0] || 'Anonymous'} ·{' '}
             {new Date(createdAt).toLocaleDateString()}
           </span>
         </div>
@@ -58,16 +58,13 @@ const ReviewCard = ({ review }) => {
             <p className='text-muted-foreground'>{competitors}</p>
           </div>
         )}
-      </CardContent>
-
-      <CardFooter>
         {wouldIPayForThis && (
           <div className='text-sm'>
             <Label className='text-xs'>Would I pay for this?</Label>
             <p className='text-muted-foreground'>{wouldIPayForThis}</p>
           </div>
         )}
-      </CardFooter>
+      </CardContent>
     </Card>
   );
 };
