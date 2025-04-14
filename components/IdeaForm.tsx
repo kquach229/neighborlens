@@ -122,7 +122,7 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose }) => {
         <Label>Brief Description</Label>
         <Textarea
           {...register('briefDescription')}
-          className='border p-2 w-full h-[3rem]'
+          className='border p-2 w-full h-[7rem]'
         />
         {errors.briefDescription && (
           <p className='text-red-500 text-sm'>
@@ -135,7 +135,7 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose }) => {
         <Label>Problem</Label>
         <Textarea
           {...register('problem')}
-          className='border p-2 w-full h-[7rem]'
+          className='border p-2 w-full h-[10rem]'
         />
         {errors.problem && (
           <p className='text-red-500 text-sm'>{errors.problem.message}</p>
@@ -146,7 +146,7 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose }) => {
         <Label>Solution</Label>
         <Textarea
           {...register('solution')}
-          className='border p-2 w-full h-[7rem]'
+          className='border p-2 w-full h-[10rem]'
         />
         {errors.solution && (
           <p className='text-red-500 text-sm'>{errors.solution.message}</p>

@@ -92,7 +92,10 @@ const IdeaDetails = async ({ params, searchParams }) => {
         )}
 
         {isAuthor ? (
-          <div className={isEditing ? 'w-full' : ''}>
+          <div
+            className={`${
+              isEditing ? 'w-full' : 'absolute top-20 right-20 '
+            } flex flex-row`}>
             <ReusableEditFormButton
               dataId={ideaId}
               data={idea}
