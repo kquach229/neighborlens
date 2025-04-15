@@ -11,6 +11,7 @@ const Footer = () => {
         </div>
         <div className='gap-5 flex'>
           <Link href='/dashboard'>Dashboard</Link>
+          <Link href='/about'>About</Link>
           <Link href='/pricing'>Pricing</Link>
         </div>
       </div>
