@@ -17,6 +17,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Parallax } from 'react-scroll-parallax';
 import ParalaxParent from '@/components/ParalaxParent';
+import { Input } from '@/components/ui/input';
 
 export const FAQSection = () => {
   return (
@@ -221,14 +222,16 @@ export default function Home() {
                 Go to Dashboard
               </Button>
             ) : (
-              <SignInButton />
+              <div className='w-[200px]'>
+                <SignInButton />
+              </div>
             )}
             <span></span>
           </div>
           <div className='w-full sm:w-1/3 mt-10 mb-10'>
             <Parallax speed={-12}>
               <Image
-                className='object-center rounded-sm'
+                className='object-center rounded-sm shadow-2xl'
                 src={'/idea-card.png'}
                 alt='hero-image'
                 height={1000}
@@ -280,7 +283,7 @@ export default function Home() {
         <div className='mt-24 mb-10 md:mt-52 flex flex-col md:flex-row justify-around items-center gap-10'>
           <Parallax speed={-10}>
             <Image
-              className='mb-20 h-[400px] md:h-[500px] w-full md:w-[500px] object-cover'
+              className='rounded-sm mb-20 h-[400px] md:h-[500px] w-full md:w-[500px] object-cover shadow-2xl'
               src={'/landing-page-macbooks.jpg'}
               alt='hero-image'
               height={600}
@@ -323,7 +326,7 @@ export default function Home() {
           <h2 className='mb-5 text-2xl font-semibold'>User Testimonials</h2>
           <span>See how others are validating smarter</span>
           <div className='flex flex-col md:flex-row gap-5 mt-5 mb-28'>
-            <Card className='p-5 w-full md:w-1/2'>
+            <Card className='p-5 w-full md:w-1/2 shadow-2xl'>
               <div className='flex'>
                 {[...Array(5)].map((_, i) => (
                   <StarIcon key={i} color='ffee8c' fill='ffee8c' />
@@ -345,7 +348,7 @@ export default function Home() {
                 </div>
               </CardFooter>
             </Card>
-            <Card className='p-5 w-full md:w-1/2'>
+            <Card className='p-5 w-full md:w-1/2 shadow-2xl'>
               <div className='flex'>
                 {[...Array(5)].map((_, i) => (
                   <StarIcon key={i} color='ffee8c' fill='ffee8c' />
@@ -370,7 +373,7 @@ export default function Home() {
         </div>
 
         <div className='mt-24 md:mt-52 mb-52'>
-          <div className='flex border border-foreground items-center justify-between pl-10 pr-10 h-32'>
+          <div className='flex rounded-sm shadow-2xl border border-foreground items-center justify-between pl-10 pr-10 h-32'>
             <div>
               <h2 className='text-xl font-semibold'>
                 Validate Before You Build
@@ -398,7 +401,7 @@ export default function Home() {
               and startup validation trends.
             </div>
             <div className='flex gap-2 mt-10'>
-              <input
+              <Input
                 className='flex-1 bg-muted'
                 type='text'
                 placeholder='Your email'

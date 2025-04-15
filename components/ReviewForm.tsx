@@ -88,7 +88,7 @@ const ReviewForm = ({ ideaId, idea, alreadyReviewed }: { ideaId: string }) => {
           Leave a Review for "{idea?.title}"
         </h3>
         {alreadyReviewed && (
-          <span className='text-xs text-red-200'>
+          <span className='text-xs text-red-500'>
             * You have already reviewed this idea. Each user can have 1 review
             for each idea *
           </span>

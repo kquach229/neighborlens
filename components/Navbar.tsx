@@ -11,6 +11,7 @@ import { AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import { useSession } from 'next-auth/react';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { signOut } from 'next-auth/react';
+import SignInButton from './SignInButton';
 
 export const NavLogo = () => {
   return (
@@ -31,16 +32,23 @@ const Navbar = () => {
       </div>
 
       <div className='flex gap-5 items-center'>
-        <Button
-          onClick={() =>
-            openDialog(IdeaForm, {
-              title: 'Submit Idea',
-            })
-          }>
-          Submit Idea
-        </Button>
+        {session.data?.user ? (
+          <Button
+            onClick={() =>
+              openDialog(IdeaForm, {
+                title: 'Submit Idea',
+              })
+            }>
+            Submit Idea
+          </Button>
+        ) : (
+          <div className='w-[100px]'>
+            <SignInButton />
+          </div>
+        )}
 
         <Link href='/dashboard'>Dashboard</Link>
+        <Link href='/about'>About</Link>
         <Link href='/pricing'>Pricing</Link>
         <ThemeToggler />
         {session.data?.user && (
