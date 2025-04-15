@@ -2,7 +2,7 @@
 
 import { AvatarImage, Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { Card, CardFooter } from '@/components/ui/card';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import {
   Accordion,
   AccordionItem,
@@ -15,7 +15,7 @@ import Image from 'next/image';
 import SignInButton from '@/components/SignInButton';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { Parallax } from 'react-scroll-parallax';
+import { Parallax, ParallaxBanner } from 'react-scroll-parallax';
 import ParalaxParent from '@/components/ParalaxParent';
 import { Input } from '@/components/ui/input';
 
@@ -370,6 +370,45 @@ export default function Home() {
               </CardFooter>
             </Card>
           </div>
+        </div>
+
+        <div className='relative'>
+          <ParallaxBanner
+            layers={[{ image: '/garbage-idea.jpg', speed: -15 }]}
+            className='aspect-[2/1] rounded-sm'
+          />
+
+          <Card className='backdrop-blur-xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md shadow-xl rounded-2xl border  bg-transparent p-6'>
+            <CardContent className='space-y-4'>
+              <div>
+                <h5 className='text-xl font-semibold'>
+                  Scrap Useless Ideas Before Spending Countless Resources
+                </h5>
+                <p className='text-sm mt-1'>
+                  Get clarity early. Run your concept by real validators and
+                  avoid wasting time, money, and energy.
+                </p>
+              </div>
+              <div>
+                <p className='text-sm italic'>
+                  Fail fast. Iterate smarter. Move forward with confidence.
+                </p>
+              </div>
+              <div className='pt-2'>
+                {session.data?.user ? (
+                  <Button
+                    className='w-[15rem]'
+                    onClick={() => router.push('/dashboard')}>
+                    Go to Dashboard
+                  </Button>
+                ) : (
+                  <div className='w-[200px]'>
+                    <SignInButton />
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         <div className='mt-24 md:mt-52 mb-52'>
