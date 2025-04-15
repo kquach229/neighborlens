@@ -15,6 +15,8 @@ import Image from 'next/image';
 import SignInButton from '@/components/SignInButton';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { Parallax } from 'react-scroll-parallax';
+import ParalaxParent from '@/components/ParalaxParent';
 
 export const FAQSection = () => {
   return (
@@ -201,205 +203,214 @@ export default function Home() {
   const session = useSession();
   const router = useRouter();
   return (
-    <div className='min-h-screen p-5'>
-      <div className='mt-24 flex flex-col w-full sm:flex-row justify-between items-center gap-10'>
-        <div className='flex flex-col justify-center gap-6 w-full md:w-2/3'>
-          <h1 className='font-bold text-4xl leading-tight'>
-            Validate Your Startup Idea—Before You Build
-          </h1>
-          <span className='text-lg'>
-            Get real human feedback from experienced validators. No AI, no
-            fluff—just actionable insight to help you decide what to build.
-          </span>
-          {session.data?.user ? (
-            <Button
-              className='w-[15rem]'
-              onClick={() => router.push('/dashboard')}>
-              Go to Dashboard
-            </Button>
-          ) : (
-            <SignInButton />
-          )}
-          <span></span>
-        </div>
-        <div className='w-full sm:w-1/3'>
-          <Image
-            className='object-center rounded-sm'
-            src={'/idea-card.png'}
-            alt='hero-image'
-            height={1000}
-            width={1000}
-          />
-        </div>
-      </div>
-
-      <div className='mt-24 md:mt-52'>
-        <div className='w-full md:w-3/4'>
-          <h2 className='mb-5 text-2xl font-semibold'>
-            Turn Uncertainty Into Clarity
-          </h2>
-          <span>
-            Submit your startup idea and receive structured, thoughtful feedback
-            from real people—your potential users, investors, and advisors.
-          </span>
-        </div>
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-10 mt-24 text-center'>
-          <div>
-            <Gem className='place-self-center mb-5 h-[3rem] w-[3rem]' />
-            <h6 className='font-semibold mb-2'>Discover What Matters</h6>
-            <span>
-              Learn what stands out and what needs work in your concept—direct
-              from real-world validators.
+    <ParalaxParent>
+      <div className='min-h-screen p-5'>
+        <div className='mt-24 flex flex-col w-full sm:flex-row justify-between items-center gap-10'>
+          <div className='flex flex-col justify-center gap-6 w-full md:w-2/3'>
+            <h1 className='font-bold text-4xl leading-tight'>
+              Validate Your Startup Idea—Before You Build
+            </h1>
+            <span className='text-lg'>
+              Get real human feedback from experienced validators. No AI, no
+              fluff—just actionable insight to help you decide what to build.
             </span>
+            {session.data?.user ? (
+              <Button
+                className='w-[15rem]'
+                onClick={() => router.push('/dashboard')}>
+                Go to Dashboard
+              </Button>
+            ) : (
+              <SignInButton />
+            )}
+            <span></span>
           </div>
-          <div className='self-center'>
-            <AlertCircle className='place-self-center mb-5 h-[3rem] w-[3rem]' />
-            <h6 className='font-semibold mb-2'>Spot the Biggest Risks</h6>
-            <span>
-              Get early insight into red flags, assumptions, and potential
-              dealbreakers.
-            </span>
-          </div>
-          <div className='self-center'>
-            <MessageCircle className='place-self-center mb-5 h-[3rem] w-[3rem]' />
-            <h6 className='font-semibold mb-2'>Engage With Feedback</h6>
-            <span>
-              Ask questions, gather feedback, and improve your idea in real
-              time.
-            </span>
+          <div className='w-full sm:w-1/3 mt-10 mb-10'>
+            <Parallax speed={-12}>
+              <Image
+                className='object-center rounded-sm'
+                src={'/idea-card.png'}
+                alt='hero-image'
+                height={1000}
+                width={1000}
+              />
+            </Parallax>
           </div>
         </div>
-      </div>
 
-      <div className='mt-24 md:mt-52 flex flex-col md:flex-row justify-around items-center gap-10'>
-        <Image
-          className='h-[400px] md:h-[500px] w-full md:w-[500px] object-cover'
-          src={'/landing-page-macbooks.jpg'}
-          alt='hero-image'
-          height={600}
-          width={600}
-          objectFit='cover'
-          objectPosition='center'
-          loading='lazy'
-        />
-
-        <div className='gap-10 flex flex-col w-full md:w-1/2'>
-          <h2 className='text-2xl font-semibold'>
-            Founders & Validators, All in One Place
-          </h2>
-          <span>
-            Switch roles easily between founder and validator. Submit ideas and
-            review others—because better startups start with better feedback
-            loops.
-          </span>
-          <div className='flex flex-col md:flex-row justify-start gap-5'>
-            <span className='w-full md:w-80'>
-              <h6 className='font-semibold'>Easy Submission</h6>
+        <div className='mt-24 md:mt-52'>
+          <div className='w-full md:w-3/4'>
+            <h2 className='mb-5 text-2xl font-semibold'>
+              Turn Uncertainty Into Clarity
+            </h2>
+            <span>
+              Submit your startup idea and receive structured, thoughtful
+              feedback from real people—your potential users, investors, and
+              advisors.
+            </span>
+          </div>
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-10 mt-24 text-center'>
+            <div>
+              <Gem className='place-self-center mb-5 h-[3rem] w-[3rem]' />
+              <h6 className='font-semibold mb-2'>Discover What Matters</h6>
               <span>
-                Fill in a simple form with your idea’s details—title, problem,
-                solution, pricing model, and more.
+                Learn what stands out and what needs work in your concept—direct
+                from real-world validators.
               </span>
-            </span>
-            <span className='w-full md:w-80'>
-              <h6 className='font-semibold'>Structured Validation</h6>
+            </div>
+            <div className='self-center'>
+              <AlertCircle className='place-self-center mb-5 h-[3rem] w-[3rem]' />
+              <h6 className='font-semibold mb-2'>Spot the Biggest Risks</h6>
               <span>
-                Validators rate, comment, and provide risks, feedback, and
-                willingness to pay—all anonymously or publicly.
+                Get early insight into red flags, assumptions, and potential
+                dealbreakers.
               </span>
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <div className='mt-24 md:mt-52'>
-        <h2 className='mb-5 text-2xl font-semibold'>User Testimonials</h2>
-        <span>See how others are validating smarter</span>
-        <div className='flex flex-col md:flex-row gap-5 mt-5 mb-28'>
-          <Card className='p-5 w-full md:w-1/2'>
-            <div className='flex'>
-              {[...Array(5)].map((_, i) => (
-                <StarIcon key={i} color='ffee8c' fill='ffee8c' />
-              ))}
             </div>
-
-            <span>
-              "ValidatorLens helped me realize I was solving a non-problem. That
-              insight saved me months of wasted effort."
-            </span>
-            <CardFooter className='flex gap-5'>
-              <Avatar>
-                <AvatarImage src='/lily.jpeg' />
-                <AvatarFallback>F</AvatarFallback>
-              </Avatar>
-              <div>
-                <div className='font-semibold'>Alex Rivera</div>
-                <div className='text-sm'>Early-Stage Founder</div>
-              </div>
-            </CardFooter>
-          </Card>
-          <Card className='p-5 w-full md:w-1/2'>
-            <div className='flex'>
-              {[...Array(5)].map((_, i) => (
-                <StarIcon key={i} color='ffee8c' fill='ffee8c' />
-              ))}
-            </div>
-            <span>
-              "As a validator, I enjoy giving feedback—and I’ve discovered ideas
-              I’d actually invest in."
-            </span>
-            <CardFooter className='flex gap-5'>
-              <Avatar>
-                <AvatarImage src='/validator.jpeg' />
-                <AvatarFallback>V</AvatarFallback>
-              </Avatar>
-              <div>
-                <div className='font-semibold'>Maya Chen</div>
-                <div className='text-sm'>Product Manager & Validator</div>
-              </div>
-            </CardFooter>
-          </Card>
-        </div>
-      </div>
-
-      <div className='mt-24 md:mt-52 mb-52'>
-        <div className='flex border border-foreground items-center justify-between pl-10 pr-10 h-32'>
-          <div>
-            <h2 className='text-xl font-semibold'>Validate Before You Build</h2>
-            <div className='mt-2'>
-              Join ValidatorLens and start turning ideas into validated
-              opportunities.
+            <div className='self-center'>
+              <MessageCircle className='place-self-center mb-5 h-[3rem] w-[3rem]' />
+              <h6 className='font-semibold mb-2'>Engage With Feedback</h6>
+              <span>
+                Ask questions, gather feedback, and improve your idea in real
+                time.
+              </span>
             </div>
           </div>
-          <div>
-            <Button>Get Started</Button>
-          </div>
         </div>
-      </div>
 
-      <div className='mt-24 md:mt-32 mb-32'>
-        <FAQSection />
-      </div>
-
-      <div className='flex flex-col md:flex-row justify-around items-center'>
-        <div>
-          <h2 className='text-2xl font-semibold'>Get Validation Updates</h2>
-          <div className='mt-5'>
-            Join our newsletter to hear about top-rated ideas, validator tips,
-            and startup validation trends.
-          </div>
-          <div className='flex gap-2 mt-10'>
-            <input
-              className='flex-1 bg-muted'
-              type='text'
-              placeholder='Your email'
+        <div className='mt-24 mb-10 md:mt-52 flex flex-col md:flex-row justify-around items-center gap-10'>
+          <Parallax speed={-10}>
+            <Image
+              className='mb-20 h-[400px] md:h-[500px] w-full md:w-[500px] object-cover'
+              src={'/landing-page-macbooks.jpg'}
+              alt='hero-image'
+              height={600}
+              width={600}
+              objectFit='cover'
+              objectPosition='center'
+              loading='lazy'
             />
-            <Button>Subscribe</Button>
+          </Parallax>
+
+          <div className='gap-10 flex flex-col w-full md:w-1/2'>
+            <h2 className='text-2xl font-semibold'>
+              Founders & Validators, All in One Place
+            </h2>
+            <span>
+              Switch roles easily between founder and validator. Submit ideas
+              and review others—because better startups start with better
+              feedback loops.
+            </span>
+            <div className='flex flex-col md:flex-row justify-start gap-5'>
+              <span className='w-full md:w-80'>
+                <h6 className='font-semibold'>Easy Submission</h6>
+                <span>
+                  Fill in a simple form with your idea’s details—title, problem,
+                  solution, pricing model, and more.
+                </span>
+              </span>
+              <span className='w-full md:w-80'>
+                <h6 className='font-semibold'>Structured Validation</h6>
+                <span>
+                  Validators rate, comment, and provide risks, feedback, and
+                  willingness to pay—all anonymously or publicly.
+                </span>
+              </span>
+            </div>
           </div>
-          <div className='mt-5 text-xs'>
-            By subscribing, you agree to our Terms and Privacy Policy.
+        </div>
+
+        <div className='mt-24 md:mt-52'>
+          <h2 className='mb-5 text-2xl font-semibold'>User Testimonials</h2>
+          <span>See how others are validating smarter</span>
+          <div className='flex flex-col md:flex-row gap-5 mt-5 mb-28'>
+            <Card className='p-5 w-full md:w-1/2'>
+              <div className='flex'>
+                {[...Array(5)].map((_, i) => (
+                  <StarIcon key={i} color='ffee8c' fill='ffee8c' />
+                ))}
+              </div>
+
+              <span>
+                "ValidatorLens helped me realize I was solving a non-problem.
+                That insight saved me months of wasted effort."
+              </span>
+              <CardFooter className='flex gap-5'>
+                <Avatar>
+                  <AvatarImage src='/lily.jpeg' />
+                  <AvatarFallback>F</AvatarFallback>
+                </Avatar>
+                <div>
+                  <div className='font-semibold'>Alex Rivera</div>
+                  <div className='text-sm'>Early-Stage Founder</div>
+                </div>
+              </CardFooter>
+            </Card>
+            <Card className='p-5 w-full md:w-1/2'>
+              <div className='flex'>
+                {[...Array(5)].map((_, i) => (
+                  <StarIcon key={i} color='ffee8c' fill='ffee8c' />
+                ))}
+              </div>
+              <span>
+                "As a validator, I enjoy giving feedback—and I’ve discovered
+                ideas I’d actually invest in."
+              </span>
+              <CardFooter className='flex gap-5'>
+                <Avatar>
+                  <AvatarImage src='/validator.jpeg' />
+                  <AvatarFallback>V</AvatarFallback>
+                </Avatar>
+                <div>
+                  <div className='font-semibold'>Maya Chen</div>
+                  <div className='text-sm'>Product Manager & Validator</div>
+                </div>
+              </CardFooter>
+            </Card>
+          </div>
+        </div>
+
+        <div className='mt-24 md:mt-52 mb-52'>
+          <div className='flex border border-foreground items-center justify-between pl-10 pr-10 h-32'>
+            <div>
+              <h2 className='text-xl font-semibold'>
+                Validate Before You Build
+              </h2>
+              <div className='mt-2'>
+                Join ValidatorLens and start turning ideas into validated
+                opportunities.
+              </div>
+            </div>
+            <div>
+              <Button>Get Started</Button>
+            </div>
+          </div>
+        </div>
+
+        <div className='mt-24 md:mt-32 mb-32'>
+          <FAQSection />
+        </div>
+
+        <div className='flex flex-col md:flex-row justify-around items-center'>
+          <div>
+            <h2 className='text-2xl font-semibold'>Get Validation Updates</h2>
+            <div className='mt-5'>
+              Join our newsletter to hear about top-rated ideas, validator tips,
+              and startup validation trends.
+            </div>
+            <div className='flex gap-2 mt-10'>
+              <input
+                className='flex-1 bg-muted'
+                type='text'
+                placeholder='Your email'
+              />
+              <Button>Subscribe</Button>
+            </div>
+            <div className='mt-5 text-xs'>
+              By subscribing, you agree to our Terms and Privacy Policy.
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </ParalaxParent>
   );
 }

@@ -5,10 +5,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { SessionProvider } from 'next-auth/react';
-import ReusableDialog, {
-  DialogContent,
-  GlobalDialog,
-} from '@/components/ReusableDialog';
+import { GlobalDialog } from '@/components/ReusableDialog';
 import IdeaForm from '@/components/IdeaForm';
 import { DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
