@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function PUT(req: Request, { params }) {
   const { id } = await params;
@@ -28,4 +28,30 @@ export async function GET(
   });
 
   return NextResponse.json(idea);
+}
+
+export async function DELETE(req: NextRequest, { params }) {
+  const { id } = await params;
+  console.log('djflsjfklsjfl', id);
+  try {
+    await prisma.review.deleteMany({
+      where: { ideaId: params.id },
+    });
+
+    await prisma.idea.delete({
+      where: { id: params.id },
+    });
+    const deletedIdea = await prisma.idea.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    console.log('ideaId', id);
+
+    return NextResponse.json(deletedIdea);
+  } catch (err) {
+    console.error(err);
+    return NextResponse.json({ message: 'Error deleting idea', err: err });
+  }
 }

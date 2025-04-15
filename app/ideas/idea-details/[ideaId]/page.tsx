@@ -1,7 +1,6 @@
 import auth from '@/auth';
 import IdeaForm from '@/components/IdeaForm';
 import ReusableEditFormButton from '@/components/ReusableEditFormButton';
-import ReviewCard from '@/components/ReviewCard';
 import ReviewForm from '@/components/ReviewForm';
 import ReviewsComponent from '@/components/ReviewsComponent';
 import { Badge } from '@/components/ui/badge';
@@ -32,8 +31,8 @@ const IdeaDetails = async ({ params, searchParams }) => {
   const reviews = await getReviewsForIdea(ideaId);
   const session = await auth();
   const isEditing = searchParams?.isEditing;
-  const numberOfDaysSincePosting = getTimeDifference(idea.createdAt);
-  const numberOfDaysSinceUpdated = getTimeDifference(idea.updatedAt);
+  const numberOfDaysSincePosting = getTimeDifference(idea?.createdAt);
+  const numberOfDaysSinceUpdated = getTimeDifference(idea?.updatedAt);
   const isAuthor = idea?.authorId === session?.user.id;
   const alreadyReviewed = idea?.reviews.find(
     (review) => review.userId == session?.user?.id
@@ -46,7 +45,7 @@ const IdeaDetails = async ({ params, searchParams }) => {
           <div className='w-full'>
             <div className='flex justify-between items-center mt-10'>
               <div>
-                <h1 className='mb-3'>{idea.title}</h1>
+                <h1 className='mb-3'>{idea?.title}</h1>
                 <span className='text-muted-foreground'>
                   Posted {numberOfDaysSincePosting} ago by{' '}
                   <Link
@@ -85,7 +84,7 @@ const IdeaDetails = async ({ params, searchParams }) => {
               </div>
 
               <div className='mt-5'>
-                {idea.categories.map((category: string) => (
+                {idea?.categories.map((category: string) => (
                   <Badge key={category} className='mr-2 mt-2 text-xs'>
                     {category.toUpperCase()}
                   </Badge>

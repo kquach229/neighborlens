@@ -85,7 +85,7 @@ const ReviewForm = ({ ideaId, idea, alreadyReviewed }: { ideaId: string }) => {
         className='flex flex-col space-y-6 p-6 rounded-2xl'
         onSubmit={handleSubmit(onSubmit)}>
         <h3 className='text-xl font-semibold'>
-          Leave a Review for "{idea.title}"
+          Leave a Review for "{idea?.title}"
         </h3>
         {alreadyReviewed && (
           <span className='text-xs text-red-200'>

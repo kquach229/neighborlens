@@ -3,6 +3,7 @@ import { Card, CardContent, CardFooter, CardHeader } from './ui/card';
 import { Label } from './ui/label';
 import { Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import Link from 'next/link';
 
 const ReviewCard = ({ review }) => {
   const {
@@ -14,7 +15,7 @@ const ReviewCard = ({ review }) => {
     createdAt,
     user,
   } = review;
-  console.log(review);
+
   const stars = Array.from({ length: 5 }, (_, i) => (
     <Star
       key={i}
@@ -32,8 +33,12 @@ const ReviewCard = ({ review }) => {
       <CardHeader className='space-y-2'>
         <div className='flex items-center gap-2'>
           <span className='text-sm text-muted-foreground'>
-            {user.name.split(' ')[0] || 'Anonymous'} ·{' '}
-            {new Date(createdAt).toLocaleDateString()}
+            {(
+              <Link href={`/users/user-profile/${user.id}`}>
+                {user.name.split(' ')[0]}
+              </Link>
+            ) || 'Anonymous'}
+            · {new Date(createdAt).toLocaleDateString()}
           </span>
         </div>
         <div className='flex gap-1'>{stars}</div>
