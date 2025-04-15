@@ -13,6 +13,8 @@ import {
 import { AlertCircle, Gem, MessageCircle, StarIcon } from 'lucide-react';
 import Image from 'next/image';
 import SignInButton from '@/components/SignInButton';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export const FAQSection = () => {
   return (
@@ -196,6 +198,8 @@ export const FAQSection = () => {
 };
 
 export default function Home() {
+  const session = useSession();
+  const router = useRouter();
   return (
     <div className='min-h-screen p-5'>
       <div className='mt-24 flex flex-col w-full sm:flex-row justify-between items-center gap-10'>
@@ -207,9 +211,16 @@ export default function Home() {
             Get real human feedback from experienced validators. No AI, no
             fluff—just actionable insight to help you decide what to build.
           </span>
-          <span>
+          {session.data?.user ? (
+            <Button
+              className='w-[15rem]'
+              onClick={() => router.push('/dashboard')}>
+              Go to Dashboard
+            </Button>
+          ) : (
             <SignInButton />
-          </span>
+          )}
+          <span></span>
         </div>
         <div className='w-full sm:w-1/3'>
           <Image
