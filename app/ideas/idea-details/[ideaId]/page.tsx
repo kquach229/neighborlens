@@ -12,6 +12,7 @@ import { getTimeDifference } from '@/lib/utils';
 const getIdea = async (ideaId) => {
   return await prisma.idea.findUnique({
     where: { id: ideaId },
+    include: { reviews: true },
   });
 };
 
@@ -33,6 +34,9 @@ const IdeaDetails = async ({ params, searchParams }) => {
   const numberOfDaysSincePosting = getTimeDifference(idea.createdAt);
   const numberOfDaysSinceUpdated = getTimeDifference(idea.updatedAt);
   const isAuthor = idea?.authorId === session?.user.id;
+  const alreadyReviewed = idea?.reviews.find(
+    (review) => review.userId == session?.user?.id
+  );
 
   return (
     <div className='min-h-[90vh] p-5 w-full'>
@@ -104,7 +108,11 @@ const IdeaDetails = async ({ params, searchParams }) => {
           </div>
         ) : (
           <div className='w-full md:w-2/3'>
-            <ReviewForm ideaId={ideaId} idea={idea} />
+            <ReviewForm
+              alreadyReviewed={alreadyReviewed}
+              ideaId={ideaId}
+              idea={idea}
+            />
           </div>
         )}
       </div>

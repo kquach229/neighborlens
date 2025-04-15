@@ -29,7 +29,7 @@ const formSchema = z.object({
 
 type FormSchema = z.infer<typeof formSchema>;
 
-const ReviewForm = ({ ideaId, idea }: { ideaId: string }) => {
+const ReviewForm = ({ ideaId, idea, alreadyReviewed }: { ideaId: string }) => {
   const {
     register,
     control,
@@ -37,6 +37,21 @@ const ReviewForm = ({ ideaId, idea }: { ideaId: string }) => {
     formState: { errors },
     reset,
   } = useForm<FormSchema>({
+    defaultValues: alreadyReviewed
+      ? {
+          rating: alreadyReviewed.rating?.toString() || '',
+          comment: alreadyReviewed.comment || '',
+          biggestRisk: alreadyReviewed.biggestRisk || '',
+          competitors: alreadyReviewed.competitors || '',
+          wouldIPayForThis: alreadyReviewed.wouldIPayForThis || '',
+        }
+      : {
+          rating: '',
+          comment: '',
+          biggestRisk: '',
+          wouldIPayForThis: '',
+          competitors: '',
+        },
     resolver: zodResolver(formSchema),
   });
 
@@ -67,6 +82,12 @@ const ReviewForm = ({ ideaId, idea }: { ideaId: string }) => {
         <h3 className='text-xl font-semibold'>
           Leave a Review for "{idea.title}"
         </h3>
+        {alreadyReviewed && (
+          <span className='text-xs text-red-200'>
+            * You have already reviewed this idea. Each user can have 1 review
+            for each idea *
+          </span>
+        )}
 
         <div className='space-y-1'>
           <Label htmlFor='rating'>Rating (1–5)</Label>
@@ -77,6 +98,7 @@ const ReviewForm = ({ ideaId, idea }: { ideaId: string }) => {
             min='1'
             max='5'
             className='w-full'
+            disabled={alreadyReviewed}
             {...register('rating')}
           />
           {errors.rating && (
@@ -89,6 +111,7 @@ const ReviewForm = ({ ideaId, idea }: { ideaId: string }) => {
           <Textarea
             id='comment'
             className='w-full min-h-[100px]'
+            disabled={alreadyReviewed}
             {...register('comment')}
           />
           {errors.comment && (
@@ -101,6 +124,7 @@ const ReviewForm = ({ ideaId, idea }: { ideaId: string }) => {
           <Input
             id='biggestRisk'
             className='w-full'
+            disabled={alreadyReviewed}
             {...register('biggestRisk')}
           />
           {errors.biggestRisk && (
@@ -113,6 +137,7 @@ const ReviewForm = ({ ideaId, idea }: { ideaId: string }) => {
           <Textarea
             id='competitors'
             className='w-full min-h-[80px]'
+            disabled={alreadyReviewed}
             {...register('competitors')}
           />
           {errors.competitors && (
@@ -126,7 +151,10 @@ const ReviewForm = ({ ideaId, idea }: { ideaId: string }) => {
             control={control}
             name='wouldIPayForThis'
             render={({ field }) => (
-              <Select value={field.value} onValueChange={field.onChange}>
+              <Select
+                disabled={alreadyReviewed}
+                value={field.value}
+                onValueChange={field.onChange}>
                 <SelectTrigger id='wouldIPayForThis' className='w-full'>
                   <SelectValue placeholder='Select an option' />
                 </SelectTrigger>
@@ -148,7 +176,7 @@ const ReviewForm = ({ ideaId, idea }: { ideaId: string }) => {
         </div>
 
         <div className='pt-2'>
-          <Button type='submit' className='w-full'>
+          <Button disabled={alreadyReviewed} type='submit' className='w-full'>
             Submit Review
           </Button>
         </div>
