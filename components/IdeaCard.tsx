@@ -24,7 +24,7 @@ const IdeaCard = ({ idea }) => {
       <Link href={`/ideas/idea-details/${id}`}>
         <CardHeader>
           <div className='text-xs text-muted-foreground text-right'>
-            Posted {numberOfDaysSincePosting} Ago
+            Posted {numberOfDaysSincePosting} Ago{' '}
           </div>
           <div className='flex justify-between items-center'>
             <h5>{title}</h5>

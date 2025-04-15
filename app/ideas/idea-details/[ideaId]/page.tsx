@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { prisma } from '@/lib/prisma';
 import { getTimeDifference } from '@/lib/utils';
+import Link from 'next/link';
 
 const getIdea = async (ideaId) => {
   return await prisma.idea.findUnique({
@@ -47,7 +48,12 @@ const IdeaDetails = async ({ params, searchParams }) => {
               <div>
                 <h1 className='mb-3'>{idea.title}</h1>
                 <span className='text-muted-foreground'>
-                  Posted {numberOfDaysSincePosting} ago
+                  Posted {numberOfDaysSincePosting} ago by{' '}
+                  <Link
+                    className='text-blue-300'
+                    href={`/users/user-profile/${idea?.authorId}`}>
+                    {session?.user?.name?.split(' ')[0] || 'Anonymous'}
+                  </Link>
                 </span>
               </div>
             </div>

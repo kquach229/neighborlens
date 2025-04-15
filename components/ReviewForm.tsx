@@ -18,6 +18,7 @@ import {
 } from './ui/select';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
   rating: z.preprocess((val) => Number(val), z.number().min(1).max(5)),
@@ -55,6 +56,8 @@ const ReviewForm = ({ ideaId, idea, alreadyReviewed }: { ideaId: string }) => {
     resolver: zodResolver(formSchema),
   });
 
+  const router = useRouter();
+
   const onSubmit = async (data: FormSchema) => {
     try {
       const res = await fetch('/api/reviews', {
@@ -68,6 +71,8 @@ const ReviewForm = ({ ideaId, idea, alreadyReviewed }: { ideaId: string }) => {
       if (!res.ok) throw new Error('Failed to submit review');
 
       reset();
+      router.refresh();
+
       console.log('Review submitted!');
     } catch (err) {
       console.error(err);
