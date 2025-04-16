@@ -15,7 +15,7 @@ import Image from 'next/image';
 import SignInButton from '@/components/SignInButton';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { Parallax, ParallaxBanner } from 'react-scroll-parallax';
+import { Parallax, ParallaxBanner, useParallax } from 'react-scroll-parallax';
 import ParalaxParent from '@/components/ParalaxParent';
 import { Input } from '@/components/ui/input';
 
@@ -203,6 +203,7 @@ export const FAQSection = () => {
 export default function Home() {
   const session = useSession();
   const router = useRouter();
+
   return (
     <ParalaxParent>
       <div className='min-h-screen p-5'>

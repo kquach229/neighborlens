@@ -8,6 +8,8 @@ import { useDialogStore } from '@/stores/dialogStore';
 import IdeaForm from '@/components/IdeaForm';
 import { useSession } from 'next-auth/react';
 import { useMemo } from 'react';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import SignInButton from '@/components/SignInButton';
 
 // Reusable grid for displaying ideas
 const IdeasGrid = ({ ideas }) => {
@@ -108,6 +110,27 @@ const DashboardClient = ({ allIdeas }) => {
       notYetValidated: notValidated,
     };
   }, [allIdeas, currentUserId]);
+
+  if (!session.data?.user) {
+    return (
+      <div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 px-4'>
+        <Card className='w-full max-w-md shadow-xl'>
+          <CardHeader>
+            <h2 className='text-2xl font-bold text-center'>Welcome Back</h2>
+            <p className='text-sm text-gray-500 text-center mt-1'>
+              Sign in to continue to ValidatorLens
+            </p>
+          </CardHeader>
+          <CardContent className='space-y-4'>
+            <SignInButton />
+            <div className='text-center text-sm text-gray-500'>
+              Don’t have an account? Contact the admin to join.
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div>
