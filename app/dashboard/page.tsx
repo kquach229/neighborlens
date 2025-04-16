@@ -1,6 +1,8 @@
 import React from 'react';
 import { prisma } from '@/lib/prisma';
 import DashboardClient from './DashboardClient';
+import auth from '@/auth';
+import { redirect } from 'next/navigation';
 
 const getAllIdeas = async () => {
   const ownIdeas = await prisma.idea.findMany({
@@ -19,6 +21,9 @@ const getAllReviews = async () => {
 const DashboardPage = async () => {
   const allIdeas = await getAllIdeas();
   const allReviews = await getAllReviews();
+  const session = await auth();
+
+  if (!session?.user) redirect('/login');
 
   return (
     <div className='min-h-[90vh] p-5'>
