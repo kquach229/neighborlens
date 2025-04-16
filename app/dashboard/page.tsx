@@ -5,7 +5,7 @@ import auth from '@/auth';
 import { redirect } from 'next/navigation';
 
 const getAllIdeas = async () => {
-  const ownIdeas = await prisma.idea.findMany({
+  const ownIdeas = await prisma?.idea?.findMany({
     include: {
       reviews: true,
     },
