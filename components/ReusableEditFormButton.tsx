@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Edit, Trash } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { toast } from 'sonner';
 
 export default function ReusableEditFormButton({
   data,
@@ -29,13 +30,17 @@ export default function ReusableEditFormButton({
   }, [isEditing, router, searchParams]);
 
   const handleDeleteIdea = async (dataId) => {
-    await fetch(`/api/ideas/${dataId}`, {
+    const res = await fetch(`/api/ideas/${dataId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
     });
     router.push('/dashboard');
+
+    if (res.ok) {
+      toast.success('Idea deleted successfully');
+    }
   };
 
   return (
