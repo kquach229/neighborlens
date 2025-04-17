@@ -43,8 +43,15 @@ export default function AboutPage() {
         </p>
       </section>
 
-      <div className='mt-32'>
-        <h2 className='text-center'>Meet The Team</h2>
+      <div className='mt-32 text-center mx-auto w-full'>
+        <h2>Meet The Team</h2>
+        <div className='mt-5 text-md text-foreground opacity-70 max-w-[700px] w-full mx-auto'>
+          <span className='text-center'>
+            We are still growing and look to add more members as the
+            ValidateLens community grows. That being said, we appreciate your
+            support!
+          </span>
+        </div>
 
         <div className='grid grid-cols-1 mx-auto w-full place-items-center mt-20'>
           <div className='text-center space-y-2'>
