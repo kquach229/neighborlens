@@ -13,6 +13,7 @@ import { useSession } from 'next-auth/react';
 
 import ThemeToggler from './ThemeToggler';
 import { NavLogo, UserButton } from './Navbar';
+import UserCredits from './UserCredits';
 
 export default function MobileSideBar() {
   const { toggleSidebar } = useSidebar();
@@ -50,7 +51,9 @@ export default function MobileSideBar() {
       </SidebarContent>
       <SidebarSeparator />
       <SidebarFooter>
-        <UserButton session={session} />
+        <div>
+          <UserButton session={session} />
+        </div>
       </SidebarFooter>
     </Sidebar>
   );

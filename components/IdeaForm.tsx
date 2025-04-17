@@ -19,6 +19,7 @@ import {
   SelectGroup,
 } from './ui/select';
 import { Input } from './ui/input';
+import { toast } from 'sonner';
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -87,13 +88,20 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose }) => {
     const method = isEditing ? 'PUT' : 'POST';
     const endpoint = isEditing ? `/api/ideas/${dataId}` : `/api/ideas/`;
 
-    await fetch(endpoint, {
+    const res = await fetch(endpoint, {
       method,
       body: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json',
       },
     });
+
+    if (res.ok) {
+      toast.success(isEditing ? 'Idea updated!' : 'Idea created!');
+    } else {
+      const error = await res.json();
+      toast.error(error.message || 'Something went wrong');
+    }
 
     reset();
     closeDialog();

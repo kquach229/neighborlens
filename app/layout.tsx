@@ -11,6 +11,7 @@ import { DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import MobileSideBar from '@/components/MobileSidebar';
+import { Toaster } from 'sonner';
 
 const roboto = Roboto({
   variable: '--font-roboto',
@@ -53,6 +54,7 @@ export default function RootLayout({
                 </div>
 
                 {children}
+                <Toaster />
                 <Footer />
                 <GlobalDialog />
               </div>
