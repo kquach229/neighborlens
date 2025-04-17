@@ -40,19 +40,20 @@ const ReviewForm = ({ ideaId, idea, alreadyReviewed }: { ideaId: string }) => {
   } = useForm<FormSchema>({
     defaultValues: alreadyReviewed
       ? {
-          rating: alreadyReviewed.rating?.toString() || '',
+          rating: alreadyReviewed.rating || 1, // or whatever default makes sense
           comment: alreadyReviewed.comment || '',
           biggestRisk: alreadyReviewed.biggestRisk || '',
           competitors: alreadyReviewed.competitors || '',
-          wouldIPayForThis: alreadyReviewed.wouldIPayForThis || '',
+          wouldIPayForThis: alreadyReviewed.wouldIPayForThis || 'not sure',
         }
       : {
-          rating: '',
+          rating: 1,
           comment: '',
           biggestRisk: '',
-          wouldIPayForThis: '',
           competitors: '',
+          wouldIPayForThis: 'not sure',
         },
+
     resolver: zodResolver(formSchema),
   });
 
