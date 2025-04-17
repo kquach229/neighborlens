@@ -9,6 +9,8 @@ import { GlobalDialog } from '@/components/ReusableDialog';
 import IdeaForm from '@/components/IdeaForm';
 import { DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import MobileSideBar from '@/components/MobileSidebar';
 
 const roboto = Roboto({
   variable: '--font-roboto',
@@ -34,20 +36,29 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <body className={`${roboto.className} ${oleo.variable} antialiased`}>
-        <SessionProvider>
-          <ThemeProvider
-            attribute='class'
-            defaultTheme='system'
-            enableSystem
-            disableTransitionOnChange>
-            <div className='max-w-[1500px] mx-auto overflow-hidden p-2'>
-              <Navbar />
-              {children}
-              <Footer />
-              <GlobalDialog />
-            </div>
-          </ThemeProvider>
-        </SessionProvider>
+        <SidebarProvider>
+          <SessionProvider>
+            <ThemeProvider
+              attribute='class'
+              defaultTheme='system'
+              enableSystem
+              disableTransitionOnChange>
+              <div className='max-w-[1500px] mx-auto overflow-hidden p-2 w-full'>
+                <div className='block md:hidden'>
+                  <MobileSideBar />
+                  <SidebarTrigger />
+                </div>
+                <div className='hidden md:block'>
+                  <Navbar />
+                </div>
+
+                {children}
+                <Footer />
+                <GlobalDialog />
+              </div>
+            </ThemeProvider>
+          </SessionProvider>
+        </SidebarProvider>
       </body>
     </html>
   );
