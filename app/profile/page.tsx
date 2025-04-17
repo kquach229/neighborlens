@@ -4,7 +4,6 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { AvatarImage } from '@radix-ui/react-avatar';
-import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 
 const getUserData = async (userId) => {

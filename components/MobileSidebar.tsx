@@ -16,7 +16,7 @@ import { NavLogo, UserButton } from './Navbar';
 
 export default function MobileSideBar() {
   const { toggleSidebar } = useSidebar();
-  const { data: userSession } = useSession();
+  const session = useSession();
   return (
     <Sidebar>
       <SidebarHeader className='p-3'>
@@ -50,7 +50,7 @@ export default function MobileSideBar() {
       </SidebarContent>
       <SidebarSeparator />
       <SidebarFooter>
-        <UserButton />
+        <UserButton session={session} />
       </SidebarFooter>
     </Sidebar>
   );

@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma';
 import DashboardClient from './DashboardClient';
 import auth from '@/auth';
 import { redirect } from 'next/navigation';
+import UserCredits from '@/components/UserCredits';
 
 const getAllIdeas = async () => {
   const ownIdeas = await prisma?.idea?.findMany({

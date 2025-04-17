@@ -8,15 +8,6 @@ import { useDialogStore } from '@/stores/dialogStore';
 import IdeaForm from '@/components/IdeaForm';
 import { useSession } from 'next-auth/react';
 import { useMemo } from 'react';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import SignInButton from '@/components/SignInButton';
-import { redirect } from 'next/navigation';
 
 // Reusable grid for displaying ideas
 const IdeasGrid = ({ ideas }) => {

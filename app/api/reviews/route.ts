@@ -4,7 +4,11 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
   const session = await auth();
-  const body = await req.json();
+  const userId = session?.user?.id;
+  if (!userId) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   const {
     rating,
     comment,
@@ -12,46 +16,53 @@ export async function POST(req: NextRequest) {
     competitors,
     wouldIPayForThis,
     ideaId,
-  } = body;
+  } = await req.json();
 
   try {
-    const newReview = await prisma.review.create({
-      data: {
-        rating,
-        comment,
-        competitors,
-        biggestRisk,
-        wouldIPayForThis,
-        idea: { connect: { id: ideaId } },
-        user: { connect: { id: session?.user?.id } },
-      },
+    const result = await prisma.$transaction(async (tx) => {
+      const newReview = await tx.review.create({
+        data: {
+          rating,
+          comment,
+          competitors,
+          biggestRisk,
+          wouldIPayForThis,
+          idea: { connect: { id: ideaId } },
+          user: { connect: { id: userId } },
+        },
+      });
+
+      const reviewCount = await tx.review.count({
+        where: { userId },
+      });
+
+      if (reviewCount % 10 === 0) {
+        await tx.user.update({
+          where: { id: userId },
+          data: {
+            credits: { increment: 1 },
+          },
+        });
+
+        await tx.creditHistory.create({
+          data: {
+            userId,
+            amount: 1,
+            reason: 'REVIEW_REWARD',
+            metadata: `Awarded 1 credit for submitting ${reviewCount} reviews`,
+          },
+        });
+      }
+
+      return newReview;
     });
 
-    return NextResponse.json(newReview);
+    return NextResponse.json(result);
   } catch (error) {
+    console.error('[REVIEW_ERROR]', error);
     return NextResponse.json(
       { error: 'Failed to create review' },
       { status: 500 }
     );
   }
 }
-
-// both validators and founders can see all reviews on idea details page
-
-// model Review {
-//   id String @id @default(uuid())
-//   rating Float
-//   comment String?
-//   biggestRisk String?
-//   competitors String?
-//   wouldIPayForThis String?
-//   ideaId String
-//   userId String
-//   updatedAt DateTime @updatedAt
-//   createdAt DateTime @default(now())
-
-//   // Relations
-
-//   idea Idea @relation(fields: [ideaId], references: [id])
-//   user User @relation(fields: [userId], references: [id])
-// }

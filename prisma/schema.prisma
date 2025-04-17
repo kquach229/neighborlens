@@ -19,12 +19,12 @@ model User {
   name      String?
   avatarUrl String?
   createdAt DateTime @default(now())
-  planTier  PlanTier @default(FREE)
-
+  credits Int @default(0)
 
   // Relations
   ideas Idea[]
   reviews Review[]
+  creditEvents CreditHistory[]
 }
 
 
@@ -36,7 +36,6 @@ model Idea {
   solution String
   authorId String
   categories String[]
-  // images  Image[]
 
 
   pricingModel String
@@ -46,17 +45,6 @@ model Idea {
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
 }
-
-// model Image {
-//   id String @id @default(uuid())
-//   url String
-//   ideaId String
-//   idea Idea @relation(fields: [ideaId], references: [id])
-//   createdAt DateTime @default(now())
-// }
-
-
-
 
 
 model Review {
@@ -75,18 +63,21 @@ model Review {
 
   idea Idea @relation(fields: [ideaId], references: [id])
   user User @relation(fields: [userId], references: [id])
+
+  @@unique([userId, ideaId]) // prevent duplicate reviews by same user on one idea
 }
 
-model Plan {
-  id PlanTier @id @default(FREE)
-  description String?
-  features String[]
-  updatedAt DateTime @updatedAt
-  priceInCents Int
 
+model CreditHistory {
+  id String @id @default(uuid())
+  userId String
+  amount Int
+  reason CreditReason
 
+  metadata String? // Optional: details (e.g., "3rd review", "Stripe session ID", etc.)
+  createdAt DateTime @default(now())
+  user User @relation(fields: [userId], references: [id])
 }
-
 
 enum PlanTier {
   FREE
@@ -95,3 +86,9 @@ enum PlanTier {
 
 
 
+enum CreditReason {
+  PURCHASE
+  REVIEW_REWARD
+  MANUAL_ADJUSTMENT
+  REDEMPTION
+}
