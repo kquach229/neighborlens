@@ -5,14 +5,14 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarHeader,
+  SidebarSeparator,
 } from '@/components/ui/sidebar';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useSidebar } from '@/components/ui/sidebar';
 import { useSession } from 'next-auth/react';
 
 import ThemeToggler from './ThemeToggler';
-import { NavLogo } from './Navbar';
+import { NavLogo, UserButton } from './Navbar';
 
 export default function MobileSideBar() {
   const { toggleSidebar } = useSidebar();
@@ -39,8 +39,19 @@ export default function MobileSideBar() {
             </Link>
           </div>
         </SidebarGroup>
+
+        <SidebarGroup>
+          <div className='relative flex flex-col gap-5'>
+            <Link onClick={toggleSidebar} href={'/privacy-policy'}>
+              Privacy Policy
+            </Link>
+          </div>
+        </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter />
+      <SidebarSeparator />
+      <SidebarFooter>
+        <UserButton />
+      </SidebarFooter>
     </Sidebar>
   );
 }

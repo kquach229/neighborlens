@@ -22,6 +22,36 @@ export const NavLogo = () => {
   );
 };
 
+export const UserButton = () => {
+  const session = useSession();
+  if (!session.data?.user) return <SignInButton />;
+  return (
+    <Popover>
+      <PopoverTrigger>
+        <Avatar>
+          <AvatarImage src={session.data?.user?.image} alt='image' />
+          <AvatarFallback>
+            {session.data?.user?.name?.split(' ')[0][0]}
+          </AvatarFallback>
+        </Avatar>
+      </PopoverTrigger>
+      <PopoverContent className='flex flex-col gap-3'>
+        <Link
+          className='flex items-center gap-2'
+          href={`/users/user-profile/${session.data.user.id}`}>
+          <User /> <span>Profile</span>
+        </Link>
+        <span
+          className='w-full flex items-center gap-2 cursor-pointer'
+          onClick={() => signOut()}>
+          <LogOut />
+          <span>Sign Out</span>
+        </span>
+      </PopoverContent>
+    </Popover>
+  );
+};
+
 const Navbar = () => {
   const { openDialog } = useDialogStore();
   const session = useSession();
@@ -32,7 +62,7 @@ const Navbar = () => {
       </div>
 
       <div className='flex gap-5 items-center'>
-        {session.data?.user ? (
+        {session.data?.user && (
           <Button
             onClick={() =>
               openDialog(IdeaForm, {
@@ -41,41 +71,13 @@ const Navbar = () => {
             }>
             Submit Idea
           </Button>
-        ) : (
-          <div className='w-[100px]'>
-            <SignInButton />
-          </div>
         )}
 
         <Link href='/dashboard'>Dashboard</Link>
         <Link href='/about'>About</Link>
         <Link href='/pricing'>Pricing</Link>
         <ThemeToggler />
-        {session.data?.user && (
-          <Popover>
-            <PopoverTrigger>
-              <Avatar>
-                <AvatarImage src={session.data?.user?.image} alt='image' />
-                <AvatarFallback>
-                  {session.data?.user?.name?.split(' ')[0][0]}
-                </AvatarFallback>
-              </Avatar>
-            </PopoverTrigger>
-            <PopoverContent className='flex flex-col gap-3'>
-              <Link
-                className='flex items-center gap-2'
-                href={`/users/user-profile/${session.data.user.id}`}>
-                <User /> <span>Profile</span>
-              </Link>
-              <span
-                className='w-full flex items-center gap-2 cursor-pointer'
-                onClick={() => signOut()}>
-                <LogOut />
-                <span>Sign Out</span>
-              </span>
-            </PopoverContent>
-          </Popover>
-        )}
+        <UserButton />
       </div>
     </div>
   );
