@@ -19,6 +19,7 @@ import {
 import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 const formSchema = z.object({
   rating: z.preprocess((val) => Number(val), z.number().min(1).max(5)),
@@ -69,12 +70,13 @@ const ReviewForm = ({ ideaId, idea, alreadyReviewed }: { ideaId: string }) => {
         body: JSON.stringify({ ...data, ideaId }),
       });
 
-      if (!res.ok) throw new Error('Failed to submit review');
-
-      reset();
-      router.refresh();
-
-      console.log('Review submitted!');
+      if (!res.ok) {
+        throw new Error('Failed to submit review');
+      } else {
+        reset();
+        router.refresh();
+        toast.success('Review submitted!');
+      }
     } catch (err) {
       console.error(err);
     }
