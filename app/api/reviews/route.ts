@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
         where: { userId },
       });
 
-      if (reviewCount % 10 === 0) {
+      if (reviewCount % 5 === 0) {
         await tx.user.update({
           where: { id: userId },
           data: {
