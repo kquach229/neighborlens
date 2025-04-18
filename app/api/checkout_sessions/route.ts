@@ -18,7 +18,7 @@ export async function POST(req) {
           price:
             product_name == 'single'
               ? 'price_1REajuGhCEdRAWImsmOdJYQp'
-              : 'price_1REb4mGhCEdRAWImnfrCKCvy',
+              : 'price_1RFMayGhCEdRAWImCS2jdBE4',
           quantity: 1,
         },
       ],

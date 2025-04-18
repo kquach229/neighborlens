@@ -24,7 +24,9 @@ export default function PricingPage() {
 
       const data = await res.json();
       router.push(data.url);
-    } catch (error) {}
+    } catch (error) {
+      console.error('Checkout error:', error);
+    }
   };
 
   return (
@@ -40,20 +42,16 @@ export default function PricingPage() {
       <div className='grid gap-10 sm:grid-cols-1 md:grid-cols-2'>
         {/* Single Credit Plan */}
         <Card className='w-full max-w-sm transition-all duration-300 hover:shadow-xl'>
-          <CardHeader className='flex justify-between'>
+          <CardHeader className='flex justify-between items-center'>
             <h2>Single</h2>
-            <Badge>Popular</Badge>
           </CardHeader>
           <CardContent className='p-6'>
-            <div className='flex justify-between'>
-              <h2 className='text-2xl font-semibold mb-2'>1 Credit</h2>
-            </div>
-
-            <p className='mb-3 '>Perfect for trying out ValidateLens.</p>
-            <p className='text-4xl font-bold  mb-6'>$5</p>
-            <ul className='text-sm space-y-2  mb-6'>
+            <h2 className='text-2xl font-semibold mb-2'>1 Credit</h2>
+            <p className='mb-3'>Perfect for trying out ValidateLens.</p>
+            <p className='text-4xl font-bold mb-6'>$1</p>
+            <ul className='text-sm space-y-2 mb-6'>
               <li>✅ Submit 1 idea</li>
-              <li>✅ Get started for just $5</li>
+              <li>✅ Get started for just $1</li>
             </ul>
             <Button
               onClick={() => handleGoToCheckout('single')}
@@ -65,21 +63,22 @@ export default function PricingPage() {
 
         {/* Bundle Plan */}
         <Card className='w-full max-w-sm transition-all duration-300 hover:shadow-xl'>
-          <CardHeader>
+          <CardHeader className='flex justify-between items-center'>
             <h2 className=''>Bundle</h2>
+            <Badge>Popular</Badge>
           </CardHeader>
           <CardContent className='p-6'>
-            <h2 className='text-2xl font-semibold mb-2'>3 Credits</h2>
-            <p className='mb-3 '>Best value for ongoing idea validation.</p>
-            <p className='text-4xl font-bold  mb-6'>$10</p>
-            <ul className='text-sm space-y-2  mb-6'>
-              <li>✅ Submit 3 ideas</li>
+            <h2 className='text-2xl font-semibold mb-2'>7 Credits</h2>
+            <p className='mb-3'>Best value for ongoing idea validation.</p>
+            <p className='text-4xl font-bold mb-6'>$5</p>
+            <ul className='text-sm space-y-2 mb-6'>
+              <li>✅ Submit 7 ideas</li>
               <li>✅ Save by purchasing more upfront</li>
             </ul>
             <Button
               onClick={() => handleGoToCheckout('bundle')}
               className='w-full cursor-pointer'>
-              Buy 3 Credits
+              Buy 7 Credits
             </Button>
           </CardContent>
         </Card>
