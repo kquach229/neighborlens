@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react';
 import { Edit, Trash } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
+import { Card, CardContent } from './ui/card';
+import { useDialogStore } from '@/stores/dialogStore';
+import { Button } from './ui/button';
 
 export default function ReusableEditFormButton({
   data,
@@ -14,7 +17,7 @@ export default function ReusableEditFormButton({
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  console.log('dataid', dataId);
+  const { openDialog, closeDialog } = useDialogStore();
 
   useEffect(() => {
     const currentParams = new URLSearchParams(searchParams.toString());
@@ -29,7 +32,36 @@ export default function ReusableEditFormButton({
     router.replace(newUrl, { scroll: false });
   }, [isEditing, router, searchParams]);
 
-  const handleDeleteIdea = async (dataId) => {
+  const DeleteIdeaDialog = ({ dataId, data }) => {
+    return (
+      <div className='p-6 text-center space-y-6'>
+        <h3 className='text-xl font-semibold'>
+          Delete idea <span className='italic'>&quot;{data.title}&quot;</span>?
+        </h3>
+        <p className='text-muted-foreground text-sm'>
+          This action cannot be undone. Are you sure you want to delete this
+          idea?
+        </p>
+
+        <div className='flex justify-center gap-4 pt-2'>
+          <Button
+            variant='outline'
+            className='w-[6rem]'
+            onClick={() => closeDialog()}>
+            Cancel
+          </Button>
+          <Button
+            variant='destructive'
+            className='w-[6rem]'
+            onClick={() => handleDeleteIdea(dataId)}>
+            Delete
+          </Button>
+        </div>
+      </div>
+    );
+  };
+
+  const handleDeleteIdea = async () => {
     const res = await fetch(`/api/ideas/${dataId}`, {
       method: 'DELETE',
       headers: {
@@ -39,6 +71,7 @@ export default function ReusableEditFormButton({
     router.push('/dashboard');
 
     if (res.ok) {
+      closeDialog();
       toast.success('Idea deleted successfully');
     }
   };
@@ -53,7 +86,7 @@ export default function ReusableEditFormButton({
           <Edit />
         </button>
 
-        <Trash onClick={() => handleDeleteIdea(dataId)} />
+        <Trash onClick={() => openDialog(DeleteIdeaDialog, { dataId, data })} />
       </div>
 
       {isEditing && (
