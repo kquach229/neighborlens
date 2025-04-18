@@ -25,12 +25,11 @@ const formSchema = z.object({
   title: z.string().min(1, {
     message: 'Title must be at least 1 character',
   }),
-  briefDescription: z.string().optional(),
-  problem: z.string().min(5, {
-    message: 'Problem must be at least 5 characters',
-  }),
-  solution: z.string().min(5, {
-    message: 'Solution must be at least 5 characters',
+  briefDescription: z
+    .string()
+    .min(5, { message: 'Brief description must be at least 5 characters' }),
+  problemItSolves: z.string().min(5, {
+    message: 'Problem Solved must be at least 5 characters',
   }),
   categories: z.coerce
     .string()
@@ -69,8 +68,7 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose }) => {
     defaultValues: data || {
       title: '',
       briefDescription: '',
-      problem: '',
-      solution: '',
+      problemItSolves: '',
       categories: [],
       pricingModel: '',
       pricingDetails: '',
@@ -114,7 +112,7 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose }) => {
     <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
       <h3 className='text-xl font-semibold'>Submit an Idea</h3>
 
-      <div>
+      <div className='space-y-2'>
         <Label>Title</Label>
         <Input
           {...register('title')}
@@ -126,7 +124,7 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose }) => {
         )}
       </div>
 
-      <div>
+      <div className='space-y-2'>
         <Label>Brief Description</Label>
         <Textarea
           {...register('briefDescription')}
@@ -138,30 +136,20 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose }) => {
           </p>
         )}
       </div>
-
-      <div>
-        <Label>Problem</Label>
+      <div className='space-y-2'>
+        <Label>Problem It Solves</Label>
         <Textarea
-          {...register('problem')}
+          {...register('problemItSolves')}
           className='border p-2 w-full h-[10rem]'
         />
-        {errors.problem && (
-          <p className='text-red-500 text-sm'>{errors.problem.message}</p>
+        {errors.problemItSolves && (
+          <p className='text-red-500 text-sm'>
+            {errors.problemItSolves.message}
+          </p>
         )}
       </div>
 
-      <div>
-        <Label>Solution</Label>
-        <Textarea
-          {...register('solution')}
-          className='border p-2 w-full h-[10rem]'
-        />
-        {errors.solution && (
-          <p className='text-red-500 text-sm'>{errors.solution.message}</p>
-        )}
-      </div>
-
-      <div>
+      <div className='space-y-2'>
         <Label>Categories</Label>
         <ReusableMultiSelct
           className='z-50'
@@ -185,7 +173,7 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose }) => {
         )}
       </div>
 
-      <div>
+      <div className='space-y-2'>
         <Label>Pricing Model</Label>
         <Controller
           control={control}
@@ -211,7 +199,7 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose }) => {
         )}
       </div>
 
-      <div>
+      <div className='space-y-2'>
         <Label>Pricing Details</Label>
         <Textarea
           {...register('pricingDetails')}

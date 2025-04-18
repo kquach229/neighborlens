@@ -9,8 +9,9 @@ const ReviewCard = ({ review }) => {
   const {
     rating,
     comment,
-    biggestRisk,
-    competitors,
+    whatILike,
+    whatIDislike,
+    suggestions,
     wouldIPayForThis,
     createdAt,
     user,
@@ -50,23 +51,36 @@ const ReviewCard = ({ review }) => {
       </CardHeader>
 
       <CardContent className='space-y-4 text-sm'>
-        {biggestRisk && (
+        {comment && (
           <div>
-            <Label className='text-xs'>Biggest Risk</Label>
-            <p className='text-muted-foreground'>{biggestRisk}</p>
+            <Label className='text-xs'>Comments</Label>
+            <p className='text-muted-foreground'>{comment}</p>
           </div>
         )}
 
-        {competitors && (
+        {whatILike && (
           <div>
-            <Label className='text-xs'>Competitors</Label>
-            <p className='text-muted-foreground'>{competitors}</p>
+            <Label className='text-xs'>What I Like</Label>
+            <p className='text-muted-foreground'>{whatILike}</p>
+          </div>
+        )}
+        {whatIDislike && (
+          <div>
+            <Label className='text-xs'>What I Dislike</Label>
+            <p className='text-muted-foreground'>{whatIDislike}</p>
           </div>
         )}
         {wouldIPayForThis && (
           <div className='text-sm'>
             <Label className='text-xs'>Would I pay for this?</Label>
             <p className='text-muted-foreground'>{wouldIPayForThis}</p>
+          </div>
+        )}
+
+        {suggestions && (
+          <div className='text-sm'>
+            <Label className='text-xs'>Suggestions</Label>
+            <p className='text-muted-foreground'>{suggestions}</p>
           </div>
         )}
       </CardContent>

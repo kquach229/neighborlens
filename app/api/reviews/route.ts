@@ -12,8 +12,9 @@ export async function POST(req: NextRequest) {
   const {
     rating,
     comment,
-    biggestRisk,
-    competitors,
+    whatILike,
+    whatIDislike,
+    suggestions,
     wouldIPayForThis,
     ideaId,
   } = await req.json();
@@ -24,8 +25,9 @@ export async function POST(req: NextRequest) {
         data: {
           rating,
           comment,
-          competitors,
-          biggestRisk,
+          whatILike,
+          whatIDislike,
+          suggestions,
           wouldIPayForThis,
           idea: { connect: { id: ideaId } },
           user: { connect: { id: userId } },

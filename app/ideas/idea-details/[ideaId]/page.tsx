@@ -64,13 +64,8 @@ const IdeaDetails = async ({ params, searchParams }) => {
               </div>
 
               <div>
-                <Label className='text-xl'>Problem</Label>
-                <p>{idea?.problem}</p>
-              </div>
-
-              <div>
-                <Label className='text-xl'>Solution</Label>
-                <p>{idea?.solution}</p>
+                <Label className='text-xl'>Problem It Solves</Label>
+                <p>{idea?.problemItSolves}</p>
               </div>
 
               <div>

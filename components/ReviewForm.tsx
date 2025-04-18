@@ -12,9 +12,9 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
+  SelectLabel,
 } from './ui/select';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
@@ -23,10 +23,15 @@ import { toast } from 'sonner';
 
 const formSchema = z.object({
   rating: z.preprocess((val) => Number(val), z.number().min(1).max(5)),
-  comment: z.string().optional(),
-  biggestRisk: z.string().optional(),
-  competitors: z.string().optional(),
+  comment: z.string().min(5, { message: 'Minimum of 5 characters required' }),
+  whatILike: z.string().min(5, { message: 'Minimum of 5 characters required' }),
+  whatIDislike: z
+    .string()
+    .min(5, { message: 'Minimum of 5 characters required' }),
   wouldIPayForThis: z.enum(['yes', 'no', 'not sure']),
+  suggestions: z
+    .string()
+    .min(5, { message: 'Minimum of 5 characters required' }),
 });
 
 type FormSchema = z.infer<typeof formSchema>;
@@ -43,16 +48,18 @@ const ReviewForm = ({ ideaId, idea, alreadyReviewed }: { ideaId: string }) => {
       ? {
           rating: alreadyReviewed.rating || 1, // or whatever default makes sense
           comment: alreadyReviewed.comment || '',
-          biggestRisk: alreadyReviewed.biggestRisk || '',
-          competitors: alreadyReviewed.competitors || '',
-          wouldIPayForThis: alreadyReviewed.wouldIPayForThis || 'not sure',
+          whatILike: alreadyReviewed.whatILike || '',
+          whatIDislike: alreadyReviewed.whatIDislike || '',
+          suggestions: alreadyReviewed.suggestions || '',
+          wouldIPayForThis: alreadyReviewed.wouldIPayForThis || '',
         }
       : {
           rating: 1,
           comment: '',
-          biggestRisk: '',
-          competitors: '',
-          wouldIPayForThis: 'not sure',
+          whatILike: '',
+          whatIDislike: '',
+          suggestions: '',
+          wouldIPayForThis: '',
         },
 
     resolver: zodResolver(formSchema),
@@ -97,7 +104,7 @@ const ReviewForm = ({ ideaId, idea, alreadyReviewed }: { ideaId: string }) => {
           </span>
         )}
 
-        <div className='space-y-1'>
+        <div className='space-y-3'>
           <Label htmlFor='rating'>Rating (1–5)</Label>
           <Input
             id='rating'
@@ -114,7 +121,7 @@ const ReviewForm = ({ ideaId, idea, alreadyReviewed }: { ideaId: string }) => {
           )}
         </div>
 
-        <div className='space-y-1'>
+        <div className='space-y-3'>
           <Label htmlFor='comment'>Comment</Label>
           <Textarea
             id='comment'
@@ -127,33 +134,35 @@ const ReviewForm = ({ ideaId, idea, alreadyReviewed }: { ideaId: string }) => {
           )}
         </div>
 
-        <div className='space-y-1'>
-          <Label htmlFor='biggestRisk'>Biggest Risk</Label>
-          <Input
-            id='biggestRisk'
+        <div className='space-y-3'>
+          <Label htmlFor='whatILike'>What I Like</Label>
+          <Textarea
+            id='whatILike'
             className='w-full'
             disabled={alreadyReviewed}
-            {...register('biggestRisk')}
+            {...register('whatILike')}
           />
-          {errors.biggestRisk && (
-            <p className='text-sm text-red-500'>{errors.biggestRisk.message}</p>
+          {errors.whatILike && (
+            <p className='text-sm text-red-500'>{errors.whatILike.message}</p>
           )}
         </div>
 
-        <div className='space-y-1'>
-          <Label htmlFor='competitors'>Competitors</Label>
+        <div className='space-y-3'>
+          <Label htmlFor='whatIDislike'>What I Dislike</Label>
           <Textarea
-            id='competitors'
-            className='w-full min-h-[80px]'
+            id='whatIDislike'
+            className='w-full'
             disabled={alreadyReviewed}
-            {...register('competitors')}
+            {...register('whatIDislike')}
           />
-          {errors.competitors && (
-            <p className='text-sm text-red-500'>{errors.competitors.message}</p>
+          {errors.whatIDislike && (
+            <p className='text-sm text-red-500'>
+              {errors.whatIDislike.message}
+            </p>
           )}
         </div>
 
-        <div className='space-y-1'>
+        <div className='space-y-3'>
           <Label htmlFor='wouldIPayForThis'>Would you pay for this?</Label>
           <Controller
             control={control}
@@ -168,6 +177,7 @@ const ReviewForm = ({ ideaId, idea, alreadyReviewed }: { ideaId: string }) => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
+                    <SelectLabel>Select One</SelectLabel>
                     <SelectItem value='yes'>Yes</SelectItem>
                     <SelectItem value='no'>No</SelectItem>
                     <SelectItem value='not sure'>Not Sure</SelectItem>
@@ -180,6 +190,19 @@ const ReviewForm = ({ ideaId, idea, alreadyReviewed }: { ideaId: string }) => {
             <p className='text-sm text-red-500'>
               {errors.wouldIPayForThis.message}
             </p>
+          )}
+        </div>
+
+        <div className='space-y-3'>
+          <Label htmlFor='suggestions'>Suggestions</Label>
+          <Textarea
+            id='suggestions'
+            className='w-full'
+            disabled={alreadyReviewed}
+            {...register('suggestions')}
+          />
+          {errors.suggestions && (
+            <p className='text-sm text-red-500'>{errors.suggestions.message}</p>
           )}
         </div>
 

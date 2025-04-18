@@ -7,7 +7,8 @@ import { Button } from '@/components/ui/button';
 import { useDialogStore } from '@/stores/dialogStore';
 import IdeaForm from '@/components/IdeaForm';
 import { useSession } from 'next-auth/react';
-import { useMemo } from 'react';
+import { Suspense, useMemo } from 'react';
+import DashboardMetrics from './DashboardMetrics';
 
 // Reusable grid for displaying ideas
 const IdeasGrid = ({ ideas }) => {
@@ -131,6 +132,12 @@ const DashboardClient = ({ allIdeas }) => {
           reviewedIdeas={reviewedIdeas}
         />
       )}
+      <div className='w-full mt-20'>
+        <h5>Metrics</h5>
+        <Suspense fallback={<div>Loading....</div>}>
+          <DashboardMetrics role={role} />
+        </Suspense>
+      </div>
     </div>
   );
 };
