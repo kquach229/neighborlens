@@ -25,6 +25,9 @@ export async function GET(
 ) {
   const idea = await prisma.idea.findUnique({
     where: { id: params.id },
+    include: {
+      reviews: true,
+    },
   });
 
   return NextResponse.json(idea);
@@ -32,7 +35,7 @@ export async function GET(
 
 export async function DELETE(req: NextRequest, { params }) {
   const { id } = await params;
-  console.log('djflsjfklsjfl', id);
+
   try {
     await prisma.review.deleteMany({
       where: { ideaId: params.id },
@@ -46,8 +49,6 @@ export async function DELETE(req: NextRequest, { params }) {
         id: id,
       },
     });
-
-    console.log('ideaId', id);
 
     return NextResponse.json(deletedIdea);
   } catch (err) {

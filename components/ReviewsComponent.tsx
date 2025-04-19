@@ -9,9 +9,19 @@ import {
 } from './ui/carousel';
 
 const ReviewsComponent = ({ reviews, ideaTitle }) => {
+  const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
   return (
     <div>
       <h3>Reviews For {ideaTitle} </h3>
+
+      <div className='mt-5'>
+        {reviews.length > 0 && (
+          <div className='text-sm font-medium'>
+            Average Rating: {totalRating} / {reviews.length * 5} Based On{' '}
+            {reviews.length} {reviews.length > 1 ? 'Reviews' : 'Review'}
+          </div>
+        )}
+      </div>
 
       <div className='mt-10 p-10 w-full'>
         {!reviews.length ? (

@@ -10,27 +10,40 @@ const IdeaCard = ({ idea }) => {
     id,
     title,
     briefDescription,
-    problem,
+    pricingModel,
+    pricingDetails,
     updatedAt,
-    solution,
+    problemItSolves,
     createdAt,
     categories,
+    reviews,
   } = idea;
   const numberOfDaysSincePosting = getTimeDifference(createdAt);
   const numberOfDaysSinceUpdated = getTimeDifference(updatedAt);
+  const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
 
   return (
     <Card className='h-auto cursor-pointer hover:shadow-2xl duration-1000'>
       <Link href={`/ideas/idea-details/${id}`}>
         <CardHeader>
-          <div className='text-xs text-muted-foreground text-right'>
-            Posted {numberOfDaysSincePosting} Ago{' '}
+          <div className='text-right space-y-2'>
+            <div className='text-xs text-muted-foreground '>
+              {' '}
+              Posted {numberOfDaysSincePosting} Ago{' '}
+            </div>
+            <div>
+              {reviews.length > 0 && (
+                <div className='text-sm font-medium'>
+                  Avg Rating: {totalRating} / {reviews.length * 5}
+                </div>
+              )}
+            </div>
           </div>
           <div className='flex justify-between items-center'>
             <h5>{title}</h5>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className='mt-5'>
           <div>
             <Label>Brief Description</Label>
             {briefDescription && (
@@ -41,16 +54,23 @@ const IdeaCard = ({ idea }) => {
           </div>
 
           <div>
-            <Label>Problem</Label>
+            <Label>Problem It Solves</Label>
             <div className='text-muted-foreground text-sm mt-2 mb-5'>
-              {substring(problem, 300)}
+              {substring(problemItSolves, 300)}
             </div>
           </div>
 
           <div>
-            <Label>Solution</Label>
+            <Label>Pricing Details</Label>
             <div className='text-muted-foreground text-sm mt-2 mb-5'>
-              {substring(solution, 300)}
+              {substring(pricingDetails, 300)}
+            </div>
+          </div>
+
+          <div>
+            <Label>Pricing Model</Label>
+            <div className='text-muted-foreground text-sm mt-2 mb-5'>
+              {pricingModel}
             </div>
           </div>
         </CardContent>
