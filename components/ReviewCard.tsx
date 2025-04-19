@@ -44,20 +44,13 @@ const ReviewCard = ({ review }) => {
         </div>
         <div className='flex gap-1'>{stars}</div>
         {comment && (
-          <p className='text-base text-muted-foreground leading-relaxed'>
-            {comment}
+          <p className='text-base text-muted-foreground leading-relaxed italic'>
+            "{comment}"
           </p>
         )}
       </CardHeader>
 
       <CardContent className='space-y-4 text-sm'>
-        {comment && (
-          <div>
-            <Label className='text-xs'>Comments</Label>
-            <p className='text-muted-foreground'>{comment}</p>
-          </div>
-        )}
-
         {whatILike && (
           <div>
             <Label className='text-xs'>What I Like</Label>
