@@ -38,3 +38,16 @@ export const maskName = (name: string) => {
   const masked = '*'.repeat(name.length - 3);
   return visible + masked;
 };
+
+export const getReviewsAverageMarkup = (reviews, showLongVersion) => {
+  if (!reviews.length) return;
+  const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+  const totalReviews = reviews.length;
+  if (showLongVersion) {
+    return `${totalRating} / ${totalReviews * 5} Based On ${totalReviews} ${
+      totalReviews > 1 ? 'Reviews' : 'Review'
+    }`;
+  } else {
+    return `Avg Rating: ${totalRating} / ${reviews.length * 5}`;
+  }
+};

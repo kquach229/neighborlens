@@ -1,6 +1,10 @@
 import React from 'react';
 import { Card, CardContent, CardFooter, CardHeader } from './ui/card';
-import { getTimeDifference, substring } from '@/lib/utils';
+import {
+  getReviewsAverageMarkup,
+  getTimeDifference,
+  substring,
+} from '@/lib/utils';
 import { Badge } from './ui/badge';
 import { Label } from './ui/label';
 import Link from 'next/link';
@@ -31,13 +35,12 @@ const IdeaCard = ({ idea }) => {
               {' '}
               Posted {numberOfDaysSincePosting} Ago{' '}
             </div>
-            <div>
-              {reviews.length > 0 && (
-                <div className='text-sm font-medium'>
-                  Avg Rating: {totalRating} / {reviews.length * 5}
-                </div>
-              )}
-            </div>
+
+            {reviews.length > 0 && (
+              <div className='text-sm font-medium'>
+                {getReviewsAverageMarkup(reviews, false)}
+              </div>
+            )}
           </div>
           <div className='flex justify-between items-center'>
             <h5>{title}</h5>

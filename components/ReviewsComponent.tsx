@@ -7,9 +7,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from './ui/carousel';
+import { getReviewsAverageMarkup } from '@/lib/utils';
 
 const ReviewsComponent = ({ reviews, ideaTitle }) => {
-  const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
   return (
     <div>
       <h3>Reviews For {ideaTitle} </h3>
@@ -17,8 +17,7 @@ const ReviewsComponent = ({ reviews, ideaTitle }) => {
       <div className='mt-5'>
         {reviews.length > 0 && (
           <div className='text-sm font-medium'>
-            Average Rating: {totalRating} / {reviews.length * 5} Based On{' '}
-            {reviews.length} {reviews.length > 1 ? 'Reviews' : 'Review'}
+            Average Rating: {getReviewsAverageMarkup(reviews, true)}
           </div>
         )}
       </div>
