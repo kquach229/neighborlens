@@ -2,20 +2,25 @@
 
 import React, { useEffect } from 'react';
 import { ToggleGroup, ToggleGroupItem } from './ui/toggle-group';
-import { ROLES, useRoleStore } from '@/stores/roleStore';
+import { ROLES, useRoleStore, Role } from '@/stores/roleStore';
 
 const RoleToggle = () => {
-  const { role, setRole } = useRoleStore();
+  const role = useRoleStore((state) => state.role);
+  const setRole = useRoleStore((state) => state.setRole);
 
-  // Using sessionStorage instead of localStorage
   useEffect(() => {
-    const storedRole = sessionStorage.getItem('role-storage') || ROLES.FOUNDER;
-    setRole(storedRole); // This only sets the initial role if needed
+    const stored = sessionStorage.getItem('role-storage');
+    if (stored === ROLES.FOUNDER || stored === ROLES.VALIDATOR) {
+      setRole(stored);
+    } else {
+      setRole(ROLES.FOUNDER); // fallback
+    }
   }, [setRole]);
 
   const handleRoleChange = (newRole: string) => {
-    setRole(newRole); // This automatically updates sessionStorage via zustand's persist
-    sessionStorage.setItem('role-storage', newRole); // Manually update sessionStorage
+    if (newRole !== ROLES.FOUNDER && newRole !== ROLES.VALIDATOR) return;
+    setRole(newRole as Role);
+    sessionStorage.setItem('role-storage', newRole);
   };
 
   return (

@@ -55,7 +55,15 @@ const categoriesList = [
   { value: 'climate/ustainability', label: 'Climate/Sustainability' },
 ];
 
-const IdeaForm = ({ dataId, data, onSuccess, onClose, setCredits }) => {
+interface IdeaFormProps {
+  dataId?: string;
+  data?: Partial<FormSchema>;
+  onSuccess?: () => void;
+  onClose?: () => void;
+  children?: React.ReactNode;
+}
+
+const IdeaForm = ({ dataId, data, onSuccess, onClose }: IdeaFormProps) => {
   const {
     reset,
     register,

@@ -1,13 +1,23 @@
 import { prisma } from '@/lib/prisma';
 import auth from '@/auth';
 import { NextResponse } from 'next/server';
+import { Session } from 'next-auth';
 
-export async function POST(req: Request) {
+interface IdeaRequestBody {
+  title: string;
+  briefDescription: string;
+  problemItSolves: string;
+  categories: string[];
+  pricingModel: string;
+  pricingDetails: string;
+}
+
+export async function POST(req: Request): Promise<NextResponse> {
   try {
-    const body = await req.json();
-    const session = await auth();
+    const body: IdeaRequestBody = await req.json();
+    const session: Session | null = await auth();
 
-    if (!session || !session.user.id) {
+    if (!session?.user?.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -54,11 +64,10 @@ export async function POST(req: Request) {
     ]);
 
     return NextResponse.json(newIdea);
-  } catch (err) {
+  } catch (err: unknown) {
     console.error('Error submitting idea:', err);
-    return NextResponse.json(
-      { error: 'Something went wrong.' },
-      { status: 500 }
-    );
+    const errorMessage =
+      err instanceof Error ? err.message : 'Something went wrong';
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

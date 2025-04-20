@@ -4,29 +4,34 @@ import { persist } from 'zustand/middleware';
 export const ROLES = {
   FOUNDER: 'FOUNDER',
   VALIDATOR: 'VALIDATOR',
-};
+} as const;
 
-export const useRoleStore = create(
+export type Role = keyof typeof ROLES;
+
+interface RoleState {
+  role: Role;
+  toggleRole: () => void;
+  setRole: (newRole: Role) => void;
+}
+
+export const useRoleStore = create<RoleState>()(
   persist(
     (set) => ({
-      role: 'FOUNDER', // Default role
+      role: 'FOUNDER',
 
-      // Toggles between FOUNDER and VALIDATOR
       toggleRole: () =>
         set((state) => ({
           role: state.role === 'FOUNDER' ? 'VALIDATOR' : 'FOUNDER',
         })),
 
-      // Directly set role (e.g., setRole('VALIDATOR'))
       setRole: (newRole) => set({ role: newRole }),
     }),
     {
-      name: 'role-storage', // Key used to store the role in localStorage automatically
+      name: 'role-storage',
     }
   )
 );
 
-// Helper to check if current role is founder
 export const useIsFounder = () => {
   return useRoleStore((state) => state.role === 'FOUNDER');
 };

@@ -1,17 +1,40 @@
 'use client';
 
+import { FC, Suspense } from 'react';
+import { useSession } from 'next-auth/react';
 import IdeaCard from '@/components/IdeaCard';
 import { ROLES, useRoleStore } from '@/stores/roleStore';
 import RoleToggle from '@/components/RoleToggle';
-import { Button } from '@/components/ui/button';
-import { useDialogStore } from '@/stores/dialogStore';
-import IdeaForm from '@/components/IdeaForm';
-import { useSession } from 'next-auth/react';
-import { Suspense, useMemo } from 'react';
 import DashboardMetrics from './DashboardMetrics';
+import CreateIdeaButton from '@/components/CreateIdeaButton';
+import Loading from '../loading';
 
-// Reusable grid for displaying ideas
-const IdeasGrid = ({ ideas }) => {
+import type { Idea } from '@/types/types';
+
+type DashboardClientProps = {
+  allIdeas: Idea[];
+};
+
+type IdeasGridProps = {
+  ideas: Idea[];
+};
+
+type SectionProps = {
+  title: string;
+  ideas: Idea[];
+  emptyMessage: string;
+};
+
+type FounderViewProps = {
+  ownIdeas: Idea[];
+};
+
+type ValidatorViewProps = {
+  reviewedIdeas: Idea[];
+  notYetValidated: Idea[];
+};
+
+const IdeasGrid: FC<IdeasGridProps> = ({ ideas }) => {
   if (ideas.length === 0) return null;
 
   return (
@@ -23,8 +46,7 @@ const IdeasGrid = ({ ideas }) => {
   );
 };
 
-// Section block with heading + grid
-const Section = ({ title, ideas, emptyMessage }) => (
+const Section: FC<SectionProps> = ({ title, ideas, emptyMessage }) => (
   <section className='mt-16'>
     <h4 className='text-lg font-semibold'>{title}</h4>
     {ideas.length > 0 ? (
@@ -35,19 +57,7 @@ const Section = ({ title, ideas, emptyMessage }) => (
   </section>
 );
 
-// Create Idea Button
-const CreateIdeaButton = () => {
-  const { openDialog } = useDialogStore();
-
-  return (
-    <Button onClick={() => openDialog(IdeaForm, { title: 'Create Your Idea' })}>
-      Create Idea
-    </Button>
-  );
-};
-
-// Founder View
-const FounderView = ({ ownIdeas }) => {
+const FounderView: FC<FounderViewProps> = ({ ownIdeas }) => {
   return (
     <div>
       <div className='flex justify-end'>
@@ -65,8 +75,10 @@ const FounderView = ({ ownIdeas }) => {
   );
 };
 
-// Validator View
-const ValidatorView = ({ notYetValidated, reviewedIdeas }) => (
+const ValidatorView: FC<ValidatorViewProps> = ({
+  notYetValidated,
+  reviewedIdeas,
+}) => (
   <div>
     <Section
       title='Waiting for Validation'
@@ -81,34 +93,29 @@ const ValidatorView = ({ notYetValidated, reviewedIdeas }) => (
   </div>
 );
 
-// Main Dashboard Client
-const DashboardClient = ({ allIdeas }) => {
+const DashboardClient: FC<DashboardClientProps> = ({ allIdeas }) => {
+  const { data: session, status } = useSession();
   const { role } = useRoleStore();
-  const session = useSession();
-  const currentUserId = session.data?.user.id;
 
-  const { ownIdeas, reviewedIdeas, notYetValidated } = useMemo(() => {
-    const own = [];
-    const reviewed = [];
-    const notValidated = [];
+  if (status === 'loading') return <Loading />;
+  if (!session?.user?.id) return null;
 
-    for (const idea of allIdeas) {
-      const isOwn = idea.authorId === currentUserId;
-      const hasReviewed = idea.reviews.some(
-        (review) => review.userId === currentUserId
-      );
+  const currentUserId = session.user.id;
 
-      if (isOwn) own.push(idea);
-      else if (hasReviewed) reviewed.push(idea);
-      else notValidated.push(idea);
-    }
+  const ownIdeas: Idea[] = [];
+  const reviewedIdeas: Idea[] = [];
+  const notYetValidated: Idea[] = [];
 
-    return {
-      ownIdeas: own,
-      reviewedIdeas: reviewed,
-      notYetValidated: notValidated,
-    };
-  }, [allIdeas, currentUserId]);
+  for (const idea of allIdeas) {
+    const isOwn = idea.authorId === currentUserId;
+    const hasReviewed = (idea.reviews ?? []).some(
+      (review) => review.userId === currentUserId
+    );
+
+    if (isOwn) ownIdeas.push(idea);
+    else if (hasReviewed) reviewedIdeas.push(idea);
+    else notYetValidated.push(idea);
+  }
 
   return (
     <div>
@@ -132,6 +139,7 @@ const DashboardClient = ({ allIdeas }) => {
           reviewedIdeas={reviewedIdeas}
         />
       )}
+
       <div className='w-full mt-20'>
         <h5>Metrics</h5>
         <Suspense fallback={<div>Loading....</div>}>

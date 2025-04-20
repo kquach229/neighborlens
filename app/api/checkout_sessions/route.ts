@@ -27,10 +27,10 @@ export async function POST(req) {
       cancel_url: `${origin}/?canceled=true`,
     });
     return NextResponse.json({ url: session.url });
-  } catch (err) {
+  } catch (error) {
     return NextResponse.json(
-      { error: err.message },
-      { status: err.statusCode || 500 }
+      { error: error.message },
+      { status: error.statusCode || 500 }
     );
   }
 }

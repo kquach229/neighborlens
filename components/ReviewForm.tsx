@@ -5,7 +5,7 @@ import { Label } from './ui/label';
 import { Textarea } from './ui/textarea';
 import { Input } from './ui/input';
 import { z } from 'zod';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Select,
@@ -21,6 +21,7 @@ import { Card } from './ui/card';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
+// ---- Zod schema for validation
 const formSchema = z.object({
   rating: z.preprocess((val) => Number(val), z.number().min(1).max(5)),
   comment: z.string().min(5, { message: 'Minimum of 5 characters required' }),
@@ -36,7 +37,28 @@ const formSchema = z.object({
 
 type FormSchema = z.infer<typeof formSchema>;
 
-const ReviewForm = ({ ideaId, idea, alreadyReviewed }: { ideaId: string }) => {
+type AlreadyReviewed = {
+  rating: number;
+  comment: string;
+  whatILike: string;
+  whatIDislike: string;
+  suggestions: string;
+  wouldIPayForThis: 'yes' | 'no' | 'not sure';
+};
+
+interface ReviewFormProps {
+  ideaId: string;
+  idea?: { title: string };
+  alreadyReviewed?: AlreadyReviewed;
+}
+
+const ReviewForm: React.FC<ReviewFormProps> = ({
+  ideaId,
+  idea,
+  alreadyReviewed,
+}) => {
+  const router = useRouter();
+
   const {
     register,
     control,
@@ -44,59 +66,47 @@ const ReviewForm = ({ ideaId, idea, alreadyReviewed }: { ideaId: string }) => {
     formState: { errors },
     reset,
   } = useForm<FormSchema>({
+    resolver: zodResolver(formSchema),
     defaultValues: alreadyReviewed
-      ? {
-          rating: alreadyReviewed.rating || 1, // or whatever default makes sense
-          comment: alreadyReviewed.comment || '',
-          whatILike: alreadyReviewed.whatILike || '',
-          whatIDislike: alreadyReviewed.whatIDislike || '',
-          suggestions: alreadyReviewed.suggestions || '',
-          wouldIPayForThis: alreadyReviewed.wouldIPayForThis || '',
-        }
+      ? { ...alreadyReviewed }
       : {
           rating: 1,
           comment: '',
           whatILike: '',
           whatIDislike: '',
           suggestions: '',
-          wouldIPayForThis: '',
+          wouldIPayForThis: 'not sure',
         },
-
-    resolver: zodResolver(formSchema),
   });
 
-  const router = useRouter();
-
-  const onSubmit = async (data: FormSchema) => {
+  const onSubmit: SubmitHandler<FormSchema> = async (data) => {
     try {
       const res = await fetch('/api/reviews', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...data, ideaId }),
       });
 
-      if (!res.ok) {
-        throw new Error('Failed to submit review');
-      } else {
-        reset();
-        router.refresh();
-        toast.success('Review submitted!');
-      }
+      if (!res.ok) throw new Error('Failed to submit review');
+
+      reset();
+      router.refresh();
+      toast.success('Review submitted!');
     } catch (err) {
       console.error(err);
+      toast.error('Something went wrong. Please try again.');
     }
   };
 
   return (
     <Card className='shadow-md'>
       <form
-        className='flex flex-col space-y-6 p-6 rounded-2xl'
-        onSubmit={handleSubmit(onSubmit)}>
+        onSubmit={handleSubmit((data: FormSchema) => onSubmit(data))}
+        className='flex flex-col space-y-6 p-6 rounded-2xl'>
         <h3 className='text-xl font-semibold'>
           Leave a Review for "{idea?.title}"
         </h3>
+
         {alreadyReviewed && (
           <span className='text-xs text-red-500'>
             * You have already reviewed this idea. Each user can have 1 review
@@ -104,6 +114,7 @@ const ReviewForm = ({ ideaId, idea, alreadyReviewed }: { ideaId: string }) => {
           </span>
         )}
 
+        {/* Rating */}
         <div className='space-y-3'>
           <Label htmlFor='rating'>Rating (1–5)</Label>
           <Input
@@ -112,8 +123,7 @@ const ReviewForm = ({ ideaId, idea, alreadyReviewed }: { ideaId: string }) => {
             step='0.5'
             min='1'
             max='5'
-            className='w-full'
-            disabled={alreadyReviewed}
+            disabled={!!alreadyReviewed}
             {...register('rating')}
           />
           {errors.rating && (
@@ -121,12 +131,13 @@ const ReviewForm = ({ ideaId, idea, alreadyReviewed }: { ideaId: string }) => {
           )}
         </div>
 
+        {/* Comment */}
         <div className='space-y-3'>
           <Label htmlFor='comment'>Comment</Label>
           <Textarea
             id='comment'
             className='w-full min-h-[100px]'
-            disabled={alreadyReviewed}
+            disabled={!!alreadyReviewed}
             {...register('comment')}
           />
           {errors.comment && (
@@ -134,12 +145,13 @@ const ReviewForm = ({ ideaId, idea, alreadyReviewed }: { ideaId: string }) => {
           )}
         </div>
 
+        {/* What I Like */}
         <div className='space-y-3'>
           <Label htmlFor='whatILike'>What I Like</Label>
           <Textarea
             id='whatILike'
             className='w-full'
-            disabled={alreadyReviewed}
+            disabled={!!alreadyReviewed}
             {...register('whatILike')}
           />
           {errors.whatILike && (
@@ -147,12 +159,13 @@ const ReviewForm = ({ ideaId, idea, alreadyReviewed }: { ideaId: string }) => {
           )}
         </div>
 
+        {/* What I Dislike */}
         <div className='space-y-3'>
           <Label htmlFor='whatIDislike'>What I Dislike</Label>
           <Textarea
             id='whatIDislike'
             className='w-full'
-            disabled={alreadyReviewed}
+            disabled={!!alreadyReviewed}
             {...register('whatIDislike')}
           />
           {errors.whatIDislike && (
@@ -162,6 +175,7 @@ const ReviewForm = ({ ideaId, idea, alreadyReviewed }: { ideaId: string }) => {
           )}
         </div>
 
+        {/* Would You Pay For This */}
         <div className='space-y-3'>
           <Label htmlFor='wouldIPayForThis'>Would you pay for this?</Label>
           <Controller
@@ -169,10 +183,10 @@ const ReviewForm = ({ ideaId, idea, alreadyReviewed }: { ideaId: string }) => {
             name='wouldIPayForThis'
             render={({ field }) => (
               <Select
-                disabled={alreadyReviewed}
+                disabled={!!alreadyReviewed}
                 value={field.value}
                 onValueChange={field.onChange}>
-                <SelectTrigger id='wouldIPayForThis' className='w-full'>
+                <SelectTrigger id='wouldIPayForThis'>
                   <SelectValue placeholder='Select an option' />
                 </SelectTrigger>
                 <SelectContent>
@@ -193,12 +207,13 @@ const ReviewForm = ({ ideaId, idea, alreadyReviewed }: { ideaId: string }) => {
           )}
         </div>
 
+        {/* Suggestions */}
         <div className='space-y-3'>
           <Label htmlFor='suggestions'>Suggestions</Label>
           <Textarea
             id='suggestions'
             className='w-full'
-            disabled={alreadyReviewed}
+            disabled={!!alreadyReviewed}
             {...register('suggestions')}
           />
           {errors.suggestions && (
@@ -207,7 +222,7 @@ const ReviewForm = ({ ideaId, idea, alreadyReviewed }: { ideaId: string }) => {
         </div>
 
         <div className='pt-2'>
-          <Button disabled={alreadyReviewed} type='submit' className='w-full'>
+          <Button type='submit' className='w-full' disabled={!!alreadyReviewed}>
             Submit Review
           </Button>
         </div>

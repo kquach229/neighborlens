@@ -8,8 +8,13 @@ import {
 import { Badge } from './ui/badge';
 import { Label } from './ui/label';
 import Link from 'next/link';
+import { Idea } from '@/types/types';
 
-const IdeaCard = ({ idea }) => {
+interface IdeaCardProps {
+  idea: Idea;
+}
+
+const IdeaCard: React.FC<IdeaCardProps> = ({ idea }) => {
   const {
     id,
     title,
@@ -22,73 +27,75 @@ const IdeaCard = ({ idea }) => {
     categories,
     reviews,
   } = idea;
+
   const numberOfDaysSincePosting = getTimeDifference(createdAt);
   const numberOfDaysSinceUpdated = getTimeDifference(updatedAt);
-  const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
 
   return (
-    <Card className='h-auto cursor-pointer hover:shadow-2xl duration-1000'>
-      <Link href={`/ideas/idea-details/${id}`}>
+    <Card className='h-auto cursor-pointer hover:shadow-2xl transition-shadow duration-300'>
+      <Link href={`/ideas/idea-details/${id}`} passHref>
         <CardHeader>
           <div className='text-right space-y-2'>
-            <div className='text-xs text-muted-foreground '>
-              {' '}
-              Posted {numberOfDaysSincePosting} Ago{' '}
+            <div className='text-xs text-muted-foreground'>
+              Posted {numberOfDaysSincePosting} ago
             </div>
 
-            {reviews.length > 0 && (
+            {reviews && (
               <div className='text-sm font-medium'>
                 {getReviewsAverageMarkup(reviews, false)}
               </div>
             )}
           </div>
           <div className='flex justify-between items-center'>
-            <h5>{title}</h5>
+            <h5 className='text-lg font-semibold'>{title}</h5>
           </div>
         </CardHeader>
-        <CardContent className='mt-5'>
+
+        <CardContent className='mt-5 space-y-6'>
           <div>
             <Label>Brief Description</Label>
             {briefDescription && (
-              <div className='text-muted-foreground text-sm mt-2 mb-5'>
+              <p className='text-muted-foreground text-sm mt-2'>
                 {substring(briefDescription, 150)}
-              </div>
+              </p>
             )}
           </div>
 
           <div>
             <Label>Problem It Solves</Label>
-            <div className='text-muted-foreground text-sm mt-2 mb-5'>
+            <p className='text-muted-foreground text-sm mt-2'>
               {substring(problemItSolves, 300)}
-            </div>
+            </p>
           </div>
 
           <div>
             <Label>Pricing Details</Label>
-            <div className='text-muted-foreground text-sm mt-2 mb-5'>
+            <p className='text-muted-foreground text-sm mt-2'>
               {substring(pricingDetails, 300)}
-            </div>
+            </p>
           </div>
 
           <div>
             <Label>Pricing Model</Label>
-            <div className='text-muted-foreground text-sm mt-2 mb-5'>
-              {pricingModel}
-            </div>
+            <p className='text-muted-foreground text-sm mt-2'>{pricingModel}</p>
           </div>
         </CardContent>
-        <CardFooter className='flex flex-col items-start'>
-          <div>
-            {categories.map((category: string) => (
-              <Badge className='mr-2 mt-2 text-xs' key={category}>
-                {category.toUpperCase()}
+
+        <CardFooter className='flex flex-col items-start gap-2'>
+          <div className='flex flex-wrap gap-2'>
+            {categories.map((category) => (
+              <Badge
+                variant='secondary'
+                className='text-xs capitalize'
+                key={category}>
+                {category}
               </Badge>
             ))}
           </div>
 
           {numberOfDaysSinceUpdated !== numberOfDaysSincePosting && (
-            <div className='text-xs text-muted-foreground text-right mt-2'>
-              Updated {numberOfDaysSinceUpdated} Ago
+            <div className='text-xs text-muted-foreground w-full text-right mt-2'>
+              Updated {numberOfDaysSinceUpdated} ago
             </div>
           )}
         </CardFooter>

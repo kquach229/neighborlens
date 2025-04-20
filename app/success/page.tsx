@@ -1,33 +1,41 @@
 import { redirect } from 'next/navigation';
-
 import { stripe } from '../../lib/stripe';
+import { Stripe } from 'stripe';
 
-export default async function Success({ searchParams }) {
-  const { session_id } = await searchParams;
+interface SuccessPageProps {
+  searchParams: {
+    session_id?: string;
+  };
+}
 
-  if (!session_id)
+export default async function Success({ searchParams }: SuccessPageProps) {
+  const sessionId = searchParams.session_id;
+
+  if (!sessionId) {
     throw new Error('Please provide a valid session_id (`cs_test_...`)');
+  }
 
-  const {
-    status,
-    customer_details: { email: customerEmail },
-  } = await stripe.checkout.sessions.retrieve(session_id, {
+  const session = await stripe.checkout.sessions.retrieve(sessionId, {
     expand: ['line_items', 'payment_intent'],
   });
 
-  if (status === 'open') {
+  if (session.status === 'open') {
     return redirect('/');
   }
 
-  if (status === 'complete') {
+  if (session.status === 'complete') {
+    const customerEmail = session.customer_details?.email ?? 'your email';
+
     return (
       <section id='success'>
         <p>
           We appreciate your business! A confirmation email will be sent to{' '}
-          {customerEmail}. If you have any questions, please email{' '}
+          {customerEmail}
         </p>
-        <a href='mailto:orders@example.com'>orders@example.com</a>.
       </section>
     );
   }
+
+  // Handle other status cases if needed
+  return redirect('/');
 }

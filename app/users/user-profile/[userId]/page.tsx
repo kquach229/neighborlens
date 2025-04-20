@@ -7,7 +7,7 @@ import { AvatarImage } from '@radix-ui/react-avatar';
 import { Separator } from '@/components/ui/separator';
 import { maskName } from '@/lib/utils';
 
-const getUserData = async (userId) => {
+const getUserData = async (userId: string) => {
   const userData = await prisma.user.findUnique({
     where: {
       id: userId,
@@ -21,7 +21,7 @@ const getUserData = async (userId) => {
   return userData;
 };
 
-const ProfilePage = async ({ params }) => {
+const ProfilePage = async ({ params }: { params: { userId: string } }) => {
   const { userId } = await params;
 
   const session = await auth();
@@ -51,31 +51,30 @@ const ProfilePage = async ({ params }) => {
               <div>
                 <p className='text-muted-foreground text-sm'>Name</p>
                 <p className='text-xl font-medium'>
-                  {isCurrentUser ? userData?.name : maskName(userData?.name)}
+                  {isCurrentUser
+                    ? userData?.name
+                    : maskName(userData?.name || 'N/A')}
                 </p>
               </div>
               <div>
                 <p className='text-muted-foreground text-sm'>Email</p>
                 <p className='text-lg'>
-                  {isCurrentUser ? userData?.email : maskName(userData?.email)}
+                  {isCurrentUser ? userData?.email : maskName(userData?.email!)}
                 </p>
               </div>
               <div>
                 <p className='text-muted-foreground text-sm'>Account Created</p>
                 <p className='text-lg'>{dateRegistered}</p>
               </div>
-              <div>
-                <p className='text-muted-foreground text-sm'>Plan Tier</p>
-                <p className='text-lg capitalize'>
-                  {userData?.planTier ?? 'Free'}
-                </p>
-              </div>
             </div>
 
             {/* Avatar */}
             <div className='flex justify-center md:justify-end w-full md:w-auto'>
               <Avatar className='h-48 w-48'>
-                <AvatarImage src={session?.user?.image} alt='Profile image' />
+                <AvatarImage
+                  src={session?.user?.image || ''}
+                  alt='Profile image'
+                />
                 <AvatarFallback className='text-4xl'>
                   {userData?.name?.[0]}
                 </AvatarFallback>

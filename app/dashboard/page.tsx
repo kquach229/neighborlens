@@ -3,31 +3,26 @@ import { prisma } from '@/lib/prisma';
 import DashboardClient from './DashboardClient';
 import auth from '@/auth';
 import { redirect } from 'next/navigation';
+import type { Idea } from '@/types/types'; // Make sure to import your Idea type
 
-const getAllIdeas = async () => {
-  const ownIdeas = await prisma?.idea?.findMany({
+const getAllIdeas = async (): Promise<Idea[]> => {
+  const ideas = await prisma?.idea?.findMany({
     include: {
       reviews: true,
     },
   });
-  return ownIdeas;
-};
-
-const getAllReviews = async () => {
-  const allReviews = await prisma.review.findMany();
-  return allReviews;
+  return ideas || [];
 };
 
 const DashboardPage = async () => {
   const allIdeas = await getAllIdeas();
-  const allReviews = await getAllReviews();
   const session = await auth();
 
   if (!session?.user) redirect('/login');
 
   return (
     <div className='min-h-[90vh] p-5'>
-      <DashboardClient allIdeas={allIdeas} allReviews={allReviews} />
+      <DashboardClient allIdeas={allIdeas} />
     </div>
   );
 };

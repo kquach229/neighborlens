@@ -3,15 +3,14 @@ import React, { useEffect, useState } from 'react';
 import ThemeToggler from './ThemeToggler';
 import { Glasses, LogOut, User } from 'lucide-react';
 import Link from 'next/link';
-import { Button } from './ui/button';
 import { useDialogStore } from '@/stores/dialogStore';
-import IdeaForm from './IdeaForm';
 import { Avatar } from './ui/avatar';
 import { AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import { useSession, signOut } from 'next-auth/react';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import SignInButton from './SignInButton';
 import UserCredits from './UserCredits';
+import CreateIdeaButton from './CreateIdeaButton';
 
 export const NavLogo = () => (
   <Link href='/' className='inline-flex items-center gap-2 font-oleo'>
@@ -28,7 +27,7 @@ export const UserButton = () => {
     <Popover>
       <PopoverTrigger>
         <Avatar>
-          <AvatarImage src={session.data.user.image} alt='image' />
+          <AvatarImage src={session?.data?.user?.image || ''} alt='image' />
           <AvatarFallback>
             {session.data.user.name?.split(' ')[0][0]}
           </AvatarFallback>
@@ -87,13 +86,7 @@ const Navbar = () => {
       <div className='flex gap-5 items-center'>
         {session.data?.user && (
           <>
-            <Button
-              onClick={() =>
-                openDialog(IdeaForm, { title: 'Submit Idea', setCredits })
-              }
-              disabled={credits === null || credits < 1}>
-              Submit Idea
-            </Button>
+            <CreateIdeaButton />
             <UserCredits credits={credits} />
           </>
         )}

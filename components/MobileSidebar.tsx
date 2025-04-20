@@ -52,7 +52,7 @@ export default function MobileSideBar() {
       <SidebarSeparator />
       <SidebarFooter>
         <div>
-          <UserButton session={session} />
+          <UserButton />
         </div>
       </SidebarFooter>
     </Sidebar>

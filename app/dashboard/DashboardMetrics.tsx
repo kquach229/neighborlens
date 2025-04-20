@@ -24,6 +24,7 @@ type DashboardData = {
   credits?: number;
   helpfulTags?: string[];
   averageResponseTime?: string;
+  reviewsUntilNextCredit?: number;
 };
 
 const MetricBlock = ({
@@ -45,7 +46,8 @@ const DashboardMetrics = ({ role }: { role: string }) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchDashboardData(role.toUpperCase())
+    const controller = new AbortController();
+    fetchDashboardData(role)
       .then((res) => setData(res))
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
@@ -77,11 +79,15 @@ const DashboardMetrics = ({ role }: { role: string }) => {
               />
               <MetricBlock
                 label='Average Rating'
-                value={`${data.averageRating}/5`}
+                value={data.averageRating ? `${data.averageRating}/5` : '-'}
               />
               <MetricBlock
                 label='% of Reviews That Would Pay'
-                value={`${data.wouldIPayForThisPercent}%`}
+                value={
+                  data.wouldIPayForThisPercent
+                    ? `${data.wouldIPayForThisPercent}%`
+                    : '-'
+                }
               />
               <MetricBlock
                 label='Unique Validators'

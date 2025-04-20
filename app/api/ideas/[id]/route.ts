@@ -1,58 +1,68 @@
 import { prisma } from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function PUT(req: Request, { params }) {
-  const { id } = await params;
-  const body = await req.json();
+interface RouteParams {
+  params: {
+    id: string;
+  };
+}
+
+export async function PUT(req: NextRequest, { params }: RouteParams) {
+  const { id } = params;
 
   try {
+    const body = await req.json();
     const updatedIdea = await prisma.idea.update({
-      where: {
-        id: id,
-      },
+      where: { id },
       data: body,
     });
 
     return NextResponse.json(updatedIdea);
-  } catch (err) {
-    return new NextResponse('Failed to update idea', { status: 500 });
+  } catch (err: unknown) {
+    const errorMessage =
+      err instanceof Error ? err.message : 'Failed to update idea';
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
 
-export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  const idea = await prisma.idea.findUnique({
-    where: { id: params.id },
-    include: {
-      reviews: true,
-    },
-  });
+export async function GET(req: NextRequest, { params }: RouteParams) {
+  try {
+    const idea = await prisma.idea.findUnique({
+      where: { id: params.id },
+      include: { reviews: true },
+    });
 
-  return NextResponse.json(idea);
+    if (!idea) {
+      return NextResponse.json({ error: 'Idea not found' }, { status: 404 });
+    }
+
+    return NextResponse.json(idea);
+  } catch (err: unknown) {
+    const errorMessage =
+      err instanceof Error ? err.message : 'Failed to fetch idea';
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
+  }
 }
 
-export async function DELETE(req: NextRequest, { params }) {
-  const { id } = await params;
+export async function DELETE(req: NextRequest, { params }: RouteParams) {
+  const { id } = params;
 
   try {
+    // First delete all reviews associated with the idea
     await prisma.review.deleteMany({
-      where: { ideaId: params.id },
+      where: { ideaId: id },
     });
 
-    await prisma.idea.delete({
-      where: { id: params.id },
-    });
+    // Then delete the idea itself
     const deletedIdea = await prisma.idea.delete({
-      where: {
-        id: id,
-      },
+      where: { id },
     });
 
     return NextResponse.json(deletedIdea);
-  } catch (err) {
+  } catch (err: unknown) {
     console.error(err);
-    return NextResponse.json({ message: 'Error deleting idea', err: err });
+    const errorMessage =
+      err instanceof Error ? err.message : 'Error deleting idea';
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

@@ -4,15 +4,21 @@ import { useState, useEffect } from 'react';
 import { Edit, Trash } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
-import { Card, CardContent } from './ui/card';
 import { useDialogStore } from '@/stores/dialogStore';
 import { Button } from './ui/button';
+import { Idea } from '@/types/types';
+
+interface ReusableEditFormButtonProps {
+  data: Idea; // Assuming 'Idea' type from '@/types/types'
+  FormComponent: React.FC<{ dataId: string; data: Idea; onClose: () => void }>; // Type for the form component
+  dataId: string;
+}
 
 export default function ReusableEditFormButton({
   data,
   FormComponent,
   dataId,
-}) {
+}: ReusableEditFormButtonProps) {
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -32,7 +38,13 @@ export default function ReusableEditFormButton({
     router.replace(newUrl, { scroll: false });
   }, [isEditing, router, searchParams]);
 
-  const DeleteIdeaDialog = ({ dataId, data }) => {
+  const DeleteIdeaDialog = ({
+    dataId,
+    data,
+  }: {
+    dataId: string;
+    data: Idea;
+  }) => {
     return (
       <div className='p-6 text-center space-y-6'>
         <h3 className='text-xl font-semibold'>
@@ -61,7 +73,7 @@ export default function ReusableEditFormButton({
     );
   };
 
-  const handleDeleteIdea = async () => {
+  const handleDeleteIdea = async (dataId: string) => {
     const res = await fetch(`/api/ideas/${dataId}`, {
       method: 'DELETE',
       headers: {
