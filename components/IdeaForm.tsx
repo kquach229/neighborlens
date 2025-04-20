@@ -55,7 +55,7 @@ const categoriesList = [
   { value: 'climate/ustainability', label: 'Climate/Sustainability' },
 ];
 
-const IdeaForm = ({ dataId, data, onSuccess, onClose }) => {
+const IdeaForm = ({ dataId, data, onSuccess, onClose, setCredits }) => {
   const {
     reset,
     register,

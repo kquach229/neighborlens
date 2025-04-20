@@ -81,7 +81,9 @@ const Navbar = () => {
         {session.data?.user && (
           <>
             <Button
-              onClick={() => openDialog(IdeaForm, { title: 'Submit Idea' })}
+              onClick={() =>
+                openDialog(IdeaForm, { title: 'Submit Idea', setCredits })
+              }
               disabled={credits === null || credits < 1}>
               Submit Idea
             </Button>

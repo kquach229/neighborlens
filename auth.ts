@@ -28,8 +28,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         });
       }
 
-      console.log(user);
-
       return true;
     },
     async session({ session }) {
