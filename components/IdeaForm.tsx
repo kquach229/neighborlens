@@ -96,6 +96,7 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose, setCredits }) => {
 
     if (res.ok) {
       toast.success(isEditing ? 'Idea updated!' : 'Idea created!');
+      window.dispatchEvent(new Event('credits-updated'));
     } else {
       const error = await res.json();
       toast.error(error.message || 'Something went wrong');

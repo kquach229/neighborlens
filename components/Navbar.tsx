@@ -71,6 +71,13 @@ const Navbar = () => {
 
     if (session.data?.user) {
       fetchCredits();
+
+      const handleCreditsUpdated = () => fetchCredits();
+      window.addEventListener('credits-updated', handleCreditsUpdated);
+
+      return () => {
+        window.removeEventListener('credits-updated', handleCreditsUpdated);
+      };
     }
   }, [session.data?.user]);
 
