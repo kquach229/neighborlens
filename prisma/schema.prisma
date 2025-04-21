@@ -17,7 +17,6 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   credits   Int      @default(0) // optional: use if you prefer to persist balance
-  planTier  PlanTier @default(FREE)
 
   // Relations
   ideas         Idea[]
@@ -84,11 +83,6 @@ model Purchase {
   createdAt       DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id])
-}
-
-enum PlanTier {
-  FREE
-  PRO
 }
 
 enum CreditReason {
