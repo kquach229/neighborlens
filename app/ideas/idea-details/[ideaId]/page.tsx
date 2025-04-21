@@ -26,7 +26,7 @@ interface SearchParams {
 }
 
 interface IdeaDetailsProps {
-  params: IdeaParams;
+  params: Promise<IdeaParams>;
   searchParams: SearchParams;
 }
 
@@ -76,7 +76,7 @@ const getReviewsForIdea = async (ideaId: string) => {
 };
 
 const IdeaDetails = async ({ params, searchParams }: IdeaDetailsProps) => {
-  const { ideaId } = params;
+  const { ideaId } = await params;
   const idea = await getIdea(ideaId);
   const reviews = await getReviewsForIdea(ideaId);
   const session = await auth();
