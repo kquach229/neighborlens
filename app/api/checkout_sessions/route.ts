@@ -1,11 +1,11 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { headers } from 'next/headers';
 
 import { stripe } from '@/lib/stripe';
 import { prisma } from '@/lib/prisma';
 import auth from '@/auth';
 
-export async function POST(req) {
+export async function POST(req: NextRequest) {
   try {
     const headersList = await headers();
     const origin = headersList.get('origin');
@@ -44,10 +44,14 @@ export async function POST(req) {
     }
 
     return NextResponse.json({ url: session.url });
-  } catch (error) {
-    return NextResponse.json(
-      { error: error.message },
-      { status: error.statusCode || 500 }
-    );
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: 500 } // No statusCode on generic Error
+      );
+    }
+
+    return NextResponse.json({ error: 'Unknown error' }, { status: 500 });
   }
 }

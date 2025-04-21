@@ -76,16 +76,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
             credits: { increment: 1 },
           },
         });
-
-        await tx.creditHistory.create({
-          data: {
-            userId,
-            amount: 1,
-            type: 'CREDIT' as CreditType, // Explicitly typed
-            reason: 'REVIEW_REWARD' as CreditReason,
-            metadata: `Awarded 1 credit for submitting ${reviewCount} reviews`,
-          },
-        });
       }
 
       return newReview;

@@ -52,24 +52,20 @@ interface User {
   email: string | null;
 }
 
-const getIdea = async (ideaId: string): Promise<Idea | null> => {
-  return (
-    (await prisma?.idea.findUnique({
-      where: { id: ideaId },
-      include: { reviews: true },
-    })) ?? null
-  );
+const getIdea = async (ideaId: string): Promise<Idea | any> => {
+  await prisma?.idea.findUnique({
+    where: { id: ideaId },
+    include: { reviews: true },
+  });
 };
 
-const getReviewsForIdea = async (ideaId: string): Promise<Review[]> => {
-  return (
-    (await prisma?.review.findMany({
-      where: {
-        ideaId: ideaId,
-      },
-      include: { user: true },
-    })) ?? []
-  );
+const getReviewsForIdea = async (ideaId: string): Promise<Review[] | any> => {
+  await prisma?.review.findMany({
+    where: {
+      ideaId: ideaId,
+    },
+    include: { user: true },
+  });
 };
 
 const IdeaDetails = async ({ params, searchParams }: IdeaDetailsProps) => {
@@ -78,11 +74,13 @@ const IdeaDetails = async ({ params, searchParams }: IdeaDetailsProps) => {
   const reviews = await getReviewsForIdea(ideaId);
   const session = await auth();
   const isEditing = searchParams?.isEditing === 'true';
-  const numberOfDaysSincePosting = getTimeDifference(idea.createdAt);
-  const numberOfDaysSinceUpdated = getTimeDifference(idea.updatedAt);
+  const numberOfDaysSincePosting =
+    idea?.createdAt && getTimeDifference(idea.createdAt);
+  const numberOfDaysSinceUpdated =
+    idea?.updatedAt && getTimeDifference(idea.updatedAt);
   const isAuthor = idea?.authorId === session?.user?.id;
   const alreadyReviewed = idea?.reviews.find(
-    (review) => review.userId === session?.user?.id
+    (review: Review) => review.userId === session?.user?.id
   );
 
   if (!idea) {
@@ -160,7 +158,7 @@ const IdeaDetails = async ({ params, searchParams }: IdeaDetailsProps) => {
         ) : (
           <div className='w-full md:w-2/3'>
             <ReviewForm
-              alreadyReviewed={!!alreadyReviewed}
+              alreadyReviewed={alreadyReviewed}
               ideaId={ideaId}
               idea={idea}
             />

@@ -66,7 +66,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
     formState: { errors },
     reset,
   } = useForm<FormSchema>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema) as any,
     defaultValues: alreadyReviewed
       ? { ...alreadyReviewed }
       : {
