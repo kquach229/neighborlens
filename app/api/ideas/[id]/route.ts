@@ -1,13 +1,10 @@
 import { prisma } from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 
-interface RouteParams {
-  params: {
-    id: string;
-  };
-}
-
-export async function PUT(req: NextRequest, { params }: RouteParams) {
+export async function PUT(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   const { id } = params;
 
   try {
@@ -25,7 +22,10 @@ export async function PUT(req: NextRequest, { params }: RouteParams) {
   }
 }
 
-export async function GET(req: NextRequest, { params }: RouteParams) {
+export async function GET(
+  _req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
     const idea = await prisma.idea.findUnique({
       where: { id: params.id },
@@ -44,7 +44,10 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
   }
 }
 
-export async function DELETE(req: NextRequest, { params }: RouteParams) {
+export async function DELETE(
+  _req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   const { id } = params;
 
   try {
