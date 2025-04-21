@@ -8,7 +8,7 @@ interface SuccessPageProps {
   };
 }
 
-export default async function Success({ searchParams }: SuccessPageProps) {
+export default async function Success({ searchParams }: any) {
   const sessionId = searchParams.session_id;
 
   if (!sessionId) {
