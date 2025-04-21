@@ -54,6 +54,7 @@ export default function PricingPage() {
               <li>✅ Get started for just $1</li>
             </ul>
             <Button
+              disabled
               onClick={() => handleGoToCheckout('single')}
               className='w-full cursor-pointer'>
               Buy 1 Credit
@@ -76,6 +77,7 @@ export default function PricingPage() {
               <li>✅ Save by purchasing more upfront</li>
             </ul>
             <Button
+              disabled
               onClick={() => handleGoToCheckout('bundle')}
               className='w-full cursor-pointer'>
               Buy 7 Credits

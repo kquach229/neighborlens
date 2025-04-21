@@ -35,8 +35,7 @@ const CreateIdeaButton = () => {
     <Button
       onClick={() =>
         openDialog(IdeaForm, { title: 'Create Your Idea', setCredits })
-      }
-      disabled={credits === null || credits < 1}>
+      }>
       Create Idea
     </Button>
   );

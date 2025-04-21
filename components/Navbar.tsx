@@ -52,7 +52,6 @@ export const UserButton = () => {
 };
 
 const Navbar = () => {
-  const { openDialog } = useDialogStore();
   const session = useSession();
   const [credits, setCredits] = useState<number | null>(null);
 
@@ -87,7 +86,7 @@ const Navbar = () => {
         {session.data?.user && (
           <>
             <CreateIdeaButton />
-            <UserCredits credits={credits} />
+            {/* <UserCredits credits={credits} /> */}
           </>
         )}
         <Link href='/dashboard'>Dashboard</Link>

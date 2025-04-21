@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, Suspense } from 'react';
+import { FC, Suspense, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import IdeaCard from '@/components/IdeaCard';
 import { ROLES, useRoleStore } from '@/stores/roleStore';
@@ -10,6 +10,9 @@ import CreateIdeaButton from '@/components/CreateIdeaButton';
 import Loading from '../loading';
 
 import type { Idea } from '@/types/types';
+import { useDialogStore } from '@/stores/dialogStore';
+import { BadgeCheck } from 'lucide-react';
+import { DialogTitle } from '@/components/ui/dialog';
 
 type DashboardClientProps = {
   allIdeas: Idea[];
@@ -93,9 +96,53 @@ const ValidatorView: FC<ValidatorViewProps> = ({
   </div>
 );
 
+export const FreeDialog = () => {
+  return (
+    <div className='space-y-5'>
+      <DialogTitle className='text-2xl font-semibold'>
+        ValidateLens is now <span className='text-green-600'>FREE</span> 🎉
+      </DialogTitle>
+      <p className='mt-2 text-sm text-muted-foreground'>
+        You can now submit unlimited ideas without using credits. We Appreciate
+        the Support and hope everyone can continue to enjoy the platform!
+      </p>
+    </div>
+  );
+};
+
 const DashboardClient: FC<DashboardClientProps> = ({ allIdeas }) => {
   const { data: session, status } = useSession();
   const { role } = useRoleStore();
+  const { openDialog } = useDialogStore();
+
+  useEffect(() => {
+    const FIRST_VISIT_KEY = 'first_visit';
+    const ONE_HOUR = 60 * 60 * 1000; // in ms
+    const now = Date.now();
+
+    const stored = localStorage.getItem(FIRST_VISIT_KEY);
+
+    if (!stored) {
+      // First visit ever
+      localStorage.setItem(
+        FIRST_VISIT_KEY,
+        JSON.stringify({ value: 'true', timestamp: now })
+      );
+
+      openDialog(FreeDialog, { title: 'Great News!' });
+    } else {
+      const parsed = JSON.parse(stored);
+      const elapsed = now - parsed.timestamp;
+
+      if (elapsed > ONE_HOUR) {
+        // More than 1 hour has passed, reset or remove
+        localStorage.setItem(
+          FIRST_VISIT_KEY,
+          JSON.stringify({ value: 'false', timestamp: now })
+        );
+      }
+    }
+  }, []);
 
   if (status === 'loading') return <Loading />;
   if (!session?.user?.id) return null;

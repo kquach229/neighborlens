@@ -113,7 +113,7 @@ const DashboardMetrics = ({ role }: { role: string }) => {
               />
               <MetricBlock
                 label='Reviews Until Next Earned Credit'
-                value={data.reviewsUntilNextCredit}
+                value={'N/A'}
               />
               {data.helpfulTags && data.helpfulTags.length > 0 && (
                 <div className='space-y-1'>

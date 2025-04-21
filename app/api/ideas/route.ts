@@ -29,13 +29,6 @@ export async function POST(req: Request): Promise<NextResponse> {
       select: { credits: true },
     });
 
-    if (!user || user.credits < 1) {
-      return NextResponse.json(
-        { error: 'Not enough credits' },
-        { status: 402 }
-      );
-    }
-
     const [newIdea] = await prisma.$transaction([
       prisma.idea.create({
         data: {
@@ -46,19 +39,6 @@ export async function POST(req: Request): Promise<NextResponse> {
           categories: body.categories,
           pricingModel: body.pricingModel,
           pricingDetails: body.pricingDetails,
-        },
-      }),
-      prisma.user.update({
-        where: { id: userId },
-        data: { credits: { decrement: 1 } },
-      }),
-      prisma.creditHistory.create({
-        data: {
-          userId,
-          amount: 1,
-          type: 'DEBIT',
-          reason: 'REDEMPTION',
-          metadata: 'Idea submission',
         },
       }),
     ]);
