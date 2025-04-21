@@ -33,8 +33,8 @@ interface User {
 }
 
 interface IdeaDetailsProps {
-  params: { ideaId: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: any;
+  searchParams: any;
 }
 
 const getIdea = async (ideaId: string) => {
