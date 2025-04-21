@@ -19,7 +19,7 @@ import { Parallax, ParallaxBanner, useParallax } from 'react-scroll-parallax';
 import ParalaxParent from '@/components/ParalaxParent';
 import { Input } from '@/components/ui/input';
 
-export const FAQSection = () => {
+const FAQSection = () => {
   return (
     <div className='min-h-screen p-10'>
       <h1 className='text-3xl font-semibold text-center mb-12'>
