@@ -4,7 +4,7 @@ import { Stripe } from 'stripe';
 
 interface SuccessPageProps {
   searchParams: {
-    session_id?: string;
+    session_id?: any;
   };
 }
 
