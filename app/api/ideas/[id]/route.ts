@@ -22,10 +22,7 @@ export async function PUT(
   }
 }
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET({ params }: { params: { id: string } }) {
   try {
     const idea = await prisma.idea.findUnique({
       where: { id: params.id },
