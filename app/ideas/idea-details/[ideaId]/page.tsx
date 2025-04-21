@@ -8,11 +8,18 @@ import { Label } from '@/components/ui/label';
 import { prisma } from '@/lib/prisma';
 import { getTimeDifference } from '@/lib/utils';
 import Link from 'next/link';
-import { Session } from 'next-auth';
 
 interface IdeaParams {
   ideaId: string;
 }
+
+const emptyReview: Review = {
+  id: '',
+  userId: '',
+  ideaId: '',
+  rating: 0,
+  feedback: '',
+};
 
 interface SearchParams {
   isEditing?: string;
@@ -52,15 +59,15 @@ interface User {
   email: string | null;
 }
 
-const getIdea = async (ideaId: string): Promise<Idea | any> => {
-  await prisma?.idea.findUnique({
+const getIdea = async (ideaId: string) => {
+  return await prisma.idea.findUnique({
     where: { id: ideaId },
     include: { reviews: true },
   });
 };
 
-const getReviewsForIdea = async (ideaId: string): Promise<Review[] | any> => {
-  await prisma?.review.findMany({
+const getReviewsForIdea = async (ideaId: string) => {
+  return await prisma.review.findMany({
     where: {
       ideaId: ideaId,
     },
@@ -79,9 +86,9 @@ const IdeaDetails = async ({ params, searchParams }: IdeaDetailsProps) => {
   const numberOfDaysSinceUpdated =
     idea?.updatedAt && getTimeDifference(idea.updatedAt);
   const isAuthor = idea?.authorId === session?.user?.id;
-  const alreadyReviewed = idea?.reviews.find(
-    (review: Review) => review.userId === session?.user?.id
-  );
+  const alreadyReviewed =
+    idea?.reviews.find((review) => review.userId === session?.user?.id) ||
+    emptyReview;
 
   if (!idea) {
     return <div>Idea not found</div>;
