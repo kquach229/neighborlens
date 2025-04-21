@@ -21,7 +21,11 @@ const getUserData = async (userId: string) => {
   return userData;
 };
 
-const ProfilePage = async ({ params }: { params: { userId: string } }) => {
+const ProfilePage = async ({
+  params,
+}: {
+  params: Promise<{ userId: string }>;
+}) => {
   const { userId } = await params;
 
   const session = await auth();
