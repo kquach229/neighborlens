@@ -9,10 +9,6 @@ import { prisma } from '@/lib/prisma';
 import { getTimeDifference } from '@/lib/utils';
 import Link from 'next/link';
 
-interface IdeaParams {
-  ideaId: string;
-}
-
 const emptyReview: Review = {
   id: '',
   userId: '',
@@ -20,29 +16,6 @@ const emptyReview: Review = {
   rating: 0,
   feedback: '',
 };
-
-interface SearchParams {
-  isEditing?: string;
-}
-
-interface IdeaDetailsProps {
-  params: Promise<IdeaParams>;
-  searchParams: SearchParams;
-}
-
-interface Idea {
-  id: string;
-  title: string;
-  briefDescription: string;
-  problemItSolves: string;
-  pricingModel: string;
-  pricingDetails: string;
-  categories: string[];
-  authorId: string;
-  createdAt: Date;
-  updatedAt: Date;
-  reviews: Review[];
-}
 
 interface Review {
   id: string;
@@ -57,6 +30,11 @@ interface User {
   id: string;
   name: string | null;
   email: string | null;
+}
+
+interface IdeaDetailsProps {
+  params: { ideaId: string };
+  searchParams: { [key: string]: string | string[] | undefined };
 }
 
 const getIdea = async (ideaId: string) => {
