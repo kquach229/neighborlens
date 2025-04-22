@@ -55,7 +55,7 @@ const ProfilePage = async () => {
     : 'Unknown';
 
   return (
-    <div className='max-w-4xl mx-auto mt-16 px-4'>
+    <div className='max-w-4xl mx-auto mt-16 mb-20 px-4'>
       <h1 className='text-3xl font-bold mb-8 text-center'>Your Profile</h1>
 
       <Card>
