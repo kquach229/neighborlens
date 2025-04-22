@@ -20,6 +20,7 @@ import {
 } from './ui/select';
 import { Input } from './ui/input';
 import { toast } from 'sonner';
+import { triggerDashboardRefresh } from '@/lib/utils';
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -105,6 +106,7 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose }: IdeaFormProps) => {
     if (res.ok) {
       toast.success(isEditing ? 'Idea updated!' : 'Idea created!');
       window.dispatchEvent(new Event('credits-updated'));
+      if (method == 'POST') triggerDashboardRefresh();
     } else {
       const error = await res.json();
       toast.error(error.message || 'Something went wrong');

@@ -84,3 +84,8 @@ export const getReviewsAverageMarkup = (
     return `Avg Rating: ${totalRating} / ${reviews.length * 5}`;
   }
 };
+
+// utils/refreshDashboard.ts
+export const triggerDashboardRefresh = () => {
+  window.dispatchEvent(new Event('dashboardRefresh'));
+};

@@ -43,15 +43,27 @@ const MetricBlock = ({
 const DashboardMetrics = ({ role }: { role: string }) => {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [refreshKey, setRefreshKey] = useState(0);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const controller = new AbortController();
     fetchDashboardData(role)
       .then((res) => setData(res))
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
   }, [role]);
+
+  useEffect(() => {
+    const handleRefresh = () => {
+      setRefreshKey((prev) => prev + 1);
+    };
+
+    window.addEventListener('dashboardRefresh', handleRefresh);
+
+    return () => {
+      window.removeEventListener('dashboardRefresh', handleRefresh);
+    };
+  }, []);
 
   if (loading) {
     return (

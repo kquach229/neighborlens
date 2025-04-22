@@ -424,7 +424,13 @@ export default function Home() {
               </div>
             </div>
             <div>
-              <Button>Get Started</Button>
+              {session.data?.user ? (
+                <Button onClick={() => router.push('/dashboard')}>
+                  Go to Dashboard
+                </Button>
+              ) : (
+                <SignInButton />
+              )}
             </div>
           </div>
         </div>

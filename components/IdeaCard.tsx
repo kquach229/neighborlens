@@ -82,7 +82,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea }) => {
         </CardContent>
 
         <CardFooter className='flex flex-col items-start gap-2'>
-          <div className='flex flex-wrap gap-2'>
+          <div className='flex flex-wrap gap-2 mt-2'>
             {categories.map((category) => (
               <Badge
                 variant='secondary'
