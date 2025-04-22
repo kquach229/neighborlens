@@ -4,7 +4,7 @@ import { Separator } from '@/components/ui/separator';
 
 const PrivacyPolicyPage = () => {
   return (
-    <div className='max-w-4xl mx-auto mt-16 px-4'>
+    <div className='max-w-4xl mx-auto mt-16 mb-16 px-4'>
       <h1 className='text-3xl font-bold mb-8 text-center'>Privacy Policy</h1>
 
       <Card>
