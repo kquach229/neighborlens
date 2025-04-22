@@ -9,7 +9,6 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from '@/components/ui/accordion';
-
 import { AlertCircle, Gem, MessageCircle, StarIcon } from 'lucide-react';
 import Image from 'next/image';
 import SignInButton from '@/components/SignInButton';
@@ -17,7 +16,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Parallax, ParallaxBanner } from 'react-scroll-parallax';
 import ParalaxParent from '@/components/ParalaxParent';
-import { Input } from '@/components/ui/input';
+import { useEffect } from 'react';
 
 const FAQSection = () => {
   return (
@@ -207,7 +206,7 @@ export default function Home() {
   return (
     <ParalaxParent>
       <div className='min-h-screen p-5'>
-        <div className='mt-24 flex flex-col w-full sm:flex-row justify-between items-center gap-10'>
+        <div className='mt-16 flex flex-col w-full sm:flex-row justify-between items-center gap-10'>
           <div className='flex flex-col justify-center gap-6 w-full md:w-2/3'>
             <h1 className='font-bold text-4xl leading-tight'>
               Validate Your Startup Idea—Before You Build
@@ -414,11 +413,11 @@ export default function Home() {
 
         <div className='mt-24 md:mt-52 mb-52'>
           <div className='flex rounded-sm shadow-2xl border border-foreground items-center justify-between pl-10 pr-10 h-32'>
-            <div>
-              <h2 className='text-xl font-semibold'>
+            <div className='space-x-2'>
+              <h2 className='text-sm sm:text-xl font-semibold'>
                 Validate Before You Build
               </h2>
-              <div className='mt-2'>
+              <div className='mt-2 hidden sm:block'>
                 Join ValidatorLens and start turning ideas into validated
                 opportunities.
               </div>

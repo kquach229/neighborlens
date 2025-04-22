@@ -169,6 +169,11 @@ const DashboardClient: FC<DashboardClientProps> = ({ allIdeas }) => {
       <div className='flex justify-between items-center'>
         <div className='flex flex-col'>
           <h2 className='text-2xl font-bold'>Dashboard</h2>
+          {session?.user?.name && (
+            <h5 className='mt-5 mb-5'>
+              Welcome, {session.user.name.split(' ')[0]}
+            </h5>
+          )}
           <h5 className='mt-2 text-muted-foreground'>
             {role === ROLES.FOUNDER
               ? `My Ideas (${ownIdeas.length})`
