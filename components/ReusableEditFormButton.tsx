@@ -80,7 +80,9 @@ export default function ReusableEditFormButton({
         'Content-Type': 'application/json',
       },
     });
+
     router.push('/dashboard');
+    router.refresh();
 
     if (res.ok) {
       closeDialog();
