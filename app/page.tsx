@@ -438,27 +438,6 @@ export default function Home() {
         <div className='mt-24 md:mt-32 mb-32'>
           <FAQSection />
         </div>
-
-        <div className='flex flex-col md:flex-row justify-around items-center'>
-          <div>
-            <h2 className='text-2xl font-semibold'>Get Validation Updates</h2>
-            <div className='mt-5'>
-              Join our newsletter to hear about top-rated ideas, validator tips,
-              and startup validation trends.
-            </div>
-            <div className='flex gap-2 mt-10'>
-              <Input
-                className='flex-1 bg-muted'
-                type='text'
-                placeholder='Your email'
-              />
-              <Button>Subscribe</Button>
-            </div>
-            <div className='mt-5 text-xs'>
-              By subscribing, you agree to our Terms and Privacy Policy.
-            </div>
-          </div>
-        </div>
       </div>
     </ParalaxParent>
   );
