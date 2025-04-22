@@ -64,9 +64,9 @@ const IdeaDetails = async ({ params, searchParams }: IdeaDetailsProps) => {
   const numberOfDaysSinceUpdated =
     idea?.updatedAt && getTimeDifference(idea.updatedAt);
   const isAuthor = idea?.authorId === session?.user?.id;
-  const alreadyReviewed =
-    idea?.reviews.find((review) => review.userId === session?.user?.id) ||
-    emptyReview;
+  const alreadyReviewed = idea?.reviews.find(
+    (review) => review.userId === session?.user?.id
+  );
 
   if (!idea) {
     return <div>Idea not found</div>;
