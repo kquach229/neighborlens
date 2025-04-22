@@ -46,6 +46,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' suppressHydrationWarning>
+      <head>
+        <link rel='manifest' href='/manifest.json' />
+        <link rel='icon' href='/icons/icon-192x192.png' />
+        <meta name='theme-color' content='#ffffff' />
+      </head>
       <body className={`${roboto.className} ${oleo.variable} antialiased`}>
         <SidebarProvider>
           <SessionProvider>
