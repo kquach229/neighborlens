@@ -1,7 +1,7 @@
 {
   "name": "ValidateLens",
   "short_name": "VL PWA",
-  "start_url": "The URL that should be loaded when your application is opened",
+  "start_url": "https://validatelens.vercel.app/",
   "display": "standalone",
   "description": "A description for your application",
   "lang": " The default language of your application",
