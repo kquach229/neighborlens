@@ -3,21 +3,21 @@
   "short_name": "VL PWA",
   "start_url": "https://validatelens.vercel.app/",
   "display": "standalone",
-  "description": "A description for your application",
-  "lang": " The default language of your application",
+  "description": "Get real human feedback from experienced validators. No AI, no fluff—just actionable insight to help you decide what to build.",
+  "lang": "en-US",
   "dir": "auto",
   "theme_color": "#000000",
   "background_color": "#000000",
   "orientation": "any",
   "icons": [
     {
-      "src": "https://www.pwabuilder.com/assets/icons/icon_512.png",
+      "src": "/logo-black.svg",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "https://www.pwabuilder.com/assets/icons/icon_192.png",
+      "src": "/logo-black.svg",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
@@ -25,7 +25,7 @@
   ],
   "screenshots": [
     {
-      "src": "https://www.pwabuilder.com/assets/screenshots/screen1.png",
+      "src": "screenshot-1.png",
       "sizes": "2880x1800",
       "type": "image/png",
       "description": "A screenshot of the home page"
@@ -33,16 +33,20 @@
   ],
   "related_applications": [
     {
-      "platform": "windows",
-      "url": " The URL to your app in that app store"
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=validatelens"
+    },
+    {
+      "platform": "itunes",
+      "url": "https://apps.apple.com/us/app/validatelens"
     }
   ],
   "prefer_related_applications": false,
   "shortcuts": [
     {
-      "name": "The name you would like to be displayed for your shortcut",
-      "url": "The url you would like to open when the user chooses this shortcut. This must be a URL local to your PWA. For example: If my start_url is /, this URL must be something like /shortcut",
-      "description": "A description of the functionality of this shortcut"
+      "name": "ValidateLens Shortcut",
+      "url": "/shortcut",
+      "description": "A more accessible ValidateLens"
     }
   ]
 }
