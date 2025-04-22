@@ -49,7 +49,7 @@ type AlreadyReviewed = {
 interface ReviewFormProps {
   ideaId: string;
   idea?: { title: string };
-  alreadyReviewed?: AlreadyReviewed | {};
+  alreadyReviewed?: AlreadyReviewed;
 }
 
 const ReviewForm: React.FC<ReviewFormProps> = ({
