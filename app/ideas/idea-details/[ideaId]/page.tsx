@@ -40,7 +40,7 @@ interface IdeaDetailsProps {
 const getIdea = async (ideaId: string) => {
   return await prisma.idea.findUnique({
     where: { id: ideaId },
-    include: { reviews: true },
+    include: { reviews: true, author: true },
   });
 };
 
@@ -85,7 +85,7 @@ const IdeaDetails = async ({ params, searchParams }: IdeaDetailsProps) => {
                   <Link
                     className='text-blue-300'
                     href={`/users/user-profile/${idea.authorId}`}>
-                    {session?.user?.name?.split(' ')[0] || 'Anonymous'}
+                    {idea?.author?.name?.split(' ')[0] || 'Anonymous'}
                   </Link>
                 </span>
               </div>
