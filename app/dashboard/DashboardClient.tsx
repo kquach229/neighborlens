@@ -169,9 +169,9 @@ const DashboardClient: FC<DashboardClientProps> = ({ allIdeas }) => {
       <div className='flex justify-between items-center'>
         <div className='flex flex-col'>
           {session?.user?.name && (
-            <h5 className='mt-5 mb-5'>
+            <h1 className='mt-5 mb-5'>
               Welcome, {session.user.name.split(' ')[0]}
-            </h5>
+            </h1>
           )}
           <h2 className='text-2xl font-bold'>Dashboard</h2>
 
