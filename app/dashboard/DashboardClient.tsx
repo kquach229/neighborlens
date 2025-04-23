@@ -50,7 +50,7 @@ const IdeasGrid: FC<IdeasGridProps> = ({ ideas }) => {
 };
 
 const Section: FC<SectionProps> = ({ title, ideas, emptyMessage }) => (
-  <section className='mt-16'>
+  <section className='mt-10'>
     <h4 className='text-lg font-semibold'>{title}</h4>
     {ideas.length > 0 ? (
       <IdeasGrid ideas={ideas} />
@@ -168,13 +168,14 @@ const DashboardClient: FC<DashboardClientProps> = ({ allIdeas }) => {
     <div>
       <div className='flex justify-between items-center'>
         <div className='flex flex-col'>
-          <h2 className='text-2xl font-bold'>Dashboard</h2>
           {session?.user?.name && (
             <h5 className='mt-5 mb-5'>
               Welcome, {session.user.name.split(' ')[0]}
             </h5>
           )}
-          <h5 className='mt-2 text-muted-foreground'>
+          <h2 className='text-2xl font-bold'>Dashboard</h2>
+
+          <h5 className='mt-5 text-muted-foreground'>
             {role === ROLES.FOUNDER
               ? `My Ideas (${ownIdeas.length})`
               : 'Ideas to Validate'}
