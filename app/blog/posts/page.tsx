@@ -27,7 +27,7 @@ const BlogPage = () => {
           <li key={post.slug}>
             <Link
               href={`/blog/posts/${post.slug}`}
-              className='text-lg font-medium hover:underline text-blue-400'>
+              className='underline text-lg font-medium hover:underline text-blue-400'>
               {post.title} - {post.date}
             </Link>
           </li>
