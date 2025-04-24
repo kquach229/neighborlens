@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-
+import createMDX from '@next/mdx';
 const path = require('path');
 
 const isDev = process.env.NODE_ENV !== 'production';
@@ -11,6 +11,8 @@ const withPWA = require('next-pwa')({
 
   buildExcludes: ['app-build-manifest.json'],
 });
+
+const withMDX = createMDX({});
 
 const generateAppDirEntry = (entry: any) => {
   const packagePath = require.resolve('next-pwa');
@@ -35,9 +37,7 @@ const generateAppDirEntry = (entry: any) => {
 };
 
 const nextConfig = {
-  experimental: {
-    appDir: true,
-  },
+  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
 
   reactStrictMode: true,
 
@@ -52,4 +52,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withPWA(nextConfig);
+module.exports = withPWA(withMDX(nextConfig));

@@ -38,6 +38,9 @@ export default function MobileSideBar() {
             <Link onClick={toggleSidebar} href={'/pricing'}>
               Pricing
             </Link>
+            <Link onClick={toggleSidebar} href={'/blog/posts'}>
+              Blog
+            </Link>
           </div>
         </SidebarGroup>
 
