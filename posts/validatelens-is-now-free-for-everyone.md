@@ -1,10 +1,10 @@
 ---
-title: ValidateLens Is Now Free for Everyone
+title: ValidateLens Is Now Free for Everyone!
 
 date: 03-20-25
 ---
 
-We have a big announcement: **ValidateLens is now completely free to use**.
+We have a big announcement: **ValidateLens is now completely free to use 🎉🎉🎉**.
 
 That’s right — submitting your startup idea no longer requires buying credits. Whether you’re just testing the waters or gathering feedback before launch, you can now do it all at no cost.
 
