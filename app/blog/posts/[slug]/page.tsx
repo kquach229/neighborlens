@@ -13,14 +13,13 @@ async function fetchPost(slug: string) {
   return posts.find((post) => post.slug === slug);
 }
 
-type Params = {
-  params: {
-    slug: string;
-  };
-};
-
-export default async function Post({ params }: Params) {
-  const post = (await fetchPost(params.slug)) as IPost;
+export default async function Post({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const post = (await fetchPost(slug)) as IPost;
 
   if (!post) {
     notFound();
