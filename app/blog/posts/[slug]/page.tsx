@@ -28,8 +28,8 @@ export default async function Post({
   const htmlConverter = md.render(post.content);
 
   return (
-    <div className='p-5'>
-      <Link className='mb-10 mt-10 inline-block' href={'/blog/posts'}>
+    <div className='p-5 mb-20'>
+      <Link className='mt-10 inline-block' href={'/blog/posts'}>
         <Button>
           <ArrowLeft className='mr-2 h-4 w-4' /> Back to Blogs
         </Button>

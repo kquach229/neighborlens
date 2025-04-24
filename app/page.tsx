@@ -16,8 +16,6 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Parallax, ParallaxBanner } from 'react-scroll-parallax';
 import ParalaxParent from '@/components/ParalaxParent';
-import { useEffect } from 'react';
-
 const FAQSection = () => {
   return (
     <div className='min-h-screen p-10'>
