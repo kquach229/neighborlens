@@ -7,6 +7,17 @@ export default function AboutPage() {
   return (
     <main className='mx-auto px-4 py-12 space-y-10'>
       <section>
+        <div className='h-[15vh] w-full'>
+          <Image
+            className='w-full object-cover h-[15vh] duration-500 grayscale hover:grayscale-0 rounded-md'
+            alt='banner'
+            height={'800'}
+            width={'800'}
+            src={'/banner.png'}
+          />
+        </div>
+      </section>
+      <section>
         <h1 className='text-4xl font-bold mb-4'>About ValidatorLens</h1>
         <p className='text-lg'>
           ValidatorLens helps startup founders quickly validate ideas by getting
