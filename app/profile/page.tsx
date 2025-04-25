@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { AvatarImage } from '@radix-ui/react-avatar';
 import { Separator } from '@/components/ui/separator';
 import type { User, Review, Idea } from '@prisma/client';
+import { Star } from 'lucide-react';
 
 type FullUser = User & {
   reviews: Review[];
@@ -35,7 +36,6 @@ const getUserData = async (
 const ProfilePage = async () => {
   const session = await auth();
   const userId = session?.user?.id;
-
   const userData = await getUserData(userId);
 
   if (!userId || !userData) {
@@ -53,6 +53,12 @@ const ProfilePage = async () => {
   const dateRegistered = userData.createdAt
     ? formatter.format(userData.createdAt)
     : 'Unknown';
+
+  const averageRating =
+    userData.reviews.length > 0
+      ? userData.reviews.reduce((sum, r) => sum + r.rating, 0) /
+        userData.reviews.length
+      : null;
 
   return (
     <div className='max-w-4xl mx-auto mt-16 mb-20 px-4'>
@@ -103,6 +109,14 @@ const ProfilePage = async () => {
               <p className='text-muted-foreground text-sm'>Ideas Reviewed</p>
               <p className='text-lg'>{userData.reviews.length}</p>
             </div>
+            {averageRating !== null && (
+              <div className='flex items-center gap-2 mt-4 text-muted-foreground'>
+                <Star className='h-4 w-4 text-yellow-500' />
+                <span className='text-sm'>
+                  Avg. Rating Given: {averageRating.toFixed(1)} / 5
+                </span>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>

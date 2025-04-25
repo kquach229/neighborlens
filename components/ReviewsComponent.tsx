@@ -31,14 +31,6 @@ const ReviewsComponent: React.FC<ReviewsComponentProps> = ({
     <div className='w-full'>
       <h3 className='text-xl font-semibold'>Reviews For {ideaTitle}</h3>
 
-      {averageRating && (
-        <div className='mt-5'>
-          <span className='text-sm font-medium'>
-            Average Rating: {averageRating}
-          </span>
-        </div>
-      )}
-
       <div className='mt-10 p-10 w-full'>
         {reviews.length === 0 ? (
           <div className='mx-auto text-xl text-center text-gray-500'>

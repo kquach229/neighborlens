@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircleIcon, Verified } from 'lucide-react';
+import Image from 'next/image';
 
 export default function PricingPage() {
   const router = useRouter();
@@ -101,6 +102,17 @@ export default function PricingPage() {
               </Button>
             </CardContent>
           </Card>
+        </div>
+        <div className='mt-20'>
+          <div className='text-center text-muted-foreground'>
+            Secure Payments
+          </div>
+          <Image
+            height={300}
+            width={300}
+            src={'/powered-by-stripe-banner.png'}
+            alt='stripe banner'
+          />
         </div>
       </main>
     </div>

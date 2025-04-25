@@ -4,9 +4,11 @@ import ReusableEditFormButton from '@/components/ReusableEditFormButton';
 import ReviewForm from '@/components/ReviewForm';
 import ReviewsComponent from '@/components/ReviewsComponent';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { prisma } from '@/lib/prisma';
 import { getTimeDifference } from '@/lib/utils';
+import { Star } from 'lucide-react';
 import Link from 'next/link';
 
 const emptyReview: Review = {
@@ -68,19 +70,30 @@ const IdeaDetails = async ({ params, searchParams }: IdeaDetailsProps) => {
     (review) => review.userId === session?.user?.id
   );
 
+  const averageRating =
+    reviews.length > 0
+      ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
+      : 0;
+
   if (!idea) {
     return <div>Idea not found</div>;
   }
 
   return (
     <div className='min-h-[90vh] p-5 w-full'>
+      <Link href='/dashboard' className='text-sm text-blue-500 hover:underline'>
+        <Button>Back to Dashboard</Button>
+      </Link>
+
       <div className='flex justify-between gap-16 items-baseline flex-col md:flex-row'>
         {!isEditing && (
           <div className='w-full'>
             <div className='flex justify-between items-center mt-10'>
               <div>
                 <h1 className='mb-3'>{idea.title}</h1>
-                <span className='text-muted-foreground'>
+                <span
+                  className='text-muted-foreground'
+                  title={idea.createdAt.toLocaleString()}>
                   Posted {numberOfDaysSincePosting} ago by{' '}
                   <Link
                     className='text-blue-300'
@@ -88,6 +101,14 @@ const IdeaDetails = async ({ params, searchParams }: IdeaDetailsProps) => {
                     {idea?.author?.name?.split(' ')[0] || 'Anonymous'}
                   </Link>
                 </span>
+
+                {reviews.length > 0 && (
+                  <div className='flex items-center gap-2 mt-2 text-sm text-muted-foreground'>
+                    <Star className='h-4 w-4 text-yellow-500' />
+                    {averageRating.toFixed(1)} / 5 from {reviews.length}{' '}
+                    {reviews.length === 1 ? 'review' : 'reviews'}
+                  </div>
+                )}
               </div>
             </div>
 
@@ -121,7 +142,9 @@ const IdeaDetails = async ({ params, searchParams }: IdeaDetailsProps) => {
               </div>
 
               {numberOfDaysSinceUpdated !== numberOfDaysSincePosting && (
-                <div className='text-xs text-muted-foreground'>
+                <div
+                  title={idea.updatedAt.toLocaleString()}
+                  className='text-xs text-muted-foreground'>
                   Updated {numberOfDaysSinceUpdated} ago
                 </div>
               )}
@@ -150,6 +173,12 @@ const IdeaDetails = async ({ params, searchParams }: IdeaDetailsProps) => {
           </div>
         )}
       </div>
+
+      {reviews.length === 0 && (
+        <div className='mt-10 p-4 bg-yellow-50 border border-yellow-200 rounded-md text-sm text-yellow-800'>
+          Be the first to validate this idea and share your thoughts.
+        </div>
+      )}
 
       <div className='mt-32'>
         <ReviewsComponent reviews={reviews} ideaTitle={idea.title} />
