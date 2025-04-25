@@ -23,7 +23,7 @@ const FAQSection = () => {
         Frequently Asked Questions
       </h1>
 
-      <div className='max-w-3xl mx-auto'>
+      <div className='max-w-5xl mx-auto'>
         <Accordion type='single' collapsible>
           <AccordionItem value='item-1'>
             <AccordionTrigger className='text-xl font-medium'>
@@ -57,9 +57,9 @@ const FAQSection = () => {
             </AccordionTrigger>
             <AccordionContent>
               Validators are experienced professionals in various industries,
-              such as entrepreneurs, investors, product managers, and others
-              with relevant expertise. You can view their profiles to see their
-              background and areas of expertise.
+              such as entrepreneurs, investors, product managers, yourself, and
+              others with relevant expertise. You can view their profiles to see
+              their background and areas of expertise.
             </AccordionContent>
           </AccordionItem>
 
@@ -77,14 +77,12 @@ const FAQSection = () => {
 
           <AccordionItem value='item-5'>
             <AccordionTrigger className='text-xl font-medium'>
-              5. What is included in the free plan?
+              5. What is included in the feedback?
             </AccordionTrigger>
             <AccordionContent>
-              The free plan allows you to submit one idea for validation and
-              receive a limited amount of feedback. You can also review others'
-              ideas and engage with the community. For more extensive features,
-              such as unlimited submissions and premium feedback insights, check
-              out our paid plans.
+              The feedback loop includes information like whether or not the
+              reviewer would purchase that product or service, suggestions,
+              comments, ratings, etc.
             </AccordionContent>
           </AccordionItem>
 
@@ -93,10 +91,8 @@ const FAQSection = () => {
               6. How do I upgrade my plan?
             </AccordionTrigger>
             <AccordionContent>
-              You can upgrade your plan by visiting your account settings or the
-              pricing page. Select the plan you want and follow the instructions
-              to complete the payment process. Your subscription will
-              automatically renew unless you cancel it.
+              As of 3/15/2025 ValidatorLens is now free, so there’s no need to
+              upgrade. You can access all features without a subscription.
             </AccordionContent>
           </AccordionItem>
 
@@ -105,10 +101,9 @@ const FAQSection = () => {
               7. Can I cancel my subscription?
             </AccordionTrigger>
             <AccordionContent>
-              Yes, you can cancel your subscription at any time. Simply go to
-              the billing section of your account settings and choose the
-              "Cancel Subscription" option. Please note, cancellations will take
-              effect at the end of the billing cycle.
+              Since we made the decision to make ValidatorLens free, there is no
+              subscription to cancel. All users have full access to the platform
+              at no cost.
             </AccordionContent>
           </AccordionItem>
 
@@ -129,9 +124,8 @@ const FAQSection = () => {
               9. Can I submit multiple ideas?
             </AccordionTrigger>
             <AccordionContent>
-              Yes, you can submit multiple ideas. Depending on your subscription
-              plan, the number of submissions may vary. You can always upgrade
-              to a higher plan for unlimited submissions.
+              Yes, you can submit multiple ideas. There is no limit to the
+              number of submissions as the platform is now free.
             </AccordionContent>
           </AccordionItem>
 
@@ -140,9 +134,7 @@ const FAQSection = () => {
               10. Can I edit my idea after submission?
             </AccordionTrigger>
             <AccordionContent>
-              At the moment, you cannot directly edit a submitted idea. However,
-              you can withdraw your idea and submit a new version if needed. If
-              you need help with this, feel free to contact our support team.
+              You can edit your own idea submissions.
             </AccordionContent>
           </AccordionItem>
 
@@ -153,42 +145,27 @@ const FAQSection = () => {
             <AccordionContent>
               Once your idea is submitted, it will be reviewed by validators who
               will provide feedback in the form of ratings, comments, and
-              suggestions. You will be notified via email when feedback is
-              available. You can also view feedback directly on your dashboard.
+              suggestions. You can also view feedback directly on your
+              dashboard.
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value='item-12'>
             <AccordionTrigger className='text-xl font-medium'>
-              12. Can I respond to feedback?
+              12. How can I contact customer support?
             </AccordionTrigger>
             <AccordionContent>
-              Yes, you can engage with feedback! You have the option to ask
-              follow-up questions, clarify points, or thank the validator for
-              their input. This two-way interaction helps you get more detailed
-              insights and refine your idea.
-            </AccordionContent>
-          </AccordionItem>
-
-          <AccordionItem value='item-13'>
-            <AccordionTrigger className='text-xl font-medium'>
-              13. Is feedback anonymous?
-            </AccordionTrigger>
-            <AccordionContent>
-              Yes, feedback is typically anonymous. Validators can choose
-              whether to provide their feedback publicly or privately. You will
-              be able to see if the feedback is anonymous or associated with a
-              specific validator.
-            </AccordionContent>
-          </AccordionItem>
-
-          <AccordionItem value='item-14'>
-            <AccordionTrigger className='text-xl font-medium'>
-              14. How can I contact customer support?
-            </AccordionTrigger>
-            <AccordionContent>
-              You can reach our support team via the "Contact Us" page or by
-              emailing us at support@validatorlens.com. We’re here to help!
+              You can reach our support team via emailing us at{' '}
+              <a href='mailto:kquach229@gmail.com' className='text-blue-300'>
+                kquach229@gmail.com
+              </a>
+              . We’re here to help! <br />
+              <strong>Please Note:</strong> Emails sent to
+              support@validatelens.com will no longer be received. For
+              assistance, please email:{' '}
+              <a href='mailto:kquach229@gmail.com' className='text-blue-300'>
+                kquach229@gmail.com
+              </a>
             </AccordionContent>
           </AccordionItem>
         </Accordion>
