@@ -91,7 +91,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
           <div>
             <Label className='text-xs'>Would I pay for this?</Label>
             <p className='text-muted-foreground'>
-              {wouldIPayForThis === 'true' ? 'Yes' : 'No'}
+              {wouldIPayForThis.toUpperCase()}
             </p>
           </div>
         )}
