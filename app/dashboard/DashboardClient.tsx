@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, Suspense, useEffect } from 'react';
+import { FC, Suspense, useEffect, useMemo, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import IdeaCard from '@/components/IdeaCard';
 import { ROLES, useRoleStore } from '@/stores/roleStore';
@@ -11,8 +11,14 @@ import Loading from '../loading';
 
 import type { Idea } from '@/types/types';
 import { useDialogStore } from '@/stores/dialogStore';
-import { BadgeCheck } from 'lucide-react';
 import { DialogTitle } from '@/components/ui/dialog';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 type DashboardClientProps = {
   allIdeas: Idea[];
@@ -20,12 +26,14 @@ type DashboardClientProps = {
 
 type IdeasGridProps = {
   ideas: Idea[];
+  sortOption: string;
 };
 
 type SectionProps = {
   title: string;
   ideas: Idea[];
   emptyMessage: string;
+  sortOption: string;
 };
 
 type FounderViewProps = {
@@ -37,30 +45,61 @@ type ValidatorViewProps = {
   notYetValidated: Idea[];
 };
 
-const IdeasGrid: FC<IdeasGridProps> = ({ ideas }) => {
-  if (ideas.length === 0) return null;
+const sortIdeas = (ideas: Idea[], sortOption: string): Idea[] => {
+  const sorted = [...ideas];
+  if (sortOption === 'title') {
+    sorted.sort((a, b) => a.title.localeCompare(b.title));
+  } else if (sortOption === 'newest') {
+    sorted.sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+  } else if (sortOption === 'oldest') {
+    sorted.sort(
+      (a, b) =>
+        new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+    );
+  }
+  return sorted;
+};
+
+const IdeasGrid: FC<IdeasGridProps> = ({ ideas, sortOption }) => {
+  const sortedIdeas = useMemo(
+    () => sortIdeas(ideas, sortOption),
+    [ideas, sortOption]
+  );
+
+  if (sortedIdeas.length === 0) return null;
 
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5'>
-      {ideas.map((idea) => (
+      {sortedIdeas.map((idea) => (
         <IdeaCard key={idea.id} idea={idea} />
       ))}
     </div>
   );
 };
 
-const Section: FC<SectionProps> = ({ title, ideas, emptyMessage }) => (
+const Section: FC<SectionProps> = ({
+  title,
+  ideas,
+  emptyMessage,
+  sortOption,
+}) => (
   <section className='mt-10'>
     <h4 className='text-lg font-semibold'>{title}</h4>
     {ideas.length > 0 ? (
-      <IdeasGrid ideas={ideas} />
+      <IdeasGrid ideas={ideas} sortOption={sortOption} />
     ) : (
       <p className='text-muted-foreground mt-5'>{emptyMessage}</p>
     )}
   </section>
 );
 
-const FounderView: FC<FounderViewProps> = ({ ownIdeas }) => {
+const FounderView: FC<FounderViewProps & { sortOption: string }> = ({
+  ownIdeas,
+  sortOption,
+}) => {
   return (
     <div>
       <div className='flex justify-end'>
@@ -72,26 +111,29 @@ const FounderView: FC<FounderViewProps> = ({ ownIdeas }) => {
           <h3 className='text-center mt-10'>You currently have no ideas.</h3>
         </div>
       ) : (
-        <IdeasGrid ideas={ownIdeas} />
+        <IdeasGrid ideas={ownIdeas} sortOption={sortOption} />
       )}
     </div>
   );
 };
 
-const ValidatorView: FC<ValidatorViewProps> = ({
+const ValidatorView: FC<ValidatorViewProps & { sortOption: string }> = ({
   notYetValidated,
   reviewedIdeas,
+  sortOption,
 }) => (
   <div>
     <Section
       title='Waiting for Validation'
       ideas={notYetValidated}
       emptyMessage='No new ideas to validate.'
+      sortOption={sortOption}
     />
     <Section
       title='Already Validated by You'
       ideas={reviewedIdeas}
       emptyMessage="You haven't reviewed any ideas yet."
+      sortOption={sortOption}
     />
   </div>
 );
@@ -114,28 +156,26 @@ const DashboardClient: FC<DashboardClientProps> = ({ allIdeas }) => {
   const { data: session, status } = useSession();
   const { role } = useRoleStore();
   const { openDialog } = useDialogStore();
+  const [sortOption, setSortOption] = useState('newest');
 
   useEffect(() => {
     const FIRST_VISIT_KEY = 'first_visit';
-    const ONE_HOUR = 60 * 60 * 1000; // in ms
+    const ONE_HOUR = 60 * 60 * 1000;
     const now = Date.now();
 
     const stored = localStorage.getItem(FIRST_VISIT_KEY);
 
     if (!stored) {
-      // First visit ever
       localStorage.setItem(
         FIRST_VISIT_KEY,
         JSON.stringify({ value: 'true', timestamp: now })
       );
-
       openDialog(FreeDialog, { title: 'Great News!' });
     } else {
       const parsed = JSON.parse(stored);
       const elapsed = now - parsed.timestamp;
 
       if (elapsed > ONE_HOUR) {
-        // More than 1 hour has passed, reset or remove
         localStorage.setItem(
           FIRST_VISIT_KEY,
           JSON.stringify({ value: 'false', timestamp: now })
@@ -166,32 +206,42 @@ const DashboardClient: FC<DashboardClientProps> = ({ allIdeas }) => {
 
   return (
     <div>
-      <div className='flex justify-between items-center'>
+      <div className='flex justify-between items-center space-y-10'>
         <div className='flex flex-col'>
           {session?.user?.name && (
-            <h1 className='mt-5 mb-5'>
+            <h1 className='mt-5 mb-2'>
               Welcome, {session.user.name.split(' ')[0]}
             </h1>
           )}
           <h2 className='text-2xl font-bold'>Dashboard</h2>
-
-          <h5 className='mt-5 text-muted-foreground'>
-            {role === ROLES.FOUNDER
-              ? `My Ideas (${ownIdeas.length})`
-              : 'Ideas to Validate'}
-          </h5>
         </div>
-        <RoleToggle />
+
+        <div className='flex flex-col items-end gap-5'>
+          <RoleToggle />
+        </div>
       </div>
 
-      {role === ROLES.FOUNDER ? (
-        <FounderView ownIdeas={ownIdeas} />
-      ) : (
-        <ValidatorView
-          notYetValidated={notYetValidated}
-          reviewedIdeas={reviewedIdeas}
-        />
-      )}
+      <div>
+        <Select value={sortOption} onValueChange={setSortOption}>
+          <SelectTrigger>
+            <SelectValue placeholder='Sort by' />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value='newest'>Newest</SelectItem>
+            <SelectItem value='oldest'>Oldest</SelectItem>
+            <SelectItem value='title'>Title A-Z</SelectItem>
+          </SelectContent>
+        </Select>
+        {role === ROLES.FOUNDER ? (
+          <FounderView ownIdeas={ownIdeas} sortOption={sortOption} />
+        ) : (
+          <ValidatorView
+            notYetValidated={notYetValidated}
+            reviewedIdeas={reviewedIdeas}
+            sortOption={sortOption}
+          />
+        )}
+      </div>
 
       <div className='w-full mt-20'>
         <h5>Metrics</h5>

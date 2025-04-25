@@ -18,7 +18,6 @@ const Footer = () => {
       </div>
 
       <div className='flex justify-between'>
-        <span>© 2025 ValidateLens. All rights reserved.</span>
         <div className='flex gap-5 mb-5 underline'>
           <Link href='/privacy-policy'>Privacy Policy</Link>
         </div>
