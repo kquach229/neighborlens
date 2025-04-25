@@ -118,7 +118,7 @@ const DashboardMetrics = ({ role }: { role: string }) => {
                 label='Unique Ideas Reviewed'
                 value={data.uniqueIdeasReviewed}
               />
-              <MetricBlock label='Credits Earned' value={data.credits} />
+              {/* <MetricBlock label='Credits Earned' value={data.credits} /> */}
               <MetricBlock
                 label='Avg. Response Time'
                 value={data.averageResponseTime}
