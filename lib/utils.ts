@@ -73,15 +73,19 @@ export const getReviewsAverageMarkup = (
   reviews: Review[],
   showLongVersion: boolean
 ) => {
-  if (!reviews.length) return;
-  const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
   const totalReviews = reviews.length;
+  if (!totalReviews) return 'No reviews yet';
+
+  const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+  const maxRating = totalReviews * 5;
+  const average = (totalRating / totalReviews).toFixed(1); // 1 decimal place
+
   if (showLongVersion) {
-    return `${totalRating} / ${totalReviews * 5} Based On ${totalReviews} ${
+    return `${totalRating} / ${maxRating} Based On ${totalReviews} ${
       totalReviews > 1 ? 'Reviews' : 'Review'
     }`;
   } else {
-    return `Avg Rating: ${totalRating} / ${reviews.length * 5}`;
+    return `Avg Rating: ${average} / 5`;
   }
 };
 
