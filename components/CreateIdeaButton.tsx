@@ -5,37 +5,34 @@ import { useDialogStore } from '@/stores/dialogStore';
 
 const CreateIdeaButton = () => {
   const { openDialog } = useDialogStore();
-  const [credits, setCredits] = useState<number | null>(null);
+  // const [credits, setCredits] = useState<number | null>(null);
 
-  const fetchCredits = async () => {
-    try {
-      const res = await fetch('/api/user/credits');
-      const data = await res.json();
-      setCredits(data.credits);
-    } catch (error) {
-      console.error('Failed to fetch credits', error);
-      setCredits(0);
-    }
-  };
+  // const fetchCredits = async () => {
+  //   try {
+  //     const res = await fetch('/api/user/credits');
+  //     const data = await res.json();
+  //     setCredits(data.credits);
+  //   } catch (error) {
+  //     console.error('Failed to fetch credits', error);
+  //     setCredits(0);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchCredits();
+  // useEffect(() => {
+  //   fetchCredits();
 
-    const handleCreditsUpdate = () => {
-      fetchCredits();
-    };
+  //   const handleCreditsUpdate = () => {
+  //     fetchCredits();
+  //   };
 
-    window.addEventListener('credits-updated', handleCreditsUpdate);
-    return () => {
-      window.removeEventListener('credits-updated', handleCreditsUpdate);
-    };
-  }, []);
+  //   window.addEventListener('credits-updated', handleCreditsUpdate);
+  //   return () => {
+  //     window.removeEventListener('credits-updated', handleCreditsUpdate);
+  //   };
+  // }, []);
 
   return (
-    <Button
-      onClick={() =>
-        openDialog(IdeaForm, { title: 'Create Your Idea', setCredits })
-      }>
+    <Button onClick={() => openDialog(IdeaForm, { title: 'Create Your Idea' })}>
       Create Idea
     </Button>
   );

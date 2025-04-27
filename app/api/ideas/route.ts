@@ -26,7 +26,6 @@ export async function POST(req: Request): Promise<NextResponse> {
     // Check if user has at least 1 credit
     const user = await prisma.user.findUnique({
       where: { id: userId },
-      select: { credits: true },
     });
 
     const [newIdea] = await prisma.$transaction([

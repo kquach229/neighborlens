@@ -78,7 +78,6 @@ export async function GET(request: Request) {
         }),
         prisma.user.findUnique({
           where: { id: userId },
-          select: { credits: true },
         }),
       ]);
 
