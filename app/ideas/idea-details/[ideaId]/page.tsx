@@ -60,7 +60,9 @@ const IdeaDetails = async ({ params, searchParams }: IdeaDetailsProps) => {
   const idea = await getIdea(ideaId);
   const reviews = await getReviewsForIdea(ideaId);
   const session = await auth();
-  const isEditing = searchParams?.isEditing === 'true';
+
+  const urlSearchParams = await searchParams;
+  const isEditing = urlSearchParams?.isEditing?.toString() === 'true';
   const numberOfDaysSincePosting =
     idea?.createdAt && getTimeDifference(idea.createdAt);
   const numberOfDaysSinceUpdated =

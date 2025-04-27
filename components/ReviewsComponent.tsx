@@ -55,8 +55,8 @@ const ReviewsComponent: React.FC<ReviewsComponentProps> = ({
             </CarouselContent>
 
             <>
-              <CarouselPrevious className='hidden md:flex' />
-              <CarouselNext className='hidden md:flex' />
+              <CarouselPrevious />
+              <CarouselNext />
             </>
           </Carousel>
         )}
