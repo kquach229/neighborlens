@@ -44,7 +44,7 @@ const formSchema = z.object({
 
 type FormSchema = z.infer<typeof formSchema>;
 
-const categoriesList = [
+export const categoriesList = [
   { value: 'marketplace', label: 'Marketplace' },
   { value: 'b2b saas', label: 'B2B SaaS' },
   { value: 'fintech', label: 'Fintech' },

@@ -19,6 +19,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { ReusableMultiSelct } from '@/components/ReusableMultiselect';
+import { Label } from '@/components/ui/label';
+import { categoriesList } from '@/components/IdeaForm';
+import { useForm } from 'react-hook-form';
 
 type DashboardClientProps = {
   allIdeas: Idea[];
@@ -157,6 +161,15 @@ const DashboardClient: FC<DashboardClientProps> = ({ allIdeas }) => {
   const { role } = useRoleStore();
   const { openDialog } = useDialogStore();
   const [sortOption, setSortOption] = useState('newest');
+  const { watch, setValue } = useForm();
+  const selectedCategories = watch('categories') || [];
+
+  const filterByCategories = (ideas: Idea[], selectedCategories: string[]) => {
+    if (selectedCategories.length === 0) return ideas;
+    return ideas.filter((idea) =>
+      idea.categories?.some((category) => selectedCategories.includes(category))
+    );
+  };
 
   useEffect(() => {
     const FIRST_VISIT_KEY = 'first_visit';
@@ -220,24 +233,52 @@ const DashboardClient: FC<DashboardClientProps> = ({ allIdeas }) => {
           <RoleToggle />
         </div>
       </div>
+      <div className='flex justify-between items-center w-full gap-5 mb-5'>
+        <div className='w-3/4 text-right'>
+          <Label className='mb-2'>Categories</Label>
+          <ReusableMultiSelct
+            className='z-50'
+            options={categoriesList}
+            onValueChange={(values) => setValue('categories', values)}
+            defaultValue={selectedCategories}
+            placeholder='Select categories'
+            variant='inverted'
+            animation={2}
+            maxCount={3}
+          />
+        </div>
+
+        <div className='text-right'>
+          <Label className='mb-2 text-right flex justify-end'>Sort</Label>
+          <Select value={sortOption} onValueChange={setSortOption}>
+            <SelectTrigger>
+              <SelectValue placeholder='Sort by' />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value='newest'>Newest</SelectItem>
+              <SelectItem value='oldest'>Oldest</SelectItem>
+              <SelectItem value='title'>Title A-Z</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
 
       <div>
-        <Select value={sortOption} onValueChange={setSortOption}>
-          <SelectTrigger>
-            <SelectValue placeholder='Sort by' />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value='newest'>Newest</SelectItem>
-            <SelectItem value='oldest'>Oldest</SelectItem>
-            <SelectItem value='title'>Title A-Z</SelectItem>
-          </SelectContent>
-        </Select>
         {role === ROLES.FOUNDER ? (
-          <FounderView ownIdeas={ownIdeas} sortOption={sortOption} />
+          <FounderView
+            ownIdeas={filterByCategories(ownIdeas, selectedCategories)}
+            sortOption={sortOption}
+          />
         ) : (
           <ValidatorView
-            notYetValidated={notYetValidated}
-            reviewedIdeas={reviewedIdeas}
+            notYetValidated={filterByCategories(
+              notYetValidated,
+              selectedCategories
+            )}
+            reviewedIdeas={filterByCategories(
+              reviewedIdeas,
+              selectedCategories
+            )}
             sortOption={sortOption}
           />
         )}
