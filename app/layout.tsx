@@ -9,6 +9,7 @@ import { GlobalDialog } from '@/components/ReusableDialog';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import MobileSideBar from '@/components/MobileSidebar';
 import { Toaster } from 'sonner';
+import { Analytics } from '@vercel/analytics/react';
 
 const roboto = Roboto({
   variable: '--font-roboto',
@@ -69,6 +70,7 @@ export default function RootLayout({
                 </div>
 
                 {children}
+                <Analytics />
                 <Toaster />
                 <Footer />
                 <GlobalDialog />
