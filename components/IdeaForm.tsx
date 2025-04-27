@@ -223,11 +223,7 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose }: IdeaFormProps) => {
         )}
       </div>
 
-      <Button
-        type='submit'
-        className='bg-black text-white py-2 px-4 rounded hover:bg-gray-900 transition'>
-        {data ? 'Update Idea' : 'Create Idea'}
-      </Button>
+      <Button type='submit'>{data ? 'Update Idea' : 'Create Idea'}</Button>
     </form>
   );
 };
