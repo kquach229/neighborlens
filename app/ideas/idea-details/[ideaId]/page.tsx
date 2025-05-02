@@ -1,4 +1,5 @@
 import auth from '@/auth';
+import AiBuddy from '@/components/AiBuddy';
 import IdeaForm from '@/components/IdeaForm';
 import ReusableEditFormButton from '@/components/ReusableEditFormButton';
 import ReviewForm from '@/components/ReviewForm';
@@ -6,6 +7,7 @@ import ReviewsComponent from '@/components/ReviewsComponent';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { generateAIReview } from '@/lib/aiReview';
 import { prisma } from '@/lib/prisma';
 import { getTimeDifference } from '@/lib/utils';
 import { Star } from 'lucide-react';
@@ -59,6 +61,7 @@ const IdeaDetails = async ({ params, searchParams }: IdeaDetailsProps) => {
   const { ideaId } = await params;
   const idea = await getIdea(ideaId);
   const reviews = await getReviewsForIdea(ideaId);
+
   const session = await auth();
 
   const urlSearchParams = await searchParams;
@@ -185,6 +188,12 @@ const IdeaDetails = async ({ params, searchParams }: IdeaDetailsProps) => {
       <div className='mt-32'>
         <ReviewsComponent reviews={reviews} ideaTitle={idea.title} />
       </div>
+
+      {isAuthor && (
+        <div className='mt-32'>
+          <AiBuddy idea={idea} />
+        </div>
+      )}
     </div>
   );
 };
