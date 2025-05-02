@@ -32,7 +32,7 @@ Pursue: <your thoughts>
   const text = response.text();
 
   const ratingMatch = text.match(/Rating:\s*(\d)/);
-  const feedbackMatch = text.match(/Feedback:\s*([\s\S]+)/);
+  const feedbackMatch = text.match(/Feedback:\s*([\s\S]*?)(?=\nPursue:)/);
   const pursueMatch = text.match(/Pursue:\s*([\s\S]+)/);
 
   return {
