@@ -189,11 +189,9 @@ const IdeaDetails = async ({ params, searchParams }: IdeaDetailsProps) => {
         <ReviewsComponent reviews={reviews} ideaTitle={idea.title} />
       </div>
 
-      {isAuthor && (
-        <div className='mt-32'>
-          <AiBuddy idea={idea} />
-        </div>
-      )}
+      <div className='mt-32'>
+        <AiBuddy idea={idea} />
+      </div>
     </div>
   );
 };

@@ -52,7 +52,7 @@ const AiBuddy = ({ idea }: { idea: any }) => {
 
   return (
     <div className='p-6 border border-gray-200 rounded-lg shadow-lg'>
-      <h2 className='text-xl font-semibold mb-4'>AI Cody Suggests</h2>
+      <h2 className='text-xl font-semibold mb-4'>AI Sally Suggests</h2>
 
       {!aiReview ? (
         <div className='flex flex-col items-center'>

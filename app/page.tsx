@@ -2,20 +2,26 @@
 
 import { AvatarImage, Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from '@/components/ui/card';
 import {
   Accordion,
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
 } from '@/components/ui/accordion';
-import { AlertCircle, Gem, MessageCircle, StarIcon } from 'lucide-react';
+import { StarIcon } from 'lucide-react';
 import Image from 'next/image';
 import SignInButton from '@/components/SignInButton';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Parallax, ParallaxBanner } from 'react-scroll-parallax';
 import ParalaxParent from '@/components/ParalaxParent';
+
 const FAQSection = () => {
   return (
     <div className='min-h-screen p-10'>
@@ -27,13 +33,13 @@ const FAQSection = () => {
         <Accordion type='single' collapsible>
           <AccordionItem value='item-1'>
             <AccordionTrigger className='text-xl font-medium'>
-              1. What is ValidatorLens?
+              1. What is ValidateLens?
             </AccordionTrigger>
             <AccordionContent>
-              ValidatorLens is a platform that allows founders to get real,
-              human feedback on their startup ideas from experienced validators.
-              It helps validate concepts, spot risks, and gain insights before
-              you build, saving you time and resources.
+              ValidateLens is a platform that allows founders to get real, human
+              feedback on their startup ideas from experienced validators. It
+              helps validate concepts, spot risks, and gain insights before you
+              build, saving you time and resources.
             </AccordionContent>
           </AccordionItem>
 
@@ -91,7 +97,7 @@ const FAQSection = () => {
               6. How do I upgrade my plan?
             </AccordionTrigger>
             <AccordionContent>
-              As of 3/15/2025 ValidatorLens is now free, so there’s no need to
+              As of 3/15/2025 ValidateLens is now free, so there’s no need to
               upgrade. You can access all features without a subscription.
             </AccordionContent>
           </AccordionItem>
@@ -101,7 +107,7 @@ const FAQSection = () => {
               7. Can I cancel my subscription?
             </AccordionTrigger>
             <AccordionContent>
-              Since we made the decision to make ValidatorLens free, there is no
+              Since we made the decision to make ValidateLens free, there is no
               subscription to cancel. All users have full access to the platform
               at no cost.
             </AccordionContent>
@@ -168,6 +174,29 @@ const FAQSection = () => {
               </a>
             </AccordionContent>
           </AccordionItem>
+
+          <AccordionItem value='item-13'>
+            <AccordionTrigger className='text-xl font-medium'>
+              13. What is AI Sally?
+            </AccordionTrigger>
+            <AccordionContent>
+              AI Sally is our built-in AI Feedback Assistant. He helps you spot
+              patterns, and even has smart suggestions so you can make informed
+              decisions more confidently.
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value='item-14'>
+            <AccordionTrigger className='text-xl font-medium'>
+              14. Is AI Sally Free to Use?
+            </AccordionTrigger>
+            <AccordionContent>
+              AI Sally is now free to use for everyone. We no longer are
+              charging credits for the usage of this tool. Simply go to the Idea
+              Details page, and scroll to the bottom of the page. You can find
+              her there!
+            </AccordionContent>
+          </AccordionItem>
         </Accordion>
       </div>
     </div>
@@ -187,8 +216,8 @@ export default function Home() {
               Validate Your Startup Idea—Before You Build
             </h1>
             <span className='text-lg'>
-              Get real human feedback from experienced validators. No AI, no
-              fluff—just actionable insight to help you decide what to build.
+              Get real human feedback from experienced validators. No fluff—just
+              actionable insight to help you decide what to build.
             </span>
             {session.data?.user ? (
               <Button
@@ -207,51 +236,12 @@ export default function Home() {
             <Parallax speed={-12}>
               <Image
                 className='object-center rounded-sm shadow-2xl'
-                src={'/idea-card.png'}
+                src={'/validate-lens-screenshot.png'}
                 alt='hero-image'
                 height={1000}
                 width={1000}
               />
             </Parallax>
-          </div>
-        </div>
-
-        <div className='mt-24 md:mt-52'>
-          <div className='w-full md:w-3/4'>
-            <h2 className='mb-5 text-2xl font-semibold'>
-              Turn Uncertainty Into Clarity
-            </h2>
-            <span>
-              Submit your startup idea and receive structured, thoughtful
-              feedback from real people—your potential users, investors, and
-              advisors.
-            </span>
-          </div>
-          <div className='grid grid-cols-1 md:grid-cols-3 gap-10 mt-24 text-center'>
-            <div>
-              <Gem className='place-self-center mb-5 h-[3rem] w-[3rem]' />
-              <h6 className='font-semibold mb-2'>Discover What Matters</h6>
-              <span>
-                Learn what stands out and what needs work in your concept—direct
-                from real-world validators.
-              </span>
-            </div>
-            <div className='self-center'>
-              <AlertCircle className='place-self-center mb-5 h-[3rem] w-[3rem]' />
-              <h6 className='font-semibold mb-2'>Spot the Biggest Risks</h6>
-              <span>
-                Get early insight into red flags, assumptions, and potential
-                dealbreakers.
-              </span>
-            </div>
-            <div className='self-center'>
-              <MessageCircle className='place-self-center mb-5 h-[3rem] w-[3rem]' />
-              <h6 className='font-semibold mb-2'>Engage With Feedback</h6>
-              <span>
-                Ask questions, gather feedback, and improve your idea in real
-                time.
-              </span>
-            </div>
           </div>
         </div>
 
@@ -297,6 +287,41 @@ export default function Home() {
           </div>
         </div>
 
+        <div className='mt-24 md:mt-52 flex flex-col md:flex-row items-center justify-between gap-5'>
+          <div className='w-full md:w-2/4 mb-12'>
+            <h2 className='text-2xl font-semibold mb-4'>
+              Meet AI Sally — Your Feedback Co-Pilot
+            </h2>
+            <p className='text-lg'>
+              While human validators give you high-quality feedback, AI Sally
+              helps you interpret that feedback faster. Summarize insights,
+              surface patterns, and get smart suggestions on next steps—all in
+              one click.
+            </p>
+            <div className='mt-20 w-full'>
+              <Image
+                className='mx-auto rounded-sm'
+                src={'/ai-sally-suggestion.png'}
+                height={1000}
+                width={1000}
+                alt='screenshot'
+              />
+            </div>
+          </div>
+          <div className='mx-auto w-[90%] md:w-[420px] h-auto'>
+            <video
+              className='mx-auto rounded-sm'
+              autoPlay
+              muted
+              controls={false}
+              preload='none'
+              aria-label='Video player'>
+              <source src='/ai-sally-greeting.mp4' type='video/mp4' />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+
         <div className='mt-24 md:mt-52'>
           <h2 className='mb-5 text-2xl font-semibold'>User Testimonials</h2>
           <span>See how others are validating smarter</span>
@@ -304,12 +329,16 @@ export default function Home() {
             <Card className='p-5 w-full md:w-1/2 shadow-2xl'>
               <div className='flex'>
                 {[...Array(5)].map((_, i) => (
-                  <StarIcon key={i} color='ffee8c' fill='ffee8c' />
+                  <StarIcon
+                    key={i}
+                    color='fill-yellow-500'
+                    fill='fill-yellow-500'
+                  />
                 ))}
               </div>
 
               <span>
-                "ValidatorLens helped me realize I was solving a non-problem.
+                "ValidateLens helped me realize I was solving a non-problem.
                 That insight saved me months of wasted effort."
               </span>
               <CardFooter className='flex gap-5'>
@@ -326,7 +355,11 @@ export default function Home() {
             <Card className='p-5 w-full md:w-1/2 shadow-2xl'>
               <div className='flex'>
                 {[...Array(5)].map((_, i) => (
-                  <StarIcon key={i} color='ffee8c' fill='ffee8c' />
+                  <StarIcon
+                    key={i}
+                    color='fill-yellow-500'
+                    fill='fill-yellow-500'
+                  />
                 ))}
               </div>
               <span>
@@ -393,7 +426,7 @@ export default function Home() {
                 Validate Before You Build
               </h2>
               <div className='mt-2 hidden sm:block'>
-                Join ValidatorLens and start turning ideas into validated
+                Join ValidateLens and start turning ideas into validated
                 opportunities.
               </div>
             </div>
