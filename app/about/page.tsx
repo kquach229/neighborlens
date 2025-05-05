@@ -18,9 +18,9 @@ export default function AboutPage() {
         </div>
       </section>
       <section>
-        <h1 className='text-4xl font-bold mb-4'>About ValidatorLens</h1>
+        <h1 className='text-4xl font-bold mb-4'>About ValidateLens</h1>
         <p className='text-lg'>
-          ValidatorLens helps startup founders quickly validate ideas by getting
+          ValidateLens helps startup founders quickly validate ideas by getting
           honest feedback from real humans — not just AI. We connect founders
           with experienced validators who’ve built, invested in, or operated
           startups.
@@ -49,7 +49,7 @@ export default function AboutPage() {
         <h2 className='text-2xl font-semibold mb-2'>Why we built this</h2>
         <p className=''>
           Too many founders waste time building things no one wants. We built
-          ValidatorLens to make it easier to test ideas before going all-in —
+          ValidateLens to make it easier to test ideas before going all-in —
           with insights from people who’ve been there before.
         </p>
       </section>

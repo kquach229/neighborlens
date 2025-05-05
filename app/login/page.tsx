@@ -13,7 +13,7 @@ const LoginPage = async () => {
       <div className='w-full max-w-md text-center space-y-8'>
         <div className='flex flex-col items-center space-y-4'>
           <Glasses className='h-20 w-20' />
-          <h1 className='text-4xl font-bold tracking-tight'>ValidatorLens</h1>
+          <h1 className='text-4xl font-bold tracking-tight'>ValidateLens</h1>
           <p className='max-w-sm'>
             Validate your startup ideas before investing your time and money.
           </p>

@@ -180,7 +180,7 @@ const FAQSection = () => {
               13. What is AI Sally?
             </AccordionTrigger>
             <AccordionContent>
-              AI Sally is our built-in AI Feedback Assistant. He helps you spot
+              AI Sally is our built-in AI Feedback Assistant. She helps you spot
               patterns, and even has smart suggestions so you can make informed
               decisions more confidently.
             </AccordionContent>
