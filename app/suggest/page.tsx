@@ -41,7 +41,7 @@ Format clearly in Markdown.
 
   return (
     <div className='mx-auto p-6 space-y-6'>
-      <div className='flex justify-between items-center'>
+      <div className='gap-5 flex flex-col md:flex-row md:justify-between items-start md:items-center'>
         <h1 className='text-3xl font-bold place-self-start'>
           AI Sally Suggests
         </h1>
