@@ -92,6 +92,7 @@ const Navbar = () => {
           </>
         )}
         <Link href='/dashboard'>Dashboard</Link>
+        <Link href='/suggest'>SallySuggest</Link>
         <Link href='/about'>About</Link>
         <Link href='/pricing'>Pricing</Link>
         <Link href='/blog/posts'>Blog</Link>

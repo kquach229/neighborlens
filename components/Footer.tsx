@@ -14,6 +14,9 @@ const Footer = () => {
           <Link href='/dashboard' className='transition'>
             Dashboard
           </Link>
+          <Link href='/suggest' className='transition'>
+            SallySuggest
+          </Link>
           <Link href='/about' className='transition'>
             About
           </Link>

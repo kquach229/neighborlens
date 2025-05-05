@@ -32,6 +32,9 @@ export default function MobileSideBar() {
             <Link onClick={toggleSidebar} href={'/dashboard'}>
               Dashboard
             </Link>
+            <Link onClick={toggleSidebar} href={'/suggest'}>
+              SallySuggest
+            </Link>
             <Link onClick={toggleSidebar} href={'/about'}>
               About
             </Link>
