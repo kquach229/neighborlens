@@ -42,7 +42,9 @@ Format clearly in Markdown.
   return (
     <div className='max-w-5xl mx-auto p-6 space-y-6'>
       <div className='flex justify-between items-center'>
-        <h1 className='text-3xl font-bold place-self-start'>Sally Suggests</h1>
+        <h1 className='text-3xl font-bold place-self-start'>
+          AI Sally Suggests
+        </h1>
         <div className='w-[80] h-[80]'>
           <Image
             className='rounded-sm border border-foreground'
@@ -56,9 +58,9 @@ Format clearly in Markdown.
 
       <p className='text-gray-400'>
         Don’t know what to build? Enter your interests (or leave it blank), and
-        let the AI Sally help you brainstorm. Please note: We do not store this
-        info for you, therefore, if AI Sally suggests any ideas you like, please
-        be sure to write them down yourself for your own records.
+        let AI Sally help you brainstorm. Please note: We do not store this info
+        for you, therefore, if AI Sally suggests any ideas you like, please be
+        sure to write them down yourself for your own records.
       </p>
 
       <Textarea
