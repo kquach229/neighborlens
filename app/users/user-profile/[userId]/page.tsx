@@ -76,7 +76,7 @@ const ProfilePage = async ({
             <div className='flex justify-center md:justify-end w-full md:w-auto'>
               <Avatar className='h-48 w-48'>
                 <AvatarImage
-                  src={session?.user?.image || ''}
+                  src={userData?.avatarUrl || ''}
                   alt='Profile image'
                 />
                 <AvatarFallback className='text-4xl'>
