@@ -1,5 +1,6 @@
 import auth from '@/auth';
 import AiBuddy from '@/components/AiBuddy';
+import IdeaAICompetitors from '@/components/IdeaAiCompetitors';
 import IdeaAISuggestions from '@/components/IdeaAiSuggestions';
 import IdeaForm from '@/components/IdeaForm';
 import ReusableEditFormButton from '@/components/ReusableEditFormButton';
@@ -193,6 +194,7 @@ const IdeaDetails = async ({ params, searchParams }: IdeaDetailsProps) => {
       <div className='mt-32'>
         <AiBuddy idea={idea} />
         <IdeaAISuggestions idea={idea} />
+        <IdeaAICompetitors idea={idea} />
       </div>
     </div>
   );
