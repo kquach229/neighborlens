@@ -97,7 +97,7 @@ const FAQSection = () => {
               6. How do I upgrade my plan?
             </AccordionTrigger>
             <AccordionContent>
-              As of 3/15/2025 ValidateLens is now free, so there’s no need to
+              As of 7/15/2025 ValidateLens is now free, so there’s no need to
               upgrade. You can access all features without a subscription.
             </AccordionContent>
           </AccordionItem>

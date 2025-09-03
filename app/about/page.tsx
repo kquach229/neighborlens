@@ -47,11 +47,29 @@ export default function AboutPage() {
 
       <section>
         <h2 className='text-2xl font-semibold mb-2'>Why we built this</h2>
-        <p className=''>
-          Too many founders waste time building things no one wants. We built
-          ValidateLens to make it easier to test ideas before going all-in —
-          with insights from people who’ve been there before.
+        <p className='text-lg leading-relaxed'>
+          Too many founders waste months building products no one truly needs.
+          ValidateLens was born from the belief that validation should happen
+          before you go all-in.
         </p>
+        <p className='mt-3 text-lg leading-relaxed'>
+          By creating a simple way to get unbiased, structured feedback, we're
+          helping founders build products that solve real problems, faster.
+        </p>
+      </section>
+
+      <section>
+        <h2 className='text-2xl font-semibold mb-2'>Our Mission</h2>
+        <p className='text-lg leading-relaxed'>
+          Our mission is to help founders spend less time guessing and more time
+          building. We want to empower entrepreneurs to:
+        </p>
+        <ul className='list-disc pl-6 mt-3 space-y-2 text-lg'>
+          <li>Validate ideas quickly and affordably</li>
+          <li>Access diverse perspectives and insights</li>
+          <li>Avoid costly mistakes caused by lack of early feedback</li>
+          <li>Build a strong foundation for future growth</li>
+        </ul>
       </section>
 
       <div className='mt-32 text-center mx-auto w-full'>
