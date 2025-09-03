@@ -106,7 +106,10 @@ const IdeaForm = ({ dataId, data, onSuccess, onClose }: IdeaFormProps) => {
     if (res.ok) {
       toast.success(isEditing ? 'Idea updated!' : 'Idea created!');
       window.dispatchEvent(new Event('credits-updated'));
-      if (method == 'POST') triggerDashboardRefresh();
+      if (method == 'POST') {
+        triggerDashboardRefresh();
+        router.push('/dashboard');
+      }
     } else {
       const error = await res.json();
       toast.error(error.message || 'Something went wrong');
