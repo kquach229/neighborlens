@@ -193,8 +193,6 @@ const IdeaDetails = async ({ params, searchParams }: IdeaDetailsProps) => {
 
       <div className='mt-32'>
         <AiBuddy idea={idea} />
-        <IdeaAISuggestions idea={idea} />
-        <IdeaAICompetitors idea={idea} />
       </div>
     </div>
   );
