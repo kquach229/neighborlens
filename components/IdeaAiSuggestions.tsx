@@ -22,8 +22,10 @@ const IdeaAISuggestions = ({ idea }: { idea: any }) => {
   }, [idea]);
 
   return (
-    <div className='mt-10 p-4 border border-blue-200 rounded-md bg-blue-50'>
-      <h2 className='font-semibold text-lg mb-2'>AI Improvement Suggestions</h2>
+    <div className='mt-10 p-4 border rounded-md'>
+      <h2 className='font-semibold text-lg mb-2'>
+        AI Idea Submission Improvement
+      </h2>
       {loading && <p className='text-gray-500'>Generating suggestions...</p>}
       {suggestions && (
         <ul className='list-disc pl-5 space-y-1'>
