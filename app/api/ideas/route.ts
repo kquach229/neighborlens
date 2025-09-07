@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import auth from '@/auth';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { Session } from 'next-auth';
 
 interface IdeaRequestBody {

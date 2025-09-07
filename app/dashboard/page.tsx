@@ -1,15 +1,15 @@
+// app/dashboard/page.tsx
 import React from 'react';
 import { prisma } from '@/lib/prisma';
 import DashboardClient from './DashboardClient';
 import auth from '@/auth';
 import { redirect } from 'next/navigation';
-import type { Idea } from '@/types/types'; // Make sure to import your Idea type
+import type { Idea } from '@/types/types';
 
 const getAllIdeas = async (): Promise<Idea[]> => {
   const ideas = await prisma?.idea?.findMany({
-    include: {
-      reviews: true,
-    },
+    include: { reviews: true },
+    orderBy: { createdAt: 'desc' },
   });
   return ideas || [];
 };
