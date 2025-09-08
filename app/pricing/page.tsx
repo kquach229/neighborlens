@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircleIcon, Verified } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function PricingPage() {
   const router = useRouter();
@@ -108,11 +109,30 @@ export default function PricingPage() {
             Secure Payments
           </div>
           <Image
-            height={300}
-            width={300}
+            height={200}
+            width={200}
             src={'/powered-by-stripe-banner.png'}
             alt='stripe banner'
           />
+        </div>
+
+        <div className='mt-20 text-center flex flex-col'>
+          <div className='text-muted-foreground text-sm'>
+            ValidateLens is now free for all users, but if you would like to
+            support our operations, click the link below
+          </div>
+          <Link
+            className='mt-4 text-center mx-auto'
+            href='https://buymeacoffee.com/kquach229'
+            target='_blank'>
+            <Image
+              width={217}
+              height={60}
+              className='w-[217px] h-[60px]'
+              src='https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png'
+              alt='Buy Me A Coffee'
+            />
+          </Link>
         </div>
       </main>
     </div>

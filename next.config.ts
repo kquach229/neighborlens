@@ -38,6 +38,16 @@ const generateAppDirEntry = (entry: any) => {
 
 const nextConfig = {
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.buymeacoffee.com',
+        port: '',
+        search: '',
+      },
+    ],
+  },
 
   reactStrictMode: true,
 
