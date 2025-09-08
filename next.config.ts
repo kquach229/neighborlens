@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 import createMDX from '@next/mdx';
+import { NextConfig } from 'next';
 const path = require('path');
 
 const isDev = process.env.NODE_ENV !== 'production';
@@ -36,15 +37,14 @@ const generateAppDirEntry = (entry: any) => {
   });
 };
 
-const nextConfig = {
+const nextConfig: NextConfig = {
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
   images: {
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'cdn.buymeacoffee.com',
-        port: '',
-        search: '',
+        pathname: '/**',
       },
     ],
   },
