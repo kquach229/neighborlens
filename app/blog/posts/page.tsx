@@ -10,6 +10,8 @@ export interface IPost {
   content: string;
 }
 
+// comment
+
 const BlogPage = () => {
   const rawPosts = getAllPosts() as IPost[];
   const posts = [...rawPosts].sort(

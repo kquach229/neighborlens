@@ -8,5 +8,5 @@ export const config = { match: ['/dashboard'] };
 export const { auth: middleware } = NextAuth(authConfig);
 
 export default auth(async function middleware(req: NextRequest) {
-  // Your custom middleware logic goes here
+  // Your custom middleware logic goes here and here
 });
