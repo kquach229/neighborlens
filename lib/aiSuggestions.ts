@@ -9,7 +9,7 @@ export async function generateAISuggestions(idea: {
   pricingModel: string;
   pricingDetails: string;
 }) {
-  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-8b' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-flash-latest' });
 
   const prompt = `
 You're an expert product validator. Based on the following idea, generate 3 actionable suggestions to improve the idea, focusing on:

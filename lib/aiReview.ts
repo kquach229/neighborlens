@@ -9,7 +9,7 @@ export async function generateAIReview(idea: {
   pricingModel: string;
   pricingDetails: string;
 }) {
-  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-8b' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-flash-latest' });
 
   const prompt = `
 You're an expert product validator. Based on the following idea, write a short review (2-4 sentences), answer in a sentence whether or not you would recommend the idea poster to keep going with the idea, and provide a star rating from 1 to 5.
