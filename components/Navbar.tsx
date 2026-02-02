@@ -82,24 +82,49 @@ const Navbar = () => {
   // }, [session.data?.user]);
 
   return (
-    <div className='flex justify-between items-center p-5 h-[10vh]'>
-      <NavLogo />
-      <div className='flex gap-5 items-center'>
-        {session.data?.user && (
-          <>
-            <CreateIdeaButton />
-            {/* <UserCredits credits={credits} /> */}
-          </>
-        )}
-        <Link href='/dashboard'>Dashboard</Link>
-        <Link href='/suggest'>SallySuggest</Link>
-        <Link href='/about'>About</Link>
-        <Link href='/pricing'>Pricing</Link>
-        <Link href='/blog/posts'>Blog</Link>
-        <ThemeToggler />
-        <UserButton />
+    <nav className='sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
+      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+        <div className='flex justify-between items-center h-16'>
+          <NavLogo />
+          <div className='hidden md:flex gap-6 items-center'>
+            {session.data?.user && (
+              <>
+                <CreateIdeaButton />
+              </>
+            )}
+            <Link
+              href='/dashboard'
+              className='text-sm font-medium transition-colors hover:text-primary'>
+              Dashboard
+            </Link>
+            <Link
+              href='/suggest'
+              className='text-sm font-medium transition-colors hover:text-primary'>
+              SallySuggest
+            </Link>
+            <Link
+              href='/about'
+              className='text-sm font-medium transition-colors hover:text-primary'>
+              About
+            </Link>
+            <Link
+              href='/pricing'
+              className='text-sm font-medium transition-colors hover:text-primary'>
+              Pricing
+            </Link>
+            <Link
+              href='/blog/posts'
+              className='text-sm font-medium transition-colors hover:text-primary'>
+              Blog
+            </Link>
+          </div>
+          <div className='flex gap-4 items-center'>
+            <ThemeToggler />
+            <UserButton />
+          </div>
+        </div>
       </div>
-    </div>
+    </nav>
   );
 };
 
