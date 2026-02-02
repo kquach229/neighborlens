@@ -257,7 +257,7 @@ export default function ProductDemo() {
           return 0;
         }
       });
-    }, 4000); // Change step every 4 seconds
+    }, 30000); // Change step every 4 seconds
 
     return () => clearInterval(interval);
   }, [isPaused]);
