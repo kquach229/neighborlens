@@ -1,7 +1,7 @@
 ---
 title: ValidateLens Is Now Free for Everyone!
 
-date: 07-15-25
+date: 12-15-25
 ---
 
 We have a big announcement: **ValidateLens is now completely free to use 🎉🎉🎉**.

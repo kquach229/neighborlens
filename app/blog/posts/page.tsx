@@ -10,8 +10,6 @@ export interface IPost {
   content: string;
 }
 
-// comment
-
 const BlogPage = () => {
   const rawPosts = getAllPosts() as IPost[];
   const posts = [...rawPosts].sort(
@@ -36,25 +34,32 @@ const BlogPage = () => {
           <Sparkles className='text-yellow-500' />
           Latest Post
         </h3>
+
         {posts[0] && (
           <Link
             href={`/blog/posts/${posts[0].slug}`}
-            className='text-lg text-blue-400 hover:underline font-medium'>
-            {posts[0].title} - {posts[0].date}
+            className='text-lg text-blue-400 hover:underline font-medium'
+          >
+            {posts[0].title} –{' '}
+            {new Date(posts[0].date).toLocaleDateString()}
           </Link>
         )}
       </section>
 
       <h3 className='mt-10 mb-4 text-xl font-semibold'>All Posts</h3>
+
       <ul className='space-y-4'>
         {posts.slice(1).map((post) => (
           <li key={post.slug} className='flex flex-col'>
             <Link
               href={`/blog/posts/${post.slug}`}
-              className='text-lg font-medium hover:underline text-blue-400'>
+              className='text-lg font-medium hover:underline text-blue-400'
+            >
               {post.title}
             </Link>
-            <span className='text-sm text-muted-foreground'>{post.date}</span>
+            <span className='text-sm text-muted-foreground'>
+              {new Date(post.date).toLocaleDateString()}
+            </span>
           </li>
         ))}
       </ul>

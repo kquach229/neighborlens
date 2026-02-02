@@ -57,7 +57,7 @@ const FAQSection = () => {
             },
             {
               q: 'Is ValidateLens free?',
-              a: 'Yes. As of 7/15/2025, all features are free for everyone.'
+              a: 'Yes. As of 12/15/2025, all features are free for everyone. If you have any outstanding balance, we will refund the value of your credits balance to you within 14 days.'
             },
             {
               q: 'What is AI Sally?',
