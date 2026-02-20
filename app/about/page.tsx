@@ -72,7 +72,7 @@ export default function AboutPage() {
         </ul>
       </section>
 
-      <div className='mt-32 text-center mx-auto w-full'>
+      {/* <div className='mt-32 text-center mx-auto w-full'>
         <h2>Meet The Team</h2>
         <div className='mt-5 text-md text-foreground opacity-70 max-w-[700px] w-full mx-auto'>
           <span className='text-center'>
@@ -95,7 +95,7 @@ export default function AboutPage() {
             <div className='font-bold'>Kenny Quach</div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className='pt-6'>
         <Link
