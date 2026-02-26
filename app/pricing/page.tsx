@@ -121,7 +121,7 @@ export default function PricingPage() {
             ValidateLens is now free for all users, but if you would like to
             support our operations, click the link below
           </div>
-          <Link
+          {/* <Link
             className='mt-4 text-center mx-auto'
             href='https://buymeacoffee.com/kquach229'
             target='_blank'>
@@ -132,7 +132,7 @@ export default function PricingPage() {
               src='https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png'
               alt='Buy Me A Coffee'
             />
-          </Link>
+          </Link> */}
         </div>
       </main>
     </div>
