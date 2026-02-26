@@ -117,10 +117,10 @@ export default function PricingPage() {
         </div>
 
         <div className='mt-20 text-center flex flex-col'>
-          <div className='text-muted-foreground text-sm'>
+          {/* <div className='text-muted-foreground text-sm'>
             ValidateLens is now free for all users, but if you would like to
             support our operations, click the link below
-          </div>
+          </div> */}
           {/* <Link
             className='mt-4 text-center mx-auto'
             href='https://buymeacoffee.com/kquach229'
